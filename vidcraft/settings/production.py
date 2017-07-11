@@ -171,4 +171,4 @@ SECURE_FRAME_DENY               = True
 HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 1 }
 HITCOUNT_HITS_PER_IP_LIMIT = 0
 USE_THOUSAND_SEPARATOR = True
-from vidcraft.aws.conf import *
+#from vidcraft.aws.conf import *
