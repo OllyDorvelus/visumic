@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-
+from vidcraft.aws.conf import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'hashtags',
     'charts',
     'hitcount',
+    'storages',
     "django_cron",
    # "django_celery_results",
 
