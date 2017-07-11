@@ -5,7 +5,7 @@ from celery.task.schedules import crontab
 from celery.decorators import task, periodic_task
 import subprocess
 import os
-from moviepy.editor import *
+
 import shutil
 from random import randint
 from datetime import timedelta
@@ -70,9 +70,6 @@ def convert_video_to_mp4(instance):
     newvideo = filename + ".mp4"
     # instance.video.delete(save=False)
     instance.video = os.path.relpath(newvideo, 'media')
-    # clip = VideoFileClip(newvideo)
-    # thumbnail = clip.save_frame("thumbnail.jpg", t=0)
-    # instance.thumbnail = thumbnail
     title = instance.title
     title = title.replace(" ", "_")
     title = title + "" + str(randint(0, 100000))

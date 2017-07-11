@@ -1,6 +1,6 @@
 __author__ = 'OllyD'
 
-from moviepy.editor import *
+
 from rest_framework import generics, permissions, mixins
 from rest_framework.filters import SearchFilter, OrderingFilter
 #from .seralizers import UserDisplaySerializer, User, UserProfileSerializer
