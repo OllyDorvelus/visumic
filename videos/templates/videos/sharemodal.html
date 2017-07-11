@@ -1,0 +1,103 @@
+
+{% block content %}
+<script>
+$(document).ready(function(){
+
+
+        $(".disabledbtn").addClass('disabled')
+        var charStart = 200;
+        var charCurrent = 0;
+        $("#share-form").append("<span id='shareCharsLeft'>" + charStart + "</span>")
+
+        $("#share-form textarea").keyup(function(event){
+            //console.log(event.key, event.timeStamp)
+            var shareValue = $(this).val()
+            charCurrent = charStart - shareValue.length
+            var spanChars = $("#shareCharsLeft")
+            spanChars.text(charCurrent)
+            if(charCurrent == charStart) {
+                $(".disabledbtn").addClass('disabled')
+            }
+            if (charCurrent > 0) {
+                // remove classes
+                $(".disabledbtn").removeClass('disabled')
+                spanChars.removeClass('grey-color')
+                spanChars.removeClass('red-color')
+            } else if (charCurrent == 0) {
+                // add gray class
+                $(".disabledbtn").removeClass('disabled')
+                spanChars.addClass("grey-color")
+                spanChars.removeClass('red-color')
+            } else if (charCurrent < 0) {
+                // add red class
+                $(".disabledbtn").addClass('disabled')
+                spanChars.removeClass('grey-color')
+                spanChars.addClass("red-color")
+            }
+        })
+
+        $("#share-form").submit(function(event){
+        event.preventDefault()
+        var this_ = $(this)
+        var formData = this_.serialize()
+        if (charCurrent >= 0) {
+            console.log("fethicng ...")
+            $.ajax({
+                url: "/api/videos/" +"{{ video.pk }}" + "/shares/create/",
+                data: formData,
+                method: "POST",
+                success: function (data) {
+                    console.log(data)
+                    $('#shareModal').modal('hide')
+                    sweetAlert("Success!", "Video has been shared", "success");
+                    //this_.find("input[type=text], textarea").val("")
+
+                    //attachComment(data, true)
+                    //fetchTweets()
+                    //tweetList = data
+                    //parseTweets()
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    popUpLoginModal()
+                    console.log(data)
+                }
+            })
+
+        } else {
+            console.log("Cannot send, tweet too long")
+        }
+    })
+    })
+</script>
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myshareLabel">Vcraft| Share</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid" style="margin-left:200px">
+
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Share {{ video.title }}</h3>
+                        {% include "videos/form.html" with form=share_form btn_title='Share' form_id='share-form' %}
+                </div>
+                </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,118 @@
+
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center" id="myregisterLabel">Vcraft | Register </h2>
+      </div>
+      <div class="modal-body">
+    <div class="container-fluid text-center" >
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Create a new Account</h3>
+                    <form class="form-horizontal" id="registerform" action="{% url 'accounts:register' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'accounts/form_register_template.html' %}
+                        <div class="form-group" style="display:inline">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary inline" id="regsubmit">Register</button>
+                                    <a href= "#"  data-dismiss="modal" /><button type="button" class="btn btn-primary inline login">Login</button></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+
+    </div>
+</div>
+</div>
+
+      </div>
+
+
+
+<script>
+
+    $(document).ready(function() {
+
+     // $('#registerModal').modal('toggle');
+
+    $('#registerform').submit(function(e){
+        e.preventDefault();
+        var form = $(e.target);
+        var this_ = $(this)
+        var formData = this_.serialize()
+        $.ajax({
+            url: '{% url 'accounts:register' %}',
+            type: 'POST',
+            data: $('#registerform').serialize(),//account_form.serialize() + '&' + form.serialize(),
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+
+    },
+            error: function(xhr, ajaxOptions, thrownError){ alert(thrownError); },
+            success: function(data){
+            if(data.username || data.password || data.password2 || data.email || data.email2) {
+                console.log("Invalid")
+              //  console.log(data.password[0].message)
+                attachErrorsRegister(data)
+            }
+            else {
+                console.log("valid")
+                window.location.reload();
+            }
+
+            }
+        })
+    })
+
+    function attachErrorsRegister(data) {
+        $('#username0').text("")
+        $('#email0').text("")
+        $('#email20').text("")
+        $('#password0').text("")
+        $('#password20').text("")
+        if(data.username) {
+            $('#username0').show()
+            $('#username0').prepend("<span class='text-danger small'>" + data.username[0].message + "</span>")
+        } else {
+            $('#username0').hide()
+        }
+
+        if(data.email) {
+            $('#email0').show()
+            $('#email0').prepend("<span class='text-danger small'>" + data.email[0].message + "</span>")
+        } else {
+            $('#email0').hide()
+        }
+
+        if(data.email2) {
+            $('#email20').show()
+            $('#email20').prepend("<span class='text-danger small'>" + data.email2[0].message + "</span>")
+        } else {
+            $('#email20').hide()
+        }
+
+        if(data.password) {
+            $('#password0').show()
+            $('#password0').prepend("<span class='text-danger small'>" + data.password[0].message + "</span>")
+        } else {
+            $('#password0').hide()
+        }
+
+        if(data.password2) {
+            $('#password20').show()
+            $('#password20').prepend("<span class='text-danger small'>" + data.password2[0].message + "</span>")
+        } else {
+            $('#password20').hide()
+        }
+    }
+    });
+
+
+</script>

@@ -1,0 +1,186 @@
+
+{% block content %}
+<script>
+$(document).ready(function(){
+
+        function attachPlaylist(playlistValue, prepend) {
+
+
+
+                var playlistFormat = "<div class='row' style='padding:10px'><h5 class='inline'>" + playlistValue.name + "</h5><h6 class='inline btn btn-primary btn-xs add-video-btn' data-id='" + playlistValue.id + "'>Add</h6></div>"
+
+
+
+            if (prepend == true) {
+                $("#playlist-container").prepend(playlistFormat)
+            }
+            else {
+                $("#playlist-container").append(
+
+                    playlistFormat
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var playlistList = [];
+        var nextPlaylistUrl;
+//        console.log(query)
+        function parsePlaylist() {
+
+                if (playlistList == 0) {
+                    $("#playlist-container").text("No playlist currently found.")
+                    $("#playlist-container").addClass("")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(playlistList, function (key, value) {
+                    attachPlaylist(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchPlaylist(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/" + "{{ request.user.username }}" + "/playlist"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query
+            },
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+            method: "GET",
+            success: function(data){
+                $("#loading-image").hide();
+               $('#loadmoreplaylist').show()
+               console.log(data)
+                playlistList = data.results
+                if (data.next) {
+                    nextPlaylistUrl = data.next
+                } else {
+                    $("#loadmoreplaylist").css("display", "none");
+                }
+                parsePlaylist()
+            },
+
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchPlaylist()
+
+        $("#loadmoreplaylist").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextPlaylistUrl) {
+                fetchPlaylist(nextPlaylistUrl)
+            }
+
+        })
+
+      $(document.body).on("click", ".add-video-btn", function(e){
+
+      e.preventDefault()
+      var this_ = $(this)
+      var playlistId = this_.attr("data-id")
+      var addVideoUrl = '/api/videos/playlist/' + playlistId + '/add/' + "{{ video.id }}"
+
+      // this_.text("Liked")
+      $.ajax({
+        method:"GET",
+        url: addVideoUrl,
+        success: function(data){
+          if (data.in_playlist){
+            sweetAlert("Oops...", "Already in Playlist!", "error");
+
+
+          } else {
+             sweetAlert("Success!", "Added to playlist", "success");
+
+          }
+        },
+        error: function(data){
+            popUpLoginModal()
+          console.log("error")
+          console.log(data)
+        }
+      })
+  })
+
+        $("#playlist-form").submit(function(event){
+        event.preventDefault()
+        var this_ = $(this)
+        var formData = this_.serialize()
+            console.log("fethicng ...")
+            $.ajax({
+                url: "/api/videos/playlist/create/",
+                data: formData,
+                method: "POST",
+                success: function (data) {
+                    console.log(data)
+                    attachPlaylist(data, true)
+                    //this_.find("input[type=text], textarea").val("")
+
+                    //attachComment(data, true)
+                    //fetchTweets()
+                    //tweetList = data
+                    //parseTweets()
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    popUpLoginModal()
+                    console.log(data)
+                }
+            })
+
+
+    })
+
+    })
+</script>
+<div class="modal fade" id="playlistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myplaylistLabel">Vcraft| Your Playlist</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid" style="margin-left:200px">
+
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+{#                        <h3>Share {{ video.title }}</h3>#}
+                        {% include "videos/form.html" with form=playlist_create_form btn_title='Create' form_id='playlist-form' %}
+                        <div id="playlist-container"></div>
+                        <div class="text-center"><div id="loadmoreplaylist" class="btn btn-primary btn-xs">Load More</div></div>
+                </div>
+                </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+
+<script>
+    $(document).ready(function() {
+
+
+
+
+testprint()
+console.log(2)
+console.log(3)
+
+
+
+        function testprint() {
+            console.log("hello");
+        }
+        function append() {
+            //$('#ogsection').append("<h5>Hello World</h5>")
+        }
+
+        function attachShare(shareValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var videoValue = shareValue.video
+            var videoUser = videoValue.user
+            var videoProfile = videoUser.profile
+            var shareUser = shareValue.user
+            var shareProfile = shareUser.profile
+           // var controls = "controls preload"
+
+            //if(profileValue.is_following) {
+                //verb = "Unfollow"
+           // }
+
+            var shareFormatHtml = "<div style='padding:20px'><div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-md-3'><a href='" + shareUser.url + "'><img src='" + shareProfile.user_img + "'class ='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>"+ shareUser.username +"</h5>" +
+                    "<span class='glyphicon glyphicon-user' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + shareProfile.follower_count + "</h5><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + shareUser.video_count + "</h5></div><p class='text-center'>" + shareValue.content + "</p></div></div>" +
+                    "<div class='panel-body'><div class='vidsocialwrapper'><h5 class='text-center'>" + shareUser.username + " " + "Shared " + videoUser.username + "'s" + " " + "video</h5><h4 class='text-center'>" + videoValue.title +"</h4>" +
+                    "<video id='my-video' class='video-js  vjs-default-skin vjs-big-play-centered vjs-16-9 sharevideo' controls='true' preload='auto' poster='" + videoValue.thumbnail + "'data-setup='{}'><source src='" + videoValue.video + "'type='video/mp4'></video>" +
+                    "<div class='row'><div class='col-md-5'><a href='" + videoUser.url + "'><img src='" + videoProfile.user_img + "' class='videolistpic img-responsive img-circle'style='display:inline'></a><h5 class='inline'>" + " "+ videoUser.username + "</h5><h5 class='inline'></h5><span class='glyphicon glyphicon-user inline' aria-hidden='true'>"  + videoProfile.follower_count + "</span>" +
+                    "<span class='glyphicon glyphicon-play inline' aria-hidden='true'>" + videoUser.video_count + "</span></div></div></div></div>"
+
+
+            var shareFormatHtml2 = "<div class='panel-footer'><span class='btn btn-primary commentbutton' data-target='collapse'>Comment</span><span class='btn btn-primary'>Like</span><span class='btn btn-primary>Share</span></div></div>"
+
+            if (prepend == true) {
+                //$("#userfollowers").prepend(profileFormattedHtml)
+            }
+            else {
+                $('#ogsection').append(
+                        shareFormatHtml
+
+                )
+
+            }
+
+
+        }
+
+        function attachShareComment(shareCommentValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+            var shareCommentUser = shareCommentValue.user
+
+            //if(profileValue.is_following) {
+                //verb = "Unfollow"
+           // }
+
+            var shareCommentFormatHtml = "<div class='panel-footer'><span class='btn btn-primary commentbutton' data-target='collapse'>Comment</span><span class='btn btn-primary'>Like</span><span class='btn btn-primary>Share</span></div>"
+
+
+
+            if (prepend == true) {
+                //$("#userfollowers").prepend(shareCommentFormatHtml)
+            }
+            else {
+               // $('#ogsection').append(shareCommentFormatHtml)
+            }
+
+        }
+
+
+        var shareList = [];
+        var nextShareUrl;
+        var testList = []
+//        console.log(query)
+
+        function parseShares() {
+
+                if (shareList == 0) {
+                    $("#userfollowers").text("Following No Profiles.")
+                    //console.log("no data")
+                } else {
+
+
+                $.each(shareList, function (key, value) {
+                    //var profileKey = key
+
+                    attachShare(value)
+                    //parseShareComments()
+                   // logData(value.id)
+                  //def.resolve(fetchShareComments(value.id))
+                    fetchShareComments(value.id)
+
+                    console.log(value.content)
+
+                    //console.log(value)
+
+
+
+            })
+
+       }
+
+
+        }
+
+            fetchShares()
+
+
+           // parseShareComments()
+
+        var shareCommentList = [];
+        var nextShareCommentUrl;
+        function parseShareComments() {
+
+                if (shareCommentList == 0) {
+                    $("#userfollowers").text("Following No Profiles.")
+                    //$('#ogsection').append("<h4>Hello World</h4>")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(shareCommentList,  function (key, value) {
+                    var profileKey = key
+                    attachShareComment(value)
+                    console.log(value.comment)
+
+
+
+            })
+        }
+        }
+
+
+        function fetchShares(url) {
+            //console.log("fethicng ...")
+
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/shares/following/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+            //    "q": query
+            },
+            method: "GET",
+            success: function(data){
+
+
+               //console.log(data)
+                shareList = data.results
+                if (data.next) {
+                    nextShareUrl = data.next
+                } else {
+                    $("#loadmoreshares").css("display", "none");
+                }
+
+                if (shareList == 0) {
+                    $("#userfollowers").text("Following No Profiles.")
+                } else {
+                    parseShares()
+                    //var videos = videojs(document.getElementsByClassName("sharevideo"));
+                   // var myPlayer = videojs('my-video');
+                   // var player = videojs('video')
+                   // player.play()
+                   // console.log(player.hasClass('sharevideo'))
+
+
+                }
+
+            },
+
+           async: false,
+
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        }).done(function(data){
+               // putinArray(data)
+            })
+        }
+            function putinArray(data) {
+                console.log(data)
+            }
+
+
+            //logData();
+            function fetchShareComments(shareValue, url) {
+            //console.log("fethicng ...")
+            var fetchUrl;
+
+            if (!url) {
+                fetchUrl = "/api/videos/share/" + shareValue + "/share-comments/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+            //    "q": query
+            },
+            method: "GET",
+            success: function(data){
+               //console.log(data)
+                shareCommentList = data.results
+                if (data.next) {
+                    nextShareCommentUrl = data.next
+                } else {
+                    $("#loadmoresharecomments").css("display", "none");
+                }
+               parseShareComments()
+
+            },
+             async: false,
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+
+        var setVal = function(value) {
+            var deffered = $.Deferred()
+            setTimeout(function() {
+                    deffered.resolve()
+                }, 5000)
+
+                return deffered.promise()
+                }
+        setVal().done(function() {
+            console.log("5000")
+        })
+
+
+
+
+
+
+        $("#loadmoreshares").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextShareUrl) {
+                fetchShares(nextShareUrl)
+            }
+
+        })
+
+
+//adding classes to seperate
+var caretdown = true;
+$('.comment-toggle').each(function(i) {
+  console.log(i);
+  $(this).attr("data-target", "#socialcomments" + i)
+$(this).click(function(e) {
+  e.preventDefault();
+  if(caretdown) {
+    $(this).html("&#9650")
+
+    caretdown = false
+  }else {
+  $(this).html("&#9660")
+    caretdown = true
+  // $(this).attr("data-target", "none")
+  }
+  });
+})
+
+$('.socialcomments').each(function(i) {
+  console.log(i);
+  $(this).attr("id", "socialcomments" + i)
+})
+
+$('.social-comment-form').each(function(i) {
+  console.log(i);
+  $(this).attr("id", "social-comment-form" + i)
+})
+
+        })
+
+
+
+
+
+</script>
+
+<div class="container-fluid">
+  <h1 class="text-center">VCraft| A Place To Enjoy The Arts</h1>
+<ul class="topbar text-center">
+  <div><li><a href="{% url 'accounts:home' %}">General</a></li></div>
+  <div><li><a href="{% url 'accounts:social' %}">Social</a></li></div>
+</ul>
+
+
+
+
+<div id="ogsection"></div>
+
+
+ <div class="text-center"><div id="loadmoreshares" class="row text-center btn btn-primary">Load More</div></div>
+</div>
+
+{% endblock content %}

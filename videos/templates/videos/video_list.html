@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <title></title>
+
+<body>
+{#    {% for video in videos %}#}
+{#        <h1>{{ video.title }}</h1>#}
+{#        <h2>{{ video.user.username }}</h2>#}
+{#        <h3>{{ video.description }}n</h3>#}
+{#    {% endfor %}#}
+</body>
+
+    <script>
+
+
+    $(document).ready(function() {
+
+        function attachVideo(videoValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var videoUser = videoValue.user
+            var profileValue = videoUser.profile
+            var verb = "Follow"
+          //  var follower_count = profileValue.follower_count
+           // if(profileValue.is_following) {
+           //     verb = "Unfollow"
+           // }
+
+            //var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+           //         "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'><h6><a href='#' class='follow-btn' data-id="+ profileValue.id +">" + verb +  profileValue.follower_count + "|" +
+             //       "</a></h6></span><span class='glyphicon glyphicon-play' aria-hidden='true'><h6>Videos:" + profileUser.video_count + "</h6></span></div>"
+
+
+            var videoFormatHtml = "<div class='col-md-3' style='padding-top:20px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
+                    "<h6 class='inline'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
+                    "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 class='text-center'>" + videoValue.timesince + "</h6></div>"
+
+            if (prepend == true) {
+                $("#video-container").prepend(profileFormattedHtml)
+            }
+            else {
+                $("#video-container").append(
+                        videoFormatHtml
+
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var ordering = getParameterByName('ordering')
+        var videoList = [];
+        var nextVideoUrl;
+//        console.log(query)
+        function parseVideos() {
+
+                if (videoList == 0) {
+                    $("#video-container").text("No Videos Currently Found.")
+                    $("#video-container").addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(videoList, function (key, value) {
+                    var profileKey = key
+                    attachVideo(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchVideos(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query,
+                "ordering": ordering
+            },
+            type: "GET",
+
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+            success: function(data){
+                $("#loadmore").show();
+               console.log(data)
+                videoList = data.results
+                if (data.next) {
+                    nextVideoUrl = data.next
+                } else {
+                    $("#loadmore").css("display", "none");
+                    nextVideoUrl = null
+                }
+                parseVideos()
+                $("#loading-image").hide();
+            },
+
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+
+        }
+            fetchVideos()
+
+        $("#loadmore").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+            }
+
+        })
+
+{#    window.onscroll = function(ev) {#}
+{#    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {#}
+{#       // alert("hello world")#}
+{#       if(nextVideoUrl) {#}
+{#           fetchVideos(nextVideoUrl)#}
+{#       }#}
+{##}
+{#    }#}
+
+
+
+
+//$(window).scroll(function() {
+//    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+ //         fetchVideos(nextVideoUrl)
+  //  }
+//});
+
+
+
+        var typingTimer;
+        var doneInterval = 800; // in ms
+        var searchInput = $("#video-search-form input[type=text]")
+        var searchQuery;
+        searchInput.keyup(function(event){
+            searchQuery =  $(this).val()
+            clearTimeout(typingTimer)
+            typingTimer = setTimeout(doneSearchTyping, doneInterval)
+
+        })
+         searchInput.keydown(function(event){
+            clearTimeout(typingTimer)
+        })
+        function doneSearchTyping(){
+          if (searchQuery){
+            // do search
+            var url = '/videos/browse/?q=' + searchQuery
+            document.location.href = url;
+          }
+            else {
+              var url = '/videos/browse'
+              document.location.href = url;
+          }
+        }
+
+
+
+
+
+
+
+
+    });
+</script>
+{% include "videos/video_search_form.html" %}
+    <div class='container-fluid'><div class='row'>
+            <div id="video-container">
+
+            </div>
+        </div>
+        </div>
+            <div class="text-center" style="padding-top:30px"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Videos</h5></span></div>
+{% load static %}
+{#    <img src="{% static 'static/img/ajax-loader.gif'  %}">#}
+    <div id="myDiv" class="text-center">
+        <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
+    </div>
+
+
+{% endblock content %}

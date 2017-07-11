@@ -1,0 +1,114 @@
+{% extends 'accounts/profile_detail.html' %}
+
+
+
+{% block profilecontent %}
+<script>
+    $(document).ready(function() {
+
+
+            function attachProfile(profileValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var profileUser = profileValue.user
+            var verb = "Follow"
+            var follower_count = profileValue.follower_count
+            if(profileValue.is_following) {
+                verb = "Unfollow"
+            }
+            var profileFormattedHtml = "<div class=\"media\"><div class=\"media-body\">" +  "<br> via <a href='" + profileUser.url + "'>" +
+                    profileUser.username + " videos: " + profileUser.video_count + "</a> | " +  " | " + "<a href='#'>View "  +  "  | <a href='#' class='follow-btn btn btn-primary' data-id=" + profileValue.id + ">" + verb + " " + profileValue.follower_count + "</a></div></div><hr>"
+
+
+            var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+                    "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'></span><h6><a href='#' class='follow-btn btn btn-primary btn-sm' data-id="+ profileValue.id +">" + verb + " " +  profileValue.follower_count + "" +
+                    "</a></h6><span class='glyphicon glyphicon-play' aria-hidden='true'></span><h6>Videos:" + profileUser.video_count + "</h6></div>"
+
+                var testprof = "<div>" + profileValue.username + "</div>"
+                var okay = "<h1>Hello World</h1>"
+            if (prepend == true) {
+                $("#userfollowers").prepend(profileFormattedHtml)
+            }
+            else {
+                $("#userfollowers").append(
+                        profileFormattedHtml2
+
+                )
+            }
+        }
+
+
+        var profileList = [];
+        var nextProfileUrl;
+//        console.log(query)
+        function parseProfiles() {
+
+                if (profileList == 0) {
+                    $("#userfollowers").text("No Followers")
+                    $("#userfollowers").addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(profileList, function (key, value) {
+                    var profileKey = key
+                    attachProfile(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchProfiles(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/accounts/" + "{{ User.username }}" + "/followers"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+            //    "q": query
+            },
+            method: "GET",
+            success: function(data){
+               console.log(data)
+                profileList = data.results
+                if (data.next) {
+                    nextProfileUrl = data.next
+                } else {
+                    $("#loadmore").css("display", "none");
+                }
+                parseProfiles()
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchProfiles()
+
+        $("#loadmore").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextProfileUrl) {
+                fetchProfiles(nextProfileUrl)
+            }
+
+        })
+
+        })
+</script>
+<div class="row" id="userfollowers" style="padding:20px;">
+
+
+
+</div>
+<a href="#" id="loadmore"><h5 class="text-center">Load More Videos</h5></a>
+{% endblock profilecontent %}

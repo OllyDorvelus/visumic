@@ -1,0 +1,81 @@
+
+{% block content %}
+
+
+
+
+
+
+
+ <script>
+ $(document).ready(function() {
+
+      $(document.body).on("click", ".deletevid-btn", function(e){
+      e.preventDefault()
+      var this_ = $(this)
+      var videoId = this_.attr("data-id")
+      var deleteVideoUrl = '/api/videos/' + {{ video.pk }} + '/'
+
+      // this_.text("Liked")
+      $.ajax({
+        method:"DELETE",
+        url: deleteVideoUrl,
+              beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+    },
+        success: function(data){
+            console.log("deleted")
+            {% if request.user.is_authenticated %}
+          window.location.replace('{% url 'accounts:profile_detail' request.user.username %}')
+            {% endif %}
+        },
+        error: function(data){
+          cannot()
+          console.log("error")
+          console.log(data)
+        }
+      })
+  })
+
+ })
+
+
+ </script>
+
+<div class="modal fade" id="deleteVideoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myvideoEditLabel">Vcraft| Delete</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid" style="margin-left:200px">
+
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Delete {{ video.title }}?</h3>
+{#                        <form method="get" enctype="multipart/form-data">#}
+{#                            {% csrf_token %}#}
+{#                        <submit value="post" class="btn btn-primary deletevid-btn">Delete</submit>#}
+{#                            <button type="submit" class="btn btn-primary deletevid-btn">Delete</button>#}
+{#                            <input type="hidden" name="_method" value="DELETE">#}
+{#                        </form>#}
+                        <button  class="btn btn-primary inline deletevid-btn">Yes</button>
+                        <button  class="btn btn-primary inline" data-dismiss="modal">No</button>
+                </div>
+                </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock content %}

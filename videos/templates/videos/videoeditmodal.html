@@ -1,0 +1,119 @@
+
+{% block content %}
+
+
+
+
+
+
+
+ <script>
+ $(document).ready(function() {
+
+     function getFormData() {
+         //event.preventDefault()
+         var this_ = $(this)
+         var formData = this_.serialize()
+
+         console.log("fethicng ...")
+         $.ajax({
+             url: "/api/videos/" + "{{ video.pk }}",
+             data: formData,
+             method: "GET",
+             success: function (data) {
+                 console.log(data)
+                 console.log(data.thumbnail)
+                 //this_.find("input[type=text], textarea").val("")
+                 $("#video-edit-form .title").val(data.title)
+                 $("#video-edit-form textarea").val(data.description)
+                 $('#video-edit-form select').val(data.genre)
+                 //$('#video-edit-form image').val(data.thumbnail)
+                 //$("#video-edit-form .thumbnail").url(data.thumbnail)
+                 //attachComment(data, true)
+                 //fetchTweets()
+                 //tweetList = data
+                 //parseTweets()
+
+             },
+             error: function (data) {
+                 console.log("error")
+                 popUpLoginModal()
+                 console.log(data)
+             }
+         })
+     }
+        $("#video-edit-form").submit(function(event){
+        event.preventDefault()
+        var this_ = $(this)
+        var formData = this_.serialize()
+
+            console.log("fethicng ...")
+            $.ajax({
+                url: "/api/videos/" + "{{ video.pk }}" + "/",
+                data: formData,
+                method: "POST",
+                success: function (data) {
+                    $('#videoEditModal').modal('hide')
+                    window.location.reload();
+                    console.log(data)
+                    this_.find("input[type=text], textarea").val("")
+{#                    this_.find("input[type=text], .title").val("")#}
+
+
+                    //$.ajax.reload()
+
+
+
+                    //attachComment(data, true)
+                    //fetchTweets()
+                    //tweetList = data
+                    //parseTweets()
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    popUpLoginModal()
+                    console.log(data)
+                }
+            })
+
+
+    })
+
+     getFormData()
+
+ })
+
+
+ </script>
+
+<div class="modal fade" id="videoEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title text-center" id="myvideoEditLabel">Vcraft| Edit</h3>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid text-center" style="">
+
+            <div class="col-sm-12 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <h3>Edit {{ video.title }}</h3>
+                        {% include "videos/editform.html" with form=video_edit_form action_url=video_url  btn_title='Change' form_id='video-edit-form' %}
+                </div>
+                </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+{#<body>#}
+{#    <h1>{{ User.username }}</h1>#}
+{#    <h2>{{ User.profile.id }}</h2>#}
+{#    <h3>{{ object.id }}</h3>#}
+{#    <h2><img src="{{ User.profile.user_img.url }}"></h2>#}
+{#    <h2>{% if all_videos %}#}
+{#            <h1>Hello</h1>#}
+{#        {% for video in all_videos %}#}
+{#            <h4>{{ video.title }}#}
+{#                {{ User.profile.user.videos.all }}#}
+{#            </h4>#}
+{##}
+{#        {% endfor %}#}
+{#        {% endif %}#}
+{#    </h2>#}
+{#</body>#}
+
+
+<script>
+     $(document).ready(function() {
+            var followerurl = "{% url 'accounts:profile_detail-followers' User.username  %}";
+            var likedurl = "{% url 'accounts:profile_detail-liked' User.username  %}";
+            var followingurl = "{% url 'accounts:profile_detail-following' User.username  %}";
+            var sharedurl = "{% url 'accounts:profile_detail-shared' User.username  %}";
+            var videourl = "{% url 'accounts:profile_detail' User.username %}"
+            var playlisturl = "{% url 'accounts:profile_detail-playlist' User.username %}"
+         function displayProfile(profileValue) {
+             var profileUser = profileValue.user
+             var verb = "Follow"
+             if(profileValue.is_following) {
+                verb = "Unfollow"
+            }
+             formattedHtml = "<h1>" + profileValue.user.username +   "  | <a href='#' class='follow-btn' data-id=" + profileValue.id + ">" + verb + " " + profileValue.follower_count + "</a></h1>"
+
+
+             profileFormatedHtml = "<div class='row'><div><img src='" + profileValue.profile_banner  + "'class='bannerimg'></div></div>" +
+             "<div class='row' id='profileinfo'><div class='col-md-3'><img src='" + profileValue.user_img + "'class='img-circle img-responsive listpic'><ul style='padding-top:10px;padding-bottom:10px'><h4 class='inline'>" + profileUser.username + " " + "</h4><h5 class='btn btn-primary inline follow-btn' data-id=" + profileUser.username + ">" + verb + " " + profileValue.follower_count + "</h5></ul></div>" +
+             "<div class='col-md-1'><h5>Followers: " + profileValue.follower_count + "</h5><h5>Videos: " + profileUser.video_count + "</h5><h5>Views: " + profileUser.all_views.views__hit__count + "</h5></div>" +
+             "<div class='col-md-1'><h5>Likes: " + profileUser.all_likes.liked__count + "</h5><h5>Shares: " + profileUser.all_shares.shares__count + "</h5><h5>Comments:" + profileUser.all_comments + "</h5></div><div class='col-md-5'><h5>" + profileValue.bio + "</h5></div></div>"
+
+             profileFormatedHtml2 = "<div class='row' id='profilelist'><div class='col-md-9'><ul class='inline'><li><a href='" + videourl + "'>Videos </a></li>|<li><a href='" + likedurl + "'>Liked</a></li>|" +
+             "<li><a href='" + followerurl + "'>Followers</a></li>|<li><a href='" + followingurl + "'>Following</a></li>|<li><a href='" + sharedurl + "'>Shared</a></li>|<li><a href='" + playlisturl + "'>Playlist</a></li></ul></div></div><div class='row'><div class='col-md-9 blackline'></div></div>"
+             $('#userprofile').append(profileFormatedHtml + profileFormatedHtml2)
+         }
+       function fetchProfile(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/accounts/" + "{{ User.username }}"
+            } else {
+                fetchUrl = "/api/accounts/"
+                fetchUrl = fetchUrl + url.toString()
+            }
+            $.ajax({
+            url: fetchUrl,
+{#            data: {#}
+{#                "q": query#}
+{#            },#}
+            method: "GET",
+            success: function(data){
+                console.log(data.user.username)
+                console.log(data.user_img)
+                console.log(data.user)
+                displayProfile(data)
+
+
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+         fetchProfile()
+
+
+             function attachVideo(videoValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var videoUser = videoValue.user
+            var profileValue = videoUser.profile
+            var verb = "Follow"
+          //  var follower_count = profileValue.follower_count
+           // if(profileValue.is_following) {
+           //     verb = "Unfollow"
+           // }
+                        if("{{ request.user.username }}" === videoUser.username) {
+                var editvideohtml = "<li class='dropdown' style='float:right;list-style:none'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='float:right;font-size:20px;cursor:pointer'>&#8942</span></a><ul class='dropdown-menu' style='float:right'><li><a href='#' class='deletevideo-btn' data-id='" + videoValue.id + "'>Delete</a></li></ul></li>"
+            }
+            else {
+                editvideohtml = ""
+            }
+            var videoFormatHtml = "<div class='col-md-3' id='" + videoValue.id + "'style='padding-top:20px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
+                    "<h6 class='inline'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
+                    "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6>" + editvideohtml + "<a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 class='text-center'>" + videoValue.timesince + "</h6></div>"
+
+            if (prepend == true) {
+                $("#uservideos").prepend(videoFormatHtml)
+            }
+            else {
+                $("#uservideos").append(
+                        videoFormatHtml
+
+                )
+            }
+        }
+
+       // var query = getParameterByName('q')
+        var videoList = [];
+        var nextVideoUrl;
+//        console.log(query)
+        function parseVideos() {
+
+                if (videoList == 0) {
+                    $("#uservideos").text("No Uploaded Videos")
+                    $("#uservideos").addClass('text-center')
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(videoList, function (key, value) {
+                    var profileKey = key
+                    attachVideo(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchVideos(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/accounts/" + "{{ User.username }}" + "/videos"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+            //    "q": query
+            },
+            method: "GET",
+            success: function(data){
+                $("#loadmorevids").show()
+               console.log(data)
+                videoList = data.results
+                if (data.next) {
+                    nextVideoUrl = data.next
+                } else {
+                    $("#loadmorevids").css("display", "none");
+
+                }
+
+                parseVideos()
+
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchVideos()
+
+        $("#loadmorevids").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+            }
+
+        })
+
+{#         {% if request.user.id == User.id %}#}
+{#            $('.follow-btn').addClass('btn btn-primary disabled')#}
+{#        {% endif %}#}
+
+
+     $(document.body).on("click", ".deletevideo-btn", function(e){
+      e.preventDefault()
+      var this_ = $(this)
+      var videoId = this_.attr("data-id")
+      var deleteShareUrl = '/api/videos/' + videoId  + '/'
+        swal({
+        title: "Are you sure?",
+        text: "Are you sure that you want to delete this share?",
+        type: "warning",
+        showCancelButton: true,
+        allowOutsideClick: true,
+        closeOnConfirm: true,
+        confirmButtonText: "Yes, delete it!",
+        confirmButtonColor: "black"
+
+    },
+            function() {
+                // this_.text("Liked")
+                $.ajax({
+                    method: "DELETE",
+                    url: deleteShareUrl,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    },
+                    success: function (data) {
+                        console.log("deleted")
+                        $('#' + videoId).hide(500)
+                    },
+                    error: function (data) {
+                        cannot()
+                        console.log("error")
+                        console.log(data)
+                    }
+                })
+            })
+
+  })
+                });
+</script>
+    <div class="container-fluid" id="userprofile">
+
+</div>
+    <div class="container-fluid">
+{% block profilecontent %}
+
+        <div class="row" id="uservideos" style="padding:20px;">
+
+
+    </div>
+    </div>
+    <div class="text-center"><a href="#" id="loadmorevids" class="btn btn-primary" style="display:none;width:10%"><h5 class="text-center">Load More Videos</h5></a></div>
+{% endblock profilecontent %}
+{% endblock content %}

@@ -1,0 +1,93 @@
+
+{% block content %}
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title text-center" id="myloginLabel">Vcraft| Login</h2>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid text-center" style="">
+
+            <div class="">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Login</h3>
+                    <form id="loginform" class="form-horizontal" action="{% url 'accounts:login' %}?next={{request.path}}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'accounts/formtemplate.html' %}
+                        <div class="form-group" style="display:inline" >
+
+                                <button type="submit" class="btn btn-primary inline">Login</button>
+                                    <input type="hidden" name="next" value="{{ next }}">
+                                <a href= "#"  data-dismiss="modal" /><button type="button" class="btn btn-primary register">Register</button></a>
+                                <a href="{% url 'password_reset' %}" style="display:block;padding-top:10px">Forgot Password?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+<script>
+$(document).ready(function(){
+        $('#loginform').submit(function(e){
+        e.preventDefault();
+        var form = $(e.target);
+        var this_ = $(this)
+        var formData = this_.serialize()
+        $.ajax({
+            url: '{% url 'accounts:login' %}',
+            type: 'POST',
+            data: $('#loginform').serialize(),//account_form.serialize() + '&' + form.serialize(),
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+
+    },
+            error: function(xhr, ajaxOptions, thrownError){ alert(thrownError); },
+            success: function(data){
+            if(data.username2 || data.password) {
+                console.log("Invalid")
+                attachErrorsLogin(data)
+
+            }
+            else {
+                console.log("valid")
+                window.location.reload();
+            }
+
+            }
+        })
+    })
+
+        function attachErrorsLogin(data) {
+            $('#username2').text("")
+            $('#password').text("")
+            if (data.username2) {
+                $('#username2').show()
+                $('#username2').prepend("<span class='text-danger small'>" + data.username2[0].message + "</span>")
+            } else {
+                $('#username2').hide()
+            }
+
+            if (data.password) {
+                $('#password').show()
+                $('#password').prepend("<span class='text-danger small'>" + data.password[0].message + "</span>")
+            } else {
+                $('#password').hide()
+            }
+        }
+})
+</script>

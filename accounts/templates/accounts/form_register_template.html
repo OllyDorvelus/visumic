@@ -1,0 +1,15 @@
+
+
+
+{% for field in form_register %}
+   <div class="form-group">
+
+        <div class="col-sm-offset-2 col-sm-10 text-center" id="{{ field.name }}0">
+            <span class="text-danger small">{{ field.errors }}</span>
+
+        </div>
+       <p class="text-center inline"> <label class="control-label text-center inline">{{ field.label_tag }}</label></p>
+        <div class="text-center inline">{{ field }}</div>
+    </div>
+{% endfor %}
+

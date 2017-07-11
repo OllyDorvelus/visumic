@@ -1,0 +1,124 @@
+{% extends "charts/chartbase.html" %}
+{% block chartcontent %}
+<script>
+var counter = 0;
+    $(document).ready(function() {
+
+            function attachVideo(videoValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var videoUser = videoValue.user
+            var profileValue = videoUser.profile
+            var verb = "Follow"
+          //  var follower_count = profileValue.follower_count
+           // if(profileValue.is_following) {
+           //     verb = "Unfollow"
+           // }
+
+            //var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+           //         "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'><h6><a href='#' class='follow-btn' data-id="+ profileValue.id +">" + verb +  profileValue.follower_count + "|" +
+             //       "</a></h6></span><span class='glyphicon glyphicon-play' aria-hidden='true'><h6>Videos:" + profileUser.video_count + "</h6></span></div>"
+
+
+            var videoFormatHtml =  "<div class='row'><div class='col-md-offset-1 col-md-2' style='margin-top:5em'><h4><strong>" + counter + ".</strong></h4></div><div class='col-md-3 col-md-offset-1'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "'class='videolistpic img-responsive img-circle' style='display:inline'></a>" +
+                    "<h5 class='inline'>" + videoUser.username + "</h5><h6 class='inline'><span class='glyphicon glyphicon-user' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' aria-hidden='true'></span>" + " " + videoValue.likes_count + " " + "</h6>" +
+                    "<a href='" + videoValue.url + "'><img src='" + videoValue.thumbnail + "' class='thumbnail chart-thumbnail img-responsive'></a><a href='" + videoValue.url + "'><h5 class='text-center blacklink'>" + videoValue.title + "</h5></a></div><div class='col-md-3' style='margin-top:5em;position:relative'><h4>Views: <strong>" + videoValue.daily_views + "</strong></h4></div></div>"
+
+            if (prepend == true) {
+                $("#video-container").prepend(profileFormattedHtml)
+            }
+            else {
+                $("#alltime-container").append(
+                        videoFormatHtml
+
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var videoList = [];
+        var nextVideoUrl;
+//        console.log(query)
+        function parseVideos() {
+
+                if (videoList == 0) {
+                    $("#alltime-container").text("No Videos Currently Found.")
+                    $("#alltime-container").addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(videoList, function (key, value) {
+                    var profileKey = key
+                    counter++;
+                    attachVideo(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchVideos(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/charts/daily"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query
+            },
+            type: "GET",
+            beforeSend: function(data) {
+             // $("#loading-image").show();
+
+           },
+            success: function(data){
+                $("#loadmore").show();
+               console.log(data)
+                videoList = data.results
+                if (data.next) {
+                    nextVideoUrl = data.next
+                } else {
+                    $("#loadmore").css("display", "none");
+                    //nextVideoUrl = null
+                }
+                parseVideos()
+                $("#loading-image").hide();
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchVideos()
+
+        $("#loadmore").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+            }
+
+        })
+
+    })
+</script>
+
+
+    <div class="container-fluid" id="alltime-container">
+
+
+</div>
+    <div class="text-center"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Videos</h5></span></div>
+{% endblock chartcontent %}
+<script>
+    console.log("Hello world")
+</script>

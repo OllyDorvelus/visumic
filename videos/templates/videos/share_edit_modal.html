@@ -1,0 +1,126 @@
+
+{% block content %}
+
+
+
+
+
+
+
+ <script>
+ $(document).ready(function() {
+ var globalShare = 0
+    $(document.body).on("click", ".share-edit", function(e){
+     e.preventDefault();
+         var this_ = $(this)
+         var formData = this_.serialize()
+         var shareId = this_.attr("data-id")
+         globalShare = shareId
+
+         console.log("fethicng ...")
+         $.ajax({
+             url: "/api/videos/share/" + shareId + "/",
+             data: formData,
+             method: "GET",
+             success: function (data) {
+                 console.log(data)
+               //  console.log(data.thumbnail)
+                 //this_.find("input[type=text], textarea").val("")
+                 $("#share-edit-form .content").val(data.content)
+                 //$("#share-edit-form textarea").val(data.content)
+                 //$('#video-edit-form image').val(data.thumbnail)
+                 //$("#video-edit-form .thumbnail").url(data.thumbnail)
+                 //attachComment(data, true)
+                 //fetchTweets()
+                 //tweetList = data
+                 //parseTweets()
+
+             },
+             error: function (data) {
+                 console.log("error")
+                 popUpLoginModal()
+                 console.log(data)
+             }
+         })
+     $("#shareEditModal").modal({})
+
+});
+
+         //event.preventDefault()
+
+
+        $("#share-edit-form").submit(function(event){
+        event.preventDefault()
+        var this_ = $(this)
+        var formData = this_.serialize()
+
+            console.log("fethicng ...")
+            $.ajax({
+                url: "/api/videos/share/" + globalShare + "/",
+                data: formData,
+                method: "POST",
+                success: function (data) {
+                    $('#shareEditModal').modal('hide')
+                    window.location.reload();
+                    console.log(data)
+{#                    this_.find("input[type=text], textarea").val("")#}
+{#                    this_.find("input[type=text], .title").val("")#}
+
+
+                    //$.ajax.reload()
+
+
+
+                    //attachComment(data, true)
+                    //fetchTweets()
+                    //tweetList = data
+                    //parseTweets()
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    cannot()
+                    console.log(data)
+                }
+            })
+
+
+    })
+
+
+
+ })
+
+
+ </script>
+
+<div class="modal fade" id="shareEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myshareEditLabel">Vcraft| Edit Playlist</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid" style="margin-left:200px">
+
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Edit {{ playlist.name }}</h3>
+                        {% include "videos/editform.html" with form=share_edit_form action_url=share_url  btn_title='Change' form_id='share-edit-form' %}
+                </div>
+                </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock content %}

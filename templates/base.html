@@ -1,0 +1,269 @@
+{% load static %}
+<meta charset="utf-8">
+<meta name="viewport" content="width-device-edith, initial-scale=1">
+{% load staticfiles %}
+
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{% static 'static/css/main.css' %}" />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+{#<script src="{% static 'static/sweetalert.min.js' %}"></script>#}
+{#<link rel="stylesheet" type="text/css" href="{% static 'static/sweetalert.css' %}">#}
+{#    <script src="../../Scripts/node_modules/sweetalert/dist/sweetalert.min.js"></script>#}
+{#<link rel="stylesheet" type="text/css" href="../../Scripts/node_modules/sweetalert/dist/sweetalert.css">#}
+<script src = "{% static 'static/js/main.js' %}" ></script>
+
+</head>
+<body>
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li><a href="{%  url 'accounts:profile_list' %}">Profiles</a>
+      <li><a href="{% url 'videos:playlist_list' %}">Playlist</a></li>
+      <li><a href="{% url 'accounts:logout' %}?next={{request.path}}">Logout</a></li>
+
+    </ul>
+      {% if request.user.is_authenticated %}
+            <div class='row'>
+        <div class='col-md-12'><h4 class='text-center' style='color:white'>Following</h4></div>
+      <div class='whiteline col-md-12' style='width:100%'></div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'>
+    <ul class='followingside' id="followingside">
+
+
+    </ul>
+          <a href="#" id="loadmorefollowing" style='display:none'><h5 class="text-center" style="color:white">More</h5></a>
+  </div>
+  </div>
+      {% endif %}
+</div>
+<div id="page-content-wrapper">
+<nav class="navbar navbar-default navbar-custom">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#" class="btn btn-lg navbar-brand" id="menu-toggle">
+    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+      </a>
+<a class="navbar-brand" href={% url 'accounts:home' %}>Visumic</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url "videos:video_list" %}">Browse Videos <span class="sr-only">(current)</span></a></li>
+        <li><a href="{% url "charts:chart_list_alltime" 'Music' %}">Vcharts</a></li>
+        <li><a href="{% url 'accounts:social' %}">Share Feed</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href='{% url 'videos:video_category_list' 'Music' %}'>Music</a></li>
+            <li><a href='{% url 'videos:video_category_list' 'Poetry' %}'>Poetry</a></li>
+            <li><a href='{% url 'videos:video_category_list' 'Film' %}'>Film</a></li>
+            <li><a href='{% url 'videos:video_category_list' 'Dance' %}'>Dance</a></li>
+{#            <li><a href='{% url 'videos:video_genre_list' 'spoken-word' %}'>Spoken-Word</a></li>#}
+{#            <li><a href='{% url 'videos:video_genre_list' 'Techno' %}'>Techno</a></li>#}
+{#            <li><a href='{% url 'videos:video_genre_list' 'hiphop' %}'>Hiphop</a></li>#}
+{#            <li><a href='{% url 'videos:video_genre_list' 'rnb' %}'>RNB</a></li>#}
+{#            <li><a href='{% url 'videos:video_genre_list' 'rock' %}'>Rock</a></li>#}
+{#            <li><a href='{% url 'videos:video_genre_list' 'pop' %}'>Pop</a></li>#}
+{#            <li><a href='{% url 'videos:video_genre_list' 'spoken-word' %}'>Spoken-Word</a></li>#}
+{#            <li><a href='{% url 'videos:video_genre_list' 'Techno' %}'>Techno</a></li>#}
+{#            <li role="separator" class="divider"></li>#}
+{#            <li><a href="#">Separated link</a></li>#}
+{#            <li role="separator" class="divider"></li>#}
+{#            <li><a href="#">One more separated link</a></li>#}
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+          {% if request.user.is_authenticated %}
+        <li><a href="{% url 'accounts:profile_detail' request.user.username %}">{{ request.user.username }}</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <img src="{{ context.user_img.url }}" class="img-responsive img-circle navimg">
+            </a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'accounts:profile_detail' request.user.username %}">View Account</a></li>
+            <li><a href="{% url 'accounts:profile_update' %}">Manage Account</a></li>
+            <li><a href="{% url 'videos:video_upload' %}">Upload</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{% url 'accounts:logout' %}?next={{request.path}}">Logout</a></li>
+          </ul>
+        </li>
+          {% else %}
+                    <li><a href="#" class="login">Login <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a></li>
+                    <li><a href="#" class="register">Register <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+          {% endif %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+ {% block content %}
+ {% endblock content %}
+{% include "accounts/loginmodal.html" %}
+{% include "accounts/registermodal.html" %}
+
+
+<style>
+
+</style>
+
+
+
+</div>
+</body>
+<!-- Jquery -->
+
+<script>
+
+        Cookies.set("example");
+    Cookies.set("menuOpen");
+    localStorage.setItem('myCat', 'Tom');
+    localStorage.setItem('sideMenuOpen', 'true');
+    localStorage.getItem('myCat')
+    var menu = localStorage.getItem('myCat')
+    if(!localStorage.getItem("sideOpen")) {
+        localStorage.setItem("sideOpen", "null")
+    }
+        var $mytd = $('#mytd'), $elie = $mytd.clone(), os = $mytd.offset();
+    if(localStorage.getItem("sideOpen") == "null") {
+        $('#wrapper').removeClass("menuNotDisplayed")
+       localStorage.setItem("sideOpen", "true");
+    }
+            if(localStorage.getItem("sideOpen") == "true") {
+        $('#wrapper').removeClass("menuNotDisplayed")
+            console.log("Open")
+    }
+    else {
+        $('#wrapper').addClass("menuNotDisplayed").delay(1000000)
+       // $('#wrapper').detach("menuNotDisplayed");
+            console.log("Close")
+    }
+
+//var menuOutBoolean = Cookies.get("menuOutB") || false;
+$('#menu-toggle').click(function(e) {
+  e.preventDefault();
+ // $('#wrapper').toggleClass("menuNotDisplayed");
+   if(localStorage.getItem("sideOpen") == "true") {
+       $('#wrapper').addClass("menuNotDisplayed");
+       localStorage.setItem("sideOpen", "false")
+   }
+    else {
+       $('#wrapper').removeClass("menuNotDisplayed");
+       localStorage.setItem("sideOpen", "true")
+   }
+
+
+    console.log(localStorage.getItem("sideOpen"))
+    //console.log(menuOutBoolean)
+});
+        $(document).ready(function() {
+
+            function attachProfileSideFollowing(profileUser, prepend) {
+
+
+
+
+
+            var profileValue = profileUser.profile
+
+            var profileFormattedHtml2 ="<li><a href='" + profileUser.url + "'><img src='" + profileValue.user_img +"'class='sidelistpic img-responsive img-circle' style='display:inline'></a><h6 class='inline' style='color:white'>" + profileUser.username + "</h6></li>"
+                var okay = "<h1>Hello World</h1>"
+            if (prepend == true) {
+                $("#followingside").prepend(profileFormattedHtml2)
+            }
+            else {
+                $("#followingside").append(
+                        profileFormattedHtml2
+
+                )
+            }
+        }
+
+
+        var profileSideFollowingList = [];
+        var nextProfileSideFollowingUrl;
+//        console.log(query)
+        function parseProfilesFollowing() {
+
+                if (profileSideFollowingList == 0) {
+                   // $("#userfollowers").text("Following No Profiles.")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(profileSideFollowingList, function (key, value) {
+                    var profileKey = key
+                    attachProfileSideFollowing(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchProfilesSideFollowing(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/accounts/" + "{{ request.user.username }}" + "/following/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+            //    "q": query
+            },
+            method: "GET",
+            success: function(data){
+               console.log(data)
+                profileSideFollowingList = data.results
+                if (data.next) {
+                    nextProfileSideFollowingUrl = data.next
+                    $("#loadmorefollowing").css("display", "unset");
+                } else {
+                    $("#loadmorefollowing").css("display", "none");
+                }
+                parseProfilesFollowing()
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchProfilesSideFollowing()
+
+        $("#loadmorefollowing").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextProfileSideFollowingUrl) {
+                fetchProfilesSideFollowing(nextProfileSideFollowingUrl)
+            }
+
+        })
+            })
+
+</script>

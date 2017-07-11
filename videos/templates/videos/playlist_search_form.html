@@ -1,0 +1,7 @@
+<form id='playlist-search-form' class="" method='GET' action='{% url "videos:playlist_list" %}'>
+        <div class="form-group">
+            <input class="form-control searchinput" type='text' name='q' placeholder='Your search' value='{{ request.GET.q }}'/>
+            </div>
+        <input class="btn btn-default searchbtn" type='submit' value='Search'/>
+
+</form>

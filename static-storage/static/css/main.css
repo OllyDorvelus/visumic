@@ -1,0 +1,428 @@
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+
+}
+
+/*navsidebar when displayed */
+#sidebar-wrapper {
+  z-index: 1;
+  position: fixed;
+  width: 185px;
+  height:100%;
+  overflow-y: hidden;
+  background: #000000;
+  /*border: 2px solid red;*/
+  opacity: 0.9;
+  overflow:scroll;
+
+
+}
+
+.sidebar-nav {
+  padding:0;
+  list-style:none;
+
+}
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px;
+}
+
+.sidebar-nav li a {
+  display:block;
+  text-decoration: none;
+  color:white;
+  font-weight: bold;
+  font-size:14px;
+
+}
+
+#wrapper.menuNotDisplayed #sidebar-wrapper {
+  width:0px;
+
+}
+
+#wrapper.menuNotDisplayed #page-content-wrapper {
+    width: 100%;
+    position:absolute;
+    padding-left:0px;
+}
+
+#page-content-wrapper {
+  /*width:100%;*/
+  /*position:absolute;*/
+  padding-left:185px;
+    width:100%;
+  /*border: 5px solid green;*/
+
+}
+
+.navimg {
+  height:30px;
+  width:30px;
+
+}
+
+.navbar-custom {
+    background-color:#1a1a1a;
+    color:#ffffff;
+    border-radius:0;
+}
+
+
+.navbar-custom .navbar-nav > li > a {
+    color:#fff;
+}
+.navbar-custom .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color:transparent;
+}
+.navbar-custom .navbar-brand {
+    color:#eeeeee;
+}
+
+
+.sidebar-nav :hover {
+
+    background-color:green;
+}
+
+
+
+/*video {*/
+    /*margin-right: auto;*/
+    /*margin-left:100px;*/
+/*}*/
+.vjs-poster{
+    background-size: 100%!important;
+}
+
+#my-video {
+  margin-right: auto;
+  margin-left: auto;
+  height:auto;
+  width:100%;
+
+}
+/*#my-video[poster]{*/
+/*height:auto;*/
+/*width:100%;*/
+/*background-size: 100%!important;*/
+/*}*/
+
+.searchbtn {
+    display:none;
+}
+
+.searchinput {
+    background-color:#000000;
+    color:white;
+    width:20%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius:15px;
+}
+
+
+.profilecontainer {
+  /*border: .5px solid black;*/
+  padding:10px;
+}
+
+.listpic {
+  height:100px;
+  width:100px;
+  margin-right:auto;
+  margin-left:auto;
+}
+
+h6 {
+  display:inline;
+  /*font-size:16px;*/
+}
+
+.thumbnail {
+  height:225px;
+  width:300px;
+  border-color:black;
+}
+
+.chart-thumbnail {
+  height:200px;
+  width:260px;
+  border-color:black;
+}
+
+.related-thumbnail {
+  height:150px;
+  width:200px;
+  border-color:black;
+}
+
+.videolistpic {
+  height:25px;
+  width:25px;
+}
+
+.videorelatedlistpic {
+  height:20px;
+  width:20px;
+}
+
+.smallfont {
+  font-size:10px;
+}
+
+.inline {
+  display:inline;
+}
+
+.block {
+    display:block;
+}
+
+#vidwrapper {
+  /*width:60%;*/
+  /*margin-right: auto;*/
+  margin-left:4em;
+  padding:1em;
+}
+
+.vidbtns {
+  margin-left:3em;
+}
+
+.vidbtns a {
+  text-decoration: none;
+  color:black;
+}
+
+.vidtitle {
+  color:black;
+}
+
+
+.btn-primary, .btn-primary:active, .btn-primary:visited {
+    background-color: white !important;
+    /*background: rgba(0, 0, 0, 0.5) !important;*/
+    border-radius:20px;
+    color:black !important;
+}
+
+.btn-primary:hover {
+  color:white !important;
+  background-color:black !important;
+}
+
+#undervid {
+  /*background-color:black;*/
+  display:inline-block;
+  /*opacity:80%;*/
+  margin-left:3em;
+  width:60%;
+}
+
+#videouser {
+  margin-left:3em;
+  padding:1em;
+
+}
+
+#videouser .videolistpic {
+  height:45px;
+  width:45px;
+  display:inline;
+}
+
+#description {
+  margin-left:3em;
+}
+
+.morecontent span {
+    display: none;
+}
+.morelink {
+    display: block;
+    width:100%;
+}
+
+.commentbtn {
+  color:black;
+}
+
+#commentform {
+  margin-left:3em;
+}
+
+#commentform textarea {
+  width:50%;
+  height:75px;
+
+}
+
+#commentsection {
+  margin-left:3em;
+}
+
+#commentsection .listpic {
+  display:inline;
+  width:50px;
+  height:50px;
+}
+
+
+
+/*Profile Detail Section*/
+
+.bannerimg {
+  height:55%;
+  width:100%;
+
+}
+
+#profileinfo {
+  padding-top:50px;
+}
+
+#profileinfo .listpic {
+  height:100px;
+  width: 100px;
+  margin-left:3em;
+  display:inline;
+
+}
+
+.blackline {
+  height:1px;
+  background-color:black;
+}
+
+.whiteline {
+  height:1px;
+  background-color:white;
+}
+
+.blacklink {
+    color:black;
+}
+
+#profilelist  ul  li {
+  display:inline;
+  font-size:20px;
+  padding:5px;
+}
+
+#profilelist ul li a {
+  text-decoration: none;
+  color:black;
+}
+
+#profilelist ul li a:hover {
+  color:white;
+  background-color:black;
+}
+
+/*Home Page & Social */
+
+.topbar div {
+  display:inline;
+  padding:10px;
+}
+
+.topbar li {
+  list-style: none;
+  font-size:20px;
+  color:black;
+  display:inline;
+  text-decoration: underline;
+
+}
+
+.topbar li:hover {
+  color:white;
+  background-color:black;
+}
+
+.topbar div li a {
+  color:black;
+  text-decoration: none;
+}
+
+.topbar div li a:hover {
+  color:white;
+}
+
+.vidsocialwrapper {
+  /*width:40%;*/
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#ogsection {
+  width:50%;
+  margin-right:auto;
+  margin-left: auto;
+}
+
+.caret {
+  font-size:20px;
+}
+
+.displayadd {
+    display:none;
+}
+
+
+.playlistpic {
+  height:150px;
+  width:150px;
+  display: inline;
+}
+
+#moreoptions li {
+    display:table;
+}
+
+
+/*Vcharts*/
+.timelist li {
+  display:inline;
+  padding:10px;
+  font-size:20px;
+}
+
+.timelist li a {
+  color:black;
+}
+
+.followingside {
+  padding:0;
+  list-style:none;
+
+}
+
+.followingside li {
+  list-style: none;
+  padding-top:5px;
+}
+
+.sidelistpic {
+  height:18px;
+  width:18px;
+}
+
+.centerimg {
+    display: block;
+    margin: 0 auto;
+}
+
+.randomvid {
+  height:400px;
+  width:50%;
+}
+
+#related-container {
+     background-color: #e6e6e6;
+  /*background-color: rgba(0, 0, 0, 0);*/
+
+}

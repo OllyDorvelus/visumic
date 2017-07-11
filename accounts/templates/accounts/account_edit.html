@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }} alert alert-success fadeaway"{% endif %}><h1 class="text-center">{{ message }}</h1></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{#    {% if messages %}#}
+{#        <h3 class="alert alert-success {{ message.tags }}">{{ message }}</h3>#}
+{#    {% endif %}#}
+<div class="container-fluid" style="margin-left:200px">
+        <div class="row">
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Manage Account |</h3><a href="{% url "accounts:profile_update" %}"><h5 class='text-center'>Manage Profile</h5></a>
+                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+{#                        {{ second_model }}#}
+
+    {% for field in form %}
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <span class="text-danger small">{{ field.errors }}</span>
+
+        </div>
+        <label class="control-label col-sm-2">{{ field.label_tag }}</label>
+        <div class="col-sm-10">{{ field }}</div>
+    </div>
+{% endfor %}
+                        <div class="form-group">
+                            <div class="text-center"><a href="{% url "password_change" %}">Change Password</a></div>
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+{% endblock content %}

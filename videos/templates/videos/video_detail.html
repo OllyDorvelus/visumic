@@ -1,0 +1,621 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+
+
+<script>
+$(document).ready(function() {
+
+
+        function attachComment(commentValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+        var verb = "Like"
+            var like_count = commentValue.likes_count
+        if(commentValue.did_like) {
+            verb = "Unlike"
+        }
+
+            var commentUser = commentValue.user
+            var profileValue = commentUser.profile
+
+        if("{{ request.user.username }}" === commentUser.username ) {
+       var commentedithtml = "<li class='dropdown' style='list-style:none;display:inline;float:right'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='float:right;font-size:20px'>&#8942</span></a>" +
+                    "<ul class='dropdown-menu'><li class='block btn btn-primary commentedit' data-id='" + commentValue.id + "'>Edit</li><li data-id='" + commentValue.id + "' class='deletecmt-btn block btn btn-primary'>Delete</li></ul></li>"
+        }
+
+        else if("{{ request.user.username }}" === "{{ video.user.username }}") {
+                   var commentedithtml = "<li class='dropdown' style='list-style:none;display:inline;float:right'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='float:right;font-size:20px'>&#8942</span></a>" +
+                    "<ul class='dropdown-menu'><li data-id='" + commentValue.id + "' class='deletecmt-btn block btn btn-primary'>Delete</li></ul></li>"
+        }
+            else {
+                commentedithtml = ""
+            }
+
+
+            var commentFormatHtml="<div class='row' id='" + commentValue.id + "'><div class='col-md-9'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4>" + commentedithtml +
+"<h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><span class='btn btn-primary btn-sm reply-btn' data-id='" + commentValue.id + "'>Reply</span><div class='row' style='padding-top:8px'><h6>" + commentValue.timesince + "</h6></div><hr></div></div>"
+
+
+            var commentFormatHtml2 ="<div class='row'><div class='col-md-6' style='margin-left:3em'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4><h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><hr></div></div>"
+
+            if (prepend == true) {
+                $("#commentsection").prepend(commentFormatHtml)
+                commentFormatHtml
+            }
+            else {
+                if(!commentValue.reply) {
+                    $("#commentsection").append(
+                            commentFormatHtml
+                    )
+                }
+            }
+        }
+{#        <li class='dropdown" style='list-style:none;display:inline'>#}
+{#          <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='float:right;font-size:20px;cursor:pointer'>&#8942</span></a>#}
+{#          <ul class="dropdown-menu">#}
+{#            <li><a href="#">Edit</a></li>#}
+{#            <li><a href="#">Delete</a></li>#}
+{#          </ul>#}
+{#        </li>#}
+
+        function attachCommentReply(commentValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+        var verb = "Like"
+            var like_count = commentValue.likes_count
+        if(commentValue.did_like) {
+            verb = "Unlike"
+        }
+
+            var commentUser = commentValue.user
+            var profileValue = commentUser.profile
+            var commentParent = commentValue.parent
+
+
+
+        if("{{ request.user.username }}" === commentUser.username ) {
+       var commentedithtml = "<li class='dropdown' style='list-style:none;display:inline;float:right'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='float:right;font-size:20px'>&#8942</span></a>" +
+                    "<ul class='dropdown-menu'><li class='block btn btn-primary commentedit' data-id='" + commentValue.id + "'>Edit</li><li data-id='" + commentValue.id + "' class='deletecmt-btn block btn btn-primary'>Delete</li></ul></li>"
+        }
+
+        else if("{{ request.user.username }}" === "{{ video.user.username }}") {
+                   var commentedithtml = "<li class='dropdown' style='list-style:none;display:inline;float:right'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='float:right;font-size:20px'>&#8942</span></a>" +
+                    "<ul class='dropdown-menu'><li data-id='" + commentValue.id + "' class='deletecmt-btn block btn btn-primary'>Delete</li></ul></li>"
+        }
+            else {
+                commentedithtml = ""
+            }
+
+
+            var commentFormatHtml="<div class='row' id='" + commentValue.id + "'><div class='col-md-9'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4><h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><span class='btn btn-primary btn-sm reply-btn'>Reply</span><hr></div></div>"
+
+            var commentFormatHtml2 ="<div class='row' id='" + commentValue.id + "'><div class='col-md-9' style='margin-left:3em'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4>" + commentedithtml +
+"<h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><div class='row' style='padding-top:8px'><h6>" + commentValue.timesince + "</h6></div><hr></div></div>"
+            if (prepend == true) {
+                $("#commentsection").prepend(commentFormatHtml)
+                commentFormatHtml
+            }
+            else {
+                if(!commentValue.reply) {
+                    $("#commentsection").append(
+                            commentFormatHtml
+                    )
+                }
+                else {
+                    $('#' + commentParent.id ).append(commentFormatHtml2)
+                }
+            }
+
+
+
+        }
+
+
+
+        var commentList = [];
+        var nextCommentUrl;
+//        console.log(query)
+        function parseComments() {
+
+                if (commentList == 0) {
+                   // $("#commentsection").text("No Comments.")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(commentList, function (key, value) {
+                    attachComment(value)
+                    fetchReplies(value.id)
+                    console.log(value)
+
+            })
+        }
+        }
+
+        var commentReplyList = [];
+        var nextCommmentReplyUrl;
+//        console.log(query)
+        function parseCommentReplies() {
+
+                if (commentReplyList == 0) {
+{#                    $("#commentsection").text("No Comments.")#}
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(commentReplyList, function (key, value) {
+                    attachCommentReply(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchComments(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/" + "{{ video.id }}" + "/comments"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            //data: {
+               // "q": query
+           //},
+            method: "GET",
+
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+            success: function(data){
+               $("#loadmorecomments").show();
+               console.log(data)
+                commentList = data.results
+                if (data.next) {
+                    nextCommentUrl = data.next
+                } else {
+                    $("#loadmorecomments").css("display", "none");
+                }
+                parseComments()
+                $("#loading-image").hide();
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchComments()
+
+        function fetchReplies(id, url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/comment/" + id + "/replies"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            //data: {
+               // "q": query
+           //},
+            method: "GET",
+            success: function(data){
+               console.log(data)
+                commentReplyList = data.results
+                if (data.next) {
+                    nextCommmentReplyUrl = data.next
+                } else {
+                    $("#loadmorereplies").css("display", "none");
+                }
+                parseCommentReplies()
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+
+        $("#loadmorecomments").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextCommentUrl) {
+                fetchComments(nextCommentUrl)
+            }
+
+        })
+
+           function fetchProfile(url) {
+               console.log("fethicng ...")
+               var fetchUrl;
+               if (!url) {
+                   fetchUrl = "/api/accounts/" + "{{ video.user.username }}"
+               } else {
+                   fetchUrl = "/api/accounts/"
+                   fetchUrl = fetchUrl + url.toString()
+               }
+               $.ajax({
+                   url: fetchUrl,
+                   method: "GET",
+                   success: function (data) {
+                       //console.log(data.user.username)
+                       //console.log(data.user_img)
+                       //console.log(data.user)
+                       displayProfile(data)
+                   },
+                   error: function (data) {
+                       console.log("error")
+                       console.log(data)
+                   }
+               })
+           }
+    fetchProfile()
+
+    function displayProfile(profileValue) {
+        profileUser = profileValue.user
+        var verb = "Follow"
+           var follower_count = profileValue.follower_count
+          if(profileValue.is_following) {
+               verb = "Unfollow"
+           }
+
+       var formattedHtml = "<a href='#' class='follow-btn btn btn-primary' data-id='" + profileUser.username + "'><h5 class='inline'>" + verb + " " + profileValue.follower_count + "</h5></a>"
+       $('#vidfollow').append(formattedHtml)
+    }
+
+
+    function displayVideo(videoValue) {
+        var verb = "Like"
+        var like_count = videoValue.likes_count
+        if(videoValue.did_like) {
+            verb = "Unlike"
+        }
+
+        var formattedHtml = "<a href='#' class='like-btn' data-id= " + videoValue.id + "><h5 class='inline btn btn-primary'>" + verb + " " + videoValue.likes_count + "</h5></a>" +
+                "<a href='#' class='share-btn' style='padding:5px'><h5 class='inline btn btn-primary'>Share" + " " + videoValue.shares_count + "</h5></a><li class='dropdown' style='list-style:none;display:inline'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='font-size:20px;cursor:pointer'>&#8942</span></a><ul class='dropdown-menu'><li class='btn btn-primary playlist-btn block'>Add</li>{% if request.user == video.user %}<li class='btn btn-primary block videoedit'>Edit</li><li class='btn btn-primary block delete-vid-btn'>Delete</li></ul></li>{% endif %}"
+
+        $('#likeshare').append(formattedHtml)
+
+    }
+
+
+           function fetchVideo(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/" + "{{ video.id }}"
+            } else {
+                fetchUrl = "/api/videos/"
+                fetchUrl = fetchUrl + url.toString()
+            }
+            $.ajax({
+            url: fetchUrl,
+            method: "GET",
+            success: function(data){
+                console.log(data.user.username)
+                console.log(data.title)
+                console.log(data.user.email)
+                displayVideo(data)
+
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+    fetchVideo()
+        $(".disabledbtn").addClass('disabled')
+        var charStart = 200;
+        var charCurrent = 0;
+        $("#comment-form").append("<span id='commentCharsLeft'>" + charStart + "</span>")
+
+        $("#comment-form textarea").keyup(function(event){
+            //console.log(event.key, event.timeStamp)
+            var commentValue = $(this).val()
+            charCurrent = charStart - commentValue.length
+            var spanChars = $("#commentCharsLeft")
+            spanChars.text(charCurrent)
+            if(charCurrent == charStart) {
+                $(".disabledbtn").addClass('disabled')
+            }
+            if (charCurrent > 0) {
+                // remove classes
+                $(".disabledbtn").removeClass('disabled')
+                spanChars.removeClass('grey-color')
+                spanChars.removeClass('red-color')
+            } else if (charCurrent == 0) {
+                // add gray class
+                $(".disabledbtn").removeClass('disabled')
+                spanChars.addClass("grey-color")
+                spanChars.removeClass('red-color')
+            } else if (charCurrent < 0) {
+                // add red class
+                $(".disabledbtn").addClass('disabled')
+                spanChars.removeClass('grey-color')
+                spanChars.addClass("red-color")
+            }
+        })
+
+        $("#comment-form").submit(function(event){
+        event.preventDefault()
+        var this_ = $(this)
+        var formData = this_.serialize()
+        if (charCurrent >= 0) {
+            console.log("fethicng ...")
+            $.ajax({
+                url: "/api/videos/" +"{{ video.pk }}" + "/comments/create/",
+                data: formData,
+                method: "POST",
+                success: function (data) {
+                    console.log(data)
+                   // $("#commentsection").text("")
+                    this_.find("input[type=text], textarea").val("")
+                    attachComment(data, true)
+                    //fetchTweets()
+                    //tweetList = data
+                    //parseTweets()
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    popUpLoginModal()
+                    console.log(data)
+                }
+            })
+
+        } else {
+            console.log("Cannot send, tweet too long")
+        }
+    })
+
+
+var commentId = 0
+    $(document.body).on("click", ".reply-btn", function(e){
+     e.preventDefault();
+    var this_ = $(this)
+    commentId = this_.attr("data-id")
+     $("#replyModal").modal({})
+
+});
+
+    $("#reply-form").submit(function(event){
+        event.preventDefault()
+        var this_ = $(this)
+      //  var commentId = this_.attr("data-id")
+        var formData = this_.serialize()
+        if (true) {
+            console.log("fethicng ...")
+            $.ajax({
+                url: "/api/videos/comment/" + commentId + "/reply/create/",
+                data: formData,
+                method: "POST",
+                success: function (data) {
+                    console.log(data)
+                    $('#replyModal').modal('hide')
+                    //this_.find("input[type=text], textarea").val("")
+                    attachCommentReply(data)
+                    //attachComment(data, true)
+                    //fetchTweets()
+                    //tweetList = data
+                    //parseTweets()
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    popUpLoginModal()
+                    console.log(data)
+                }
+            })
+
+        } else {
+            console.log("Cannot send, tweet too long")
+        }
+    })
+
+
+//Related Section
+        function attachVideo(videoValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var videoUser = videoValue.user
+            var profileValue = videoUser.profile
+
+            var videoRelatedFormatHtml = "<div class='col-md-9 col-md-offset-3' style='padding-top:0px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videorelatedlistpic img-responsive img-circle' style='display:inline'></a><h6 class='inline smallfont'>" + videoUser.username + "</h6>" +
+                    "<h6 class='inline smallfont'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline smallfont'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
+                    "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail related-thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 style='display:block;font-size:8px'>" + videoValue.timesince + "</h6></div>"
+
+            if (prepend == true) {
+                $("#related-container").prepend(videoRelatedFormatHtml)
+            }
+            else {
+                $("#related-container").append(
+                        videoRelatedFormatHtml
+
+                )
+            }
+        }
+
+       // var query = getParameterByName('q')
+       // var ordering = getParameterByName('ordering')
+        var videoList = [];
+        var nextVideoUrl;
+
+        function parseRelatedVideos() {
+
+                if (videoList == 0) {
+                    $("#related-container").text("No Videos Currently Found.")
+                    $("#related-container").addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(videoList, function (key, value) {
+                    var profileKey = key
+                    attachVideo(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchRelatedVideos(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/" + "{{ video.pk }}" + "/related/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+{#            data: {#}
+{#                "q": query,#}
+{#                "ordering": ordering#}
+{#            },#}
+            type: "GET",
+
+            beforeSend: function(data) {
+             // $("#loading-image").show();
+
+           },
+            success: function(data){
+                $("#loadmorerelated").show();
+               console.log(data)
+                videoList = data.results
+                if (data.next) {
+                    nextVideoUrl = data.next
+                } else {
+                    $("#loadmorerelated").css("display", "none");
+                    nextVideoUrl = null
+                }
+                parseRelatedVideos()
+               // $("#loading-image").hide();
+            },
+
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+
+        }
+            fetchRelatedVideos()
+
+        $("#loadmorerelated").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextVideoUrl) {
+                fetchRelatedVideos(nextVideoUrl)
+            }
+
+        })
+
+});
+
+</script>
+{% load hitcount_tags %}
+<div class="container-fluid">
+  <div class="row">
+<div class='col-md-8'>
+    <div id = "vidwrapper">
+    <video id="my-video" class="video-js  vjs-default-skin vjs-big-play-centered vjs-16-9 vjs-fluid" controls="true" preload="auto"
+      poster="{{ video.thumbnail.url }}" data-setup='{"fluid": true}'>
+  <source src="{{ video.video.url }}" type='video/mp4'>
+  <source src="{{ video.video.url }}" type='video/webm'>
+  <p class="vjs-no-js">
+    To view this video please enable JavaScript, and consider upgrading to a web browser that
+    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+  </p>
+</video>
+</div>
+
+
+    <div class="row" id="undervid">
+      <div class="col-md-4 vidbtns" id="likeshare">
+
+    </div>
+    <div class="vidtitle">
+      <h3 class="inline" id="vidtitle">{{ video.title }}</h3><h4 style='margin-left:20px' class='inline'>Views:</h4><h5 class="inline"><strong>{{ video.hit_count.hits }}</strong></h5>
+    </div>
+    </div>
+
+
+    <div class="row" id="videouser">
+      <div class="col-md-6">
+      <a href="{% url 'accounts:profile_detail' video.user.username %}"><img src="{{ video.user.profile.user_img.url }}" class="videolistpic img-circle img-responsive"></a>
+      <h4 class="inline">{{ video.user.username }}|</h4>
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span><div class="inline" id="vidfollow"></div>
+    </div>
+    </div>
+
+    <div class="row" id="description">
+      <span class="more hash col-md-9">
+      {% if video.description %}
+          {{video.description }}
+            {% else %}
+           <h4>No Description.</h4>
+          {% endif %}
+      </span>
+    </div>
+    <hr>
+{% load static %}
+
+        <div class="row" id="commentform">
+      <div class="col-md-12">
+
+          {% include "videos/form.html" with form=comment_form action_url=comment_url btn_title='Comment' form_id='comment-form' %}
+{#      <form = "{{ form_create }}" id="comment-form" method="post" action="{{ create_url }}">#}
+{#          {% csrf_token %}#}
+{#        <textarea></textarea>#}
+{#        <input type="submit" value="Comment" class="btn btn-primary commentbtn">#}
+{#      </form>#}
+      <hr>
+    </div>
+    </div>
+
+    <div class="row" id="commentsection">
+
+    </div>
+
+    <div id="myDiv" class="text-center">
+        <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
+    </div>
+<div class="text-center" ><a href="#" id="loadmorecomments" style="width:18%;display:none" class="btn btn-primary"><h5 class="text-center">Load More Comments</h5></a></div>
+
+</div>
+
+  <div class='col-md-4' id='related-container'><h3 class='text-center' style='text-decoration:underline'>Related Videos</h3>
+      </div>
+<div class="text-center" ><a href="#" id="loadmorerelated" style="float:right;display:none;margin-right:13em" class="btn btn-primary btn-xs"><h5 class="text-center">Load More Videos</h5></a></div>
+
+  </div>
+</div>
+
+
+
+{% include "videos/sharemodal.html" %}
+{% include "videos/playlistmodal.html" %}
+{% include "videos/videoeditmodal.html" %}
+{% include "videos/deletevideomodal.html" %}
+{% include "videos/replymodal.html" %}
+{% include "videos/comment_edit_modal.html" %}
+{% endblock content %}
+
+
+

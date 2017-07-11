@@ -1,0 +1,397 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    $(document).ready(function() {
+
+        function attachVideo(videoValue, recent, following, random) {
+
+            //var profiletImg = profileValue.user_img
+
+
+            var videoUser = videoValue.user
+            var profileValue = videoUser.profile
+            var verb = "Follow"
+            //  var follower_count = profileValue.follower_count
+            // if(profileValue.is_following) {
+            //     verb = "Unfollow"
+            // }
+
+            //var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+            //         "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'><h6><a href='#' class='follow-btn' data-id="+ profileValue.id +">" + verb +  profileValue.follower_count + "|" +
+            //       "</a></h6></span><span class='glyphicon glyphicon-play' aria-hidden='true'><h6>Videos:" + profileUser.video_count + "</h6></span></div>"
+
+
+            var videoFormatHtml = "<div class='col-md-3' style='padding-top:20px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
+                    "<h6 class='inline'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
+                    "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 class='text-center'>" + videoValue.timesince + "</h6></div>"
+
+            var videoFormatHtml2 = "<div class='row text-center'><h4><strong>Random Video of the Day</strong></h4></div>" +
+                    "<a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
+                    "<h6 class='inline'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
+                    "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail randomvid centerimg img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 class='text-center'>" + videoValue.timesince + "</h6>"
+
+            if(recent == true) {
+                $("#recentvidcontainer").append(
+                        videoFormatHtml
+                )
+            }
+                if(following == true) {
+                    $("#followingvidcontainer").append(videoFormatHtml)
+                }
+            if(random == true) {
+                $("#randomvid").append(videoFormatHtml2)
+            }
+            }
+
+        //Recent Videos
+        var query = getParameterByName('q')
+        var recentVideoList = [];
+        var recentNextVideoUrl;
+//        console.log(query)
+        function parseVideos() {
+
+            if (recentVideoList == 0) {
+                $("#recentvidcontainer").text("No Videos Currently Found.")
+            } else {
+                //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(recentVideoList, function (key, value) {
+                    var profileKey = key
+                    attachVideo(value, true)
+                    console.log(value)
+
+                })
+            }
+        }
+
+        function fetchVideos(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "api/videos/recent"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+                url: fetchUrl,
+                data: {
+                    "q": query
+                },
+                method: "GET",
+                success: function (data) {
+                    $("#recent").show()
+                    console.log(data)
+                    recentVideoList = data.results
+                    if (data.next) {
+                        recentNextVideoUrl = data.next
+                    } else {
+                        $("#loadmorerecent").css("display", "none");
+                        recentNextVideoUrl = null
+                    }
+                    parseVideos()
+                },
+                error: function (data) {
+                    console.log("error")
+                    console.log(data)
+                }
+            })
+        }
+
+        fetchVideos()
+
+
+
+        $("#loadmorerecent").click(function (event) {
+            event.preventDefault()
+            // load more items
+            if (recentNextVideoUrl) {
+                fetchVideos(recentNextVideoUrl)
+            }
+
+        })
+        // Following Videos
+        var followingVideoList = [];
+        var followingNextVideoUrl;
+//        console.log(query)
+        function parseFollowingVideos() {
+
+            if (followingVideoList == 0) {
+                $("#followingvidcontainer").text("No Videos Currently Found.")
+                $("#followingvidcontainer").addClass("text-center")
+            } else {
+                //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(followingVideoList, function (key, value) {
+                    var profileKey = key
+                    attachVideo(value, false, true)
+                    console.log(value)
+
+                })
+            }
+        }
+
+        function fetchFollowingVideos(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "api/accounts/videos/following"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+                url: fetchUrl,
+                data: {
+                   // "q": query
+                },
+                method: "GET",
+                success: function (data) {
+                    $("#following").show()
+                    console.log(data)
+                    followingVideoList = data.results
+                    if (data.next) {
+                        followingNextVideoUrl = data.next
+                    } else {
+                        $("#morefollowing").css("display", "none");
+                        //followingNextVideoUrl = null
+                    }
+                    parseFollowingVideos()
+                },
+                error: function (data) {
+                    console.log("error")
+                    console.log(data)
+                }
+            })
+        }
+
+        fetchFollowingVideos()
+
+
+
+        $("#morefollowing").click(function (event) {
+            event.preventDefault()
+            // load more items
+            if (followingNextVideoUrl) {
+                fetchFollowingVideos(followingNextVideoUrl)
+            }
+
+        })
+
+
+
+        //profiles
+        function attachProfile(profileValue, prepend) {
+            var profileUser = profileValue.user
+            var verb = "Follow"
+            var follower_count = profileValue.follower_count
+            if(profileValue.is_following) {
+                verb = "Unfollow"
+            }
+            var profileFormattedHtml = "<div class=\"media\"><div class=\"media-body\">" +  "<br> via <a href='" + profileUser.url + "'>" +
+                    profileUser.username + " videos: " + profileUser.video_count + "</a> | " +  " | " + "<a href='#'>View "  +  "  | <a href='#' class='follow-btn btn btn-primary' data-id=" + profileValue.id + ">" + verb + " " + profileValue.follower_count + "</a></div></div><hr>"
+
+
+            var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+                    "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'></span><h6><a href='#' class='follow-btn btn btn-primary btn-sm' data-id="+ profileValue.id +">" + verb + " " +  profileValue.follower_count + "" +
+                    "</a></h6><span class='glyphicon glyphicon-play' aria-hidden='true'></span><h6>Videos:" + profileUser.video_count + "</h6></div>"
+            if (prepend == true) {
+                $("#profile-container").prepend(profileFormattedHtml)
+            }
+            else {
+                $("#profile-container").append(
+                        profileFormattedHtml2
+
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var profileList = [];
+        var nextProfileUrl;
+//        console.log(query)
+        function parseProfiles() {
+
+                if (profileList == 0) {
+                    $("#profile-container").text("No profiles currently found.")
+                    $("#profile-container").addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(profileList, function (key, value) {
+                    var profileKey = key
+                    attachProfile(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchProfiles(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/accounts/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query
+            },
+            method: "GET",
+            success: function(data){
+               $("#userhome").show()
+               console.log(data)
+                profileList = data.results
+                if (data.next) {
+                    nextProfileUrl = data.next
+                } else {
+                    $("#loadmoreprofiles").css("display", "none");
+                }
+                parseProfiles()
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+
+        function fetchRandomVideo(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "api/videos/random"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+                url: fetchUrl,
+                data: {
+                    "q": query
+                },
+                method: "GET",
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+                success: function (data) {
+                    console.log(data)
+                    $("#loading-image").hide()
+                    $.each(data, function (key, value) {
+                    attachVideo(value, false, false, true)
+
+            })
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    console.log(data)
+                }
+            })
+        }
+        fetchRandomVideo()
+
+            fetchProfiles()
+
+        $("#loadmoreprofiles").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextProfileUrl) {
+                fetchProfiles(nextProfileUrl)
+
+            }
+
+        })
+        $('.displayadd').html("+")
+        $('.times').html("&times")
+
+       // $('.times').click(function() {
+            //$(this).toggleClass('displayadd')
+
+
+        //})
+
+    $(document.body).on("click", ".times", function(e){
+     e.preventDefault();
+        var this_ = $(this)
+            if(this_.hasClass('displayadd')) {
+                this_.removeClass('displayadd')
+            } else {
+                this_.addClass('displayadd')
+            }
+
+    });
+
+
+
+
+    });
+</script>
+
+
+
+
+<div class="container-fluid">
+  <h1 class="text-center">Visumic | A Place To Enjoy The Arts</h1>
+<ul class="topbar text-center">
+  <div><li><a href="{% url 'accounts:home' %}">General</a></li></div>
+  <div><li><a href="{% url 'accounts:social' %}">Feed</a></li></div>
+</ul>
+<div id="randomvid" class="text-center">
+{% load static %}
+    <div id="myDiv" class="text-center">
+        <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
+    </div>
+</div>
+
+{#    <a href="#" style="color:black"><span class="times" data-toggle="collapse" data-target="#recent" style="float:right;font-size:2em"></span></a>#}
+    <div id="recent"  style="display:none" class="row collapse in">
+    <h1>Recently Uploaded</h1>
+
+<div class="row">
+  <div class="col-md-6 blackline"></div>
+</div>
+<div class="row" id="recentvidcontainer" style="padding:20px">
+
+</div>
+        <div class="text-center"><div id="loadmorerecent" class="row text-center btn btn-primary">Load More</div></div>
+    </div>
+
+{% if request.user.is_authenticated %}
+{#<a href="#" style="color:black"><span class="times" data-toggle="collapse" data-target="#following" style="float:right;font-size:2em">&times</span></a>#}
+<div id="following" class="row collapse collapse in" style="display:none">
+  <h1>Following</h1>
+<div class="row">
+  <div class="col-md-6 blackline"></div>
+</div>
+
+    <div class="row" id="followingvidcontainer" style="padding:20px">
+
+    </div>
+    <div class="text-center"><div id="morefollowing" class="row text-center btn btn-primary">Load More</div></div>
+    </div>
+{% endif %}
+{#<a href="#" style="color:black"><span class="times" data-toggle="collapse" data-target="#userhome" style="float:right;font-size:2em">&times</span></a>#}
+<div id="userhome" class="row collapse collapse in" style="display:none">
+    <h1>Crafters</h1>
+<div class="row">
+  <div class="col-md-6 blackline"></div>
+</div>
+    <div id="profile-container" class="row" style="padding:20px">
+
+    </div>
+    <div class="text-center"><div id="loadmoreprofiles" class="row text-center btn btn-primary">Load More</div></div>
+    </div>
+
+
+</div>
+
+
+{% endblock content %}

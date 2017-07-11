@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+{#        {% for profile in all_profiles %}#}
+{#            {% if profile.user.is_active %}#}
+{#            <li><a href="{% url 'accounts:profile_detail' profile.user.username  %}">{{ profile.user.username }}</a></li>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+</body>
+</html>
+<script>
+            function getParameterByName(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    $(document).ready(function() {
+
+        function attachProfile(profileValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var profileUser = profileValue.user
+            var verb = "Follow"
+            var follower_count = profileValue.follower_count
+            if(profileValue.is_following) {
+                verb = "Unfollow"
+            }
+            var profileFormattedHtml = "<div class=\"media\"><div class=\"media-body\">" +  "<br> via <a href='" + profileUser.url + "'>" +
+                    profileUser.username + " videos: " + profileUser.video_count + "</a> | " +  " | " + "<a href='#'>View "  +  "  | <a href='#' class='follow-btn btn btn-primary' data-id=" + profileValue.id + ">" + verb + " " + profileValue.follower_count + "</a></div></div><hr>"
+
+
+            var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+                    "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'></span><h6><a href='#' class='follow-btn btn btn-primary btn-sm' data-id="+ profileUser.username +">" + verb + " " +  profileValue.follower_count + "" +
+                    "</a></h6><span class='glyphicon glyphicon-play' aria-hidden='true'></span><h6>Videos:" + profileUser.video_count + "</h6></div>"
+            if (prepend == true) {
+                $("#profile-container").prepend(profileFormattedHtml)
+            }
+            else {
+                $("#profile-container").append(
+                        profileFormattedHtml2
+
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var profileList = [];
+        var nextProfileUrl;
+//        console.log(query)
+        function parseProfiles() {
+
+                if (profileList == 0) {
+                    $("#profile-container").text("No Profiles Currently Found")
+                    $("#profile-container").addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(profileList, function (key, value) {
+                    var profileKey = key
+                    attachProfile(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchProfiles(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/accounts/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query
+            },
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+            method: "GET",
+            success: function(data){
+                $("#loading-image").hide();
+               $('#loadmore').show()
+               console.log(data)
+                profileList = data.results
+                if (data.next) {
+                    nextProfileUrl = data.next
+                } else {
+                    $("#loadmore").css("display", "none");
+                    nextProfileUrl = null
+                }
+                parseProfiles()
+            },
+
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchProfiles()
+
+        $("#loadmore").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextProfileUrl) {
+                fetchProfiles(nextProfileUrl)
+            }
+
+        })
+
+        var typingTimer;
+        var doneInterval = 800; // in ms
+        var searchInput = $("#profile-search-form input[type=text]")
+        var searchQuery;
+        searchInput.keyup(function(event){
+            searchQuery =  $(this).val()
+            clearTimeout(typingTimer)
+            typingTimer = setTimeout(doneSearchTyping, doneInterval)
+
+        })
+         searchInput.keydown(function(event){
+            clearTimeout(typingTimer)
+        })
+        function doneSearchTyping(){
+          if (searchQuery){
+            // do search
+            var url = '/crafters/?q=' + searchQuery
+            document.location.href = url;
+          }
+            else {
+              var url = '/crafters/'
+              document.location.href = url;
+          }
+        }
+
+
+
+
+    });
+</script>
+{% include "accounts/profile_search_form.html" %}
+    <div class='container-fluid'><div class='row'>
+            <div id="profile-container">
+
+            </div>
+        </div>
+        </div>
+            <div class="text-center"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none;"><h5 class="text-center">Load More Profiles</h5></span></div>
+    {% load staticfiles %}
+        <div id="myDiv" class="text-center">
+        <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
+    </div>
+{% endblock content %}

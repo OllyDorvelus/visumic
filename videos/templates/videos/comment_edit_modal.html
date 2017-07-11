@@ -1,0 +1,114 @@
+
+{% block content %}
+
+
+
+
+
+
+
+ <script>
+ $(document).ready(function() {
+ var globalComment = 0
+    $(document.body).on("click", ".commentedit", function(e){
+     e.preventDefault();
+         var this_ = $(this)
+         var formData = this_.serialize()
+         var commentId = this_.attr("data-id")
+         globalComment = commentId
+
+         console.log("fethicng ...")
+         $.ajax({
+             url: "/api/videos/comment/" + commentId + "/",
+             data: formData,
+             method: "GET",
+             success: function (data) {
+                 console.log(data)
+               //  console.log(data.thumbnail)
+                 //this_.find("input[type=text], textarea").val("")
+                 $("#comment-edit-form .comment").val(data.comment)
+                 //$("#share-edit-form textarea").val(data.content)
+                 //$('#video-edit-form image').val(data.thumbnail)
+                 //$("#video-edit-form .thumbnail").url(data.thumbnail)
+                 //attachComment(data, true)
+                 //fetchTweets()
+                 //tweetList = data
+                 //parseTweets()
+
+             },
+             error: function (data) {
+                 console.log("error")
+                 cannot()
+                 console.log(data)
+             }
+         })
+     $("#commentEditModal").modal({})
+
+});
+
+         //event.preventDefault()
+
+
+        $("#comment-edit-form").submit(function(event){
+        event.preventDefault()
+        var this_ = $(this)
+        var formData = this_.serialize()
+
+            console.log("fethicng ...")
+            $.ajax({
+                url: "/api/videos/comment/" + globalComment + "/",
+                data: formData,
+                method: "POST",
+                success: function (data) {
+                    $('#commentEditModal').modal('hide')
+                    window.location.reload();
+                    console.log(data)
+
+                },
+                error: function (data) {
+                    console.log("error")
+                    cannot()
+                    console.log(data)
+                }
+            })
+
+
+    })
+
+
+
+ })
+
+
+ </script>
+
+<div class="modal fade" id="commentEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="mycommentEditLabel">Vcraft| Edit Playlist</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid" style="margin-left:200px">
+
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Edit Comment </h3>
+                        {% include "videos/editform.html" with form=comment_edit_form action_url=comment_url  btn_title='Change' form_id='comment-edit-form' %}
+                </div>
+                </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock content %}

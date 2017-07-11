@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+{#<body>#}
+{#    <h1>{{ User.username }}</h1>#}
+{#    <h2>{{ User.profile.id }}</h2>#}
+{#    <h3>{{ object.id }}</h3>#}
+{#    <h2><img src="{{ User.profile.user_img.url }}"></h2>#}
+{#    <h2>{% if all_videos %}#}
+{#            <h1>Hello</h1>#}
+{#        {% for video in all_videos %}#}
+{#            <h4>{{ video.title }}#}
+{#                {{ User.profile.user.videos.all }}#}
+{#            </h4>#}
+{##}
+{#        {% endfor %}#}
+{#        {% endif %}#}
+{#    </h2>#}
+{#</body>#}
+
+
+<script>
+     $(document).ready(function() {
+         function displayProfile(profileValue) {
+             var profileUser = profileValue.user
+             var verb = "Follow"
+             if(profileValue.is_following) {
+                verb = "Unfollow"
+            }
+
+
+            var profileFormatedHtml = "<div class='row'><div class='col-md-2'><a href='" + profileUser.url + "'><img class='img-circle img-responsive playlistpic' src='" + profileValue.user_img + "'></a><h4 class='text-center'>" + profileUser.username + "</h4>" +
+                    "<span class='glyphicon glyphicon-user inline' aria-hidden='true'></span><a href='#' class='follow-btn btn btn-primary' data-id=" + profileUser.username + ">" + verb + " " + profileValue.follower_count + "</a><span class='glyphicon glyphicon-play inline' aria-hidden='true'></span><h5 class='inline'>" + profileUser.video_count + "</h5></div></div>"
+
+             $('#userprofile').append(profileFormatedHtml)
+         }
+       function fetchProfile(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/accounts/" + "{{ playlist.user.username }}"
+            } else {
+                fetchUrl = "/api/accounts/"
+                fetchUrl = fetchUrl + url.toString()
+            }
+            $.ajax({
+            url: fetchUrl,
+{#            data: {#}
+{#                "q": query#}
+{#            },#}
+            method: "GET",
+            success: function(data){
+                console.log(data.user.username)
+                console.log(data.user_img)
+                console.log(data.user)
+                displayProfile(data)
+
+
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+         fetchProfile()
+
+
+             function attachVideo(videoValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var videoUser = videoValue.user
+            var profileValue = videoUser.profile
+            var verb = "Follow"
+          //  var follower_count = profileValue.follower_count
+           // if(profileValue.is_following) {
+           //     verb = "Unfollow"
+           // }
+
+            //var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+           //         "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'><h6><a href='#' class='follow-btn' data-id="+ profileValue.id +">" + verb +  profileValue.follower_count + "|" +
+             //       "</a></h6></span><span class='glyphicon glyphicon-play' aria-hidden='true'><h6>Videos:" + profileUser.video_count + "</h6></span></div>"
+
+
+            var videoFormatHtml = "<div class='col-md-3' id='" + videoValue.id + "'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
+                    "<span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + profileValue.follower_count + " " + "<span class= 'glyphicon glyphicon-play' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + videoUser.video_count + "  " +
+                    "<span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + videoValue.likes_count + "<a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h4 class='text-center'>" +  videoValue.title  +"</h4></a>{% if request.user == playlist.user %}<h6 class='btn btn-primary btn-sm inline remove-video-btn' data-id='" + videoValue.id + "'>Remove{% endif %}</div>"
+
+            if (prepend == true) {
+                $("#playlistvideos").prepend(videoFormatHtml)
+            }
+            else {
+                $("#playlistvideos").append(
+                        videoFormatHtml
+
+                )
+            }
+        }
+
+       // var query = getParameterByName('q')
+        var videoList = [];
+        var nextVideoUrl;
+//        console.log(query)
+        function parseVideos() {
+
+                if (videoList == 0) {
+                    $("#uservideos").text("No Videos Found")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(videoList, function (key, value) {
+                    var profileKey = key
+                    attachVideo(value)
+                    console.log(value)
+
+            })
+        }
+        }
+        function fetchVideos(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/videos/playlist/" + "{{ playlist.id }}" + "/videos"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+            //    "q": query
+            },
+            method: "GET",
+            success: function(data){
+               console.log(data)
+                videoList = data.results
+                if (data.next) {
+                    nextVideoUrl = data.next
+                } else {
+                    $("#loadmorevids").css("display", "none");
+                }
+                parseVideos()
+            },
+            error: function(data){
+                console.log("error")
+                console.log(data)
+            }
+        })
+        }
+            fetchVideos()
+
+        $("#loadmorevids").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+            }
+
+        })
+
+      $(document.body).on("click", ".remove-video-btn", function(e) {
+
+          e.preventDefault()
+          var this_ = $(this)
+          var videoId = this_.attr("data-id")
+          var removeVideoUrl = '/api/videos/playlist/' + "{{ playlist.id }}" + '/remove/' + videoId + '/'
+
+          swal({
+                      title: "Are you sure?",
+                      text: "Are you sure that you want to remove this video?",
+                      type: "warning",
+                      showCancelButton: true,
+                      allowOutsideClick: true,
+                      closeOnConfirm: true,
+                      confirmButtonText: "Yes, delete it!",
+                      confirmButtonColor: "black"
+
+                  },
+                  function () {
+                      $.ajax({
+                          method: "GET",
+                          url: removeVideoUrl,
+                          success: function (data) {
+
+                              if (data.in_playlist) {
+
+                                  $('#' + videoId).hide(500)
+
+
+                              } else {
+
+
+                              }
+                          },
+                          error: function (data) {
+                              popUpLoginModal()
+                              console.log("error")
+                              console.log(data)
+                          }
+                      })
+                  })
+      })
+
+
+     $(document.body).on("click", ".deleteplaylist-btn", function(e){
+      e.preventDefault()
+      var this_ = $(this)
+      var playlistId = this_.attr("data-id")
+      var deletePlaylistUrl = '/api/videos/playlist/' + "{{ playlist.id }}"  + '/'
+        swal({
+        title: "Are you sure?",
+        text: "Are you sure that you want to remove this playlist?",
+        type: "warning",
+        showCancelButton: true,
+        allowOutsideClick: true,
+        closeOnConfirm: true,
+        confirmButtonText: "Yes, delete it!",
+        confirmButtonColor: "black"
+
+    },
+            function() {
+                // this_.text("Liked")
+                $.ajax({
+                    method: "DELETE",
+                    url: deletePlaylistUrl,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    },
+                    success: function (data) {
+                        console.log("deleted")
+                         {% if request.user.is_authenticated %}
+                        window.location.replace('{% url 'accounts:profile_detail-playlist' request.user.username %}')
+                        {% endif %}
+{#                        $('#' + "{{ playlist.id }}").hide(500)#}
+                    },
+                    error: function (data) {
+                        popUpLoginModal()
+                        console.log("error")
+                        console.log(data)
+                    }
+                })
+            })
+
+  })
+
+
+
+  })
+
+
+
+</script>
+    <div class="container-fluid" id="userprofile">
+
+
+</div>
+    <h2 class='text-center'>{{ playlist.name }}</h2><h5 class="text-center">{{ playlist.description }}</h5>{% if request.user == playlist.user %}<span class="btn btn-primary playlistedit">Edit</span><span class="btn btn-primary deleteplaylist-btn">Delete</span>{% endif %}
+    <div class='row'>
+      <div class='col-md-12 blackline'></div>
+    </div>
+    <div class="container-fluid">
+
+
+        <div class="row" id="playlistvideos" style="padding:20px;">
+
+
+    </div>
+
+    </div>
+    <a href="#" id="loadmorevids"><h5 class="text-center">Load More Videos</h5></a>
+
+    {% include "videos/playlist_edit_modal.html" %}
+
+{% endblock content %}
