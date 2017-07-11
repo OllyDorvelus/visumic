@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '^p#t67wi=goc+g&0v3-h-=hnt&v*ndrk=sji%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['visumic.herokuapp.com' 'www.visumic.com']
+ALLOWED_HOSTS = ['visumic.herokuapp.com', 'www.visumic.com']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
