@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'vidcraft.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Vifcraft',
+        'NAME': 'Vidcraft',
         'USER' : 'postgres',
         'PASSWORD': 'Pebbles1!@Stronges'
     }
