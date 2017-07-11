@@ -1,1 +1,1 @@
-"web: gunicorn vidcraft.wsgi"
+web: gunicorn vidcraft.wsgi
