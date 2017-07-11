@@ -58,6 +58,11 @@ INSTALLED_APPS = [
 
 ]
 
+CRON_CLASSES = [
+    "videos.crons.MyCronJob",
+    # ...
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
