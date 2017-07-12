@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-
+from vidcraft.aws.conf import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -155,7 +155,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 
 CORS_REPLACE_HTTPS_REFERER      = True
 HOST_SCHEME                     = "https://"
@@ -171,4 +171,3 @@ SECURE_FRAME_DENY               = True
 HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 1 }
 HITCOUNT_HITS_PER_IP_LIMIT = 0
 USE_THOUSAND_SEPARATOR = True
-from vidcraft.aws.conf import *
