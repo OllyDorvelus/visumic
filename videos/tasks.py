@@ -5,7 +5,7 @@ from celery.task.schedules import crontab
 from celery.decorators import task, periodic_task
 import subprocess
 import os
-
+from django.conf import settings
 import shutil
 from random import randint
 from datetime import timedelta
@@ -56,17 +56,17 @@ def convert_video_to_mp4(instance):
    # print(output_name + ".mp4".replace("media/", ""))
         #instance.input_video = instance.video
 
-    video = instance.video.url.replace("/", "", 1)
+    video = instance.video.url#.replace("/", "", 1)
 
     #video = os.path.abspath(instance.video.url)
     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
     filename, file_extension = os.path.splitext(instance.video.url)
     file_extension = file_extension.lower()
     if file_extension == ".mp4":
-        filename = filename.replace("/", "", 1) + "_V"
+        filename = filename + "_V" #.replace("/", "", 1) + "_V"
     else:
-        filename = filename.replace("/", "", 1)
-    subprocess.call("ffmpeg -i {input} {output}.mp4".format(input=video, output=filename))
+        filename = filename #.replace("/", "", 1)
+    subprocess.call("ffmpeg -i {input} -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4  {output}.mp4".format(input=video, output=filename))
     newvideo = filename + ".mp4"
     # instance.video.delete(save=False)
     instance.video = os.path.relpath(newvideo, 'media')
