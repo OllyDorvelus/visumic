@@ -66,7 +66,7 @@ def convert_video_to_mp4(instance):
         filename = filename + "_V" #.replace("/", "", 1) + "_V"
     else:
         filename = filename #.replace("/", "", 1)
-    subprocess.call("ffmpeg -i {input} -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4  {output}.mp4".format(input=video, output=filename))
+    subprocess.call("ffmpeg -re -i {input} -g 52 -ab 64k -vcodec libx264 -vb 448k -f mp4 -movflags frag_keyframe+empty_moov {output}.mp4".format(input=video, output=filename))
     newvideo = filename + ".mp4"
     # instance.video.delete(save=False)
     instance.video = os.path.relpath(newvideo, 'media')

@@ -11,9 +11,6 @@ from celery import Celery
 
 app = Celery('hello', broker='amqp://guest@localhost//')
 
-@app.task
-def hello():
-    return 'hello world'
 # Create your models here.
 
 
@@ -58,12 +55,12 @@ class UserProfileManager(models.Manager):
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile')
     following = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='followed_by')
-    user_img = models.FileField(validators=[validate_file_extension], default="vidcraftavatar.png")
+    user_img = models.FileField(validators=[validate_file_extension], default="vidcraftavatar.png", upload_to='profile_pics')
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     bio = models.TextField(blank=True)
     timestamp = models.DateField(auto_now=False, auto_now_add=True)
-    profile_banner = models.FileField(validators=[validate_file_extension], default="vidcraftavatar.png")
+    profile_banner = models.FileField(validators=[validate_file_extension], default="vidcraftavatar.png", upload_to='profile_banners')
     objects = UserProfileManager()
 
     def __str__(self):
@@ -76,9 +73,9 @@ class UserProfile(models.Model):
         # delete old file when replacing by updating the file
         try:
             this = UserProfile.objects.get(id=self.id)
-            if this.user_img != self.user_img:
+            if this.user_img != self.user_img and this.user_img != "vidcraftavatar.png":
                 this.user_img.delete(save=False)
-            if this.profile_banner != self.profile_banner:
+            if this.profile_banner != self.profile_banner and this.profile_banner != "vidcraftavatar.png":
                 this.profile_banner.delete(save=False)
         except: pass # when new photo then we do nothing, normal case
 

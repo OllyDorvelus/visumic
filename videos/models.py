@@ -296,7 +296,8 @@ def post_delete_video_receiver(sender, instance, *args, **kwargs):
    # os.close(video)
    # os.remove(video)
     instance.video.delete(save=False)
-    instance.thumbnail.delete(save=False)
+    if instance.thumbnail != "vidcraftavatar.png":
+        instance.thumbnail.delete(save=False)
 
 
 

@@ -3,21 +3,38 @@ import os
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'AKIAIWPRIUTTARYHLUUA') #"AKIAIWPRIUTTARYHLUUA"
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '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') #"NJbxy1areLLTtuynZNiP7m8ZHZD95ftTdMlod5v6"
 AWS_STORAGE_BUCKET_NAME = 'visumic-bucket'
+AWS_S3_FILE_OVERWRITE = False
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
 AWS_QUERYSTRING_AUTH = True
 S3DIRECT_REGION = 'us-east-2'
 
-DEFAULT_FILE_STORAGE = 'vidcraft.aws.utils.MediaRootS3BotoStorage'
+#WORKING MEDIA
+# DEFAULT_FILE_STORAGE = 'vidcraft.aws.utils.MediaRootS3BotoStorage'
+# MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
+# MEDIA_ROOT =
+
+
 # STATICFILES_STORAGE = 'vidcraft.aws.utils.StaticRootS3BotoStorage'
 # AWS_STORAGE_BUCKET_NAME = 'visumic-bucket'
 #
 # S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
-MEDIA_ROOT = MEDIA_URL
+
 # STATIC_URL = S3_URL + 'static/'
 #ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 #
+AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (S3DIRECT_REGION, AWS_STORAGE_BUCKET_NAME)
+
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'vidcraft.aws.utils.MediaRootS3BotoStorage'
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'vidcraft.aws.utils.StaticRootS3BotoStorage' #'vidcraft.aws.custom_storages.StaticStorage'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+
+
 two_months = datetime.timedelta(days=61)
 date_two_months_later = datetime.date.today() + two_months
 expires = date_two_months_later.strftime("%A, %d %B %Y 20:00:00 GMT")
@@ -42,11 +59,9 @@ AWS_HEADERS = {
 # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
 # you run `collectstatic`).
 #STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (S3DIRECT_REGION, AWS_STORAGE_BUCKET_NAME)
 
-STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'vidcraft.aws.custom_storages.StaticStorage'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+
 
 # MEDIAFILES_LOCATION = 'media'
 # MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
