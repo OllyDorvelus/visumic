@@ -20,13 +20,13 @@ User = get_user_model()
 # Create your views here.
 #print(settings.MEDIA_URL)
 shutil.copy('temp/copyme.html', settings.MEDIAFILES_LOCATION)
-samplevid = VideoModel.objects.get(pk=14)
-print(str(samplevid.video))
-#path = os.path.relpath(samplevid.video.url, 'media')#os.path.relpath(samplevid.video.url, 'media')
-path = samplevid.video.url #os.path.relpath(samplevid.video.url, 'vidcraft.aws.utils.MediaRootS3BotoStorage')
-print(path)
-print(samplevid.video.url)
-filename = path
+# samplevid = VideoModel.objects.get(pk=14)
+# print(str(samplevid.video))
+# #path = os.path.relpath(samplevid.video.url, 'media')#os.path.relpath(samplevid.video.url, 'media')
+# path = samplevid.video.url #os.path.relpath(samplevid.video.url, 'vidcraft.aws.utils.MediaRootS3BotoStorage')
+# print(path)
+# print(samplevid.video.url)
+# filename = path
 #subprocess.call("ffmpeg -re -i {input} -g 52 -ab 64k -vcodec libx264 -vb 448k -f mp4 -movflags frag_keyframe+empty_moov {output}.mp4".format(input=path, output=filename))
 class PostCountHitDetailView(HitCountDetailView):
     model = VideoModel        # your model goes here
