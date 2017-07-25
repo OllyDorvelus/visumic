@@ -60,7 +60,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=50, blank=True)
     bio = models.TextField(blank=True)
     timestamp = models.DateField(auto_now=False, auto_now_add=True)
-    profile_banner = models.FileField(validators=[validate_file_extension], default="vidcraftavatar.png", upload_to='profile_banners')
+    profile_banner = models.FileField(validators=[validate_file_extension], default="vbanner.jpg", upload_to='profile_banners')
     objects = UserProfileManager()
 
     def __str__(self):
@@ -75,7 +75,7 @@ class UserProfile(models.Model):
             this = UserProfile.objects.get(id=self.id)
             if this.user_img != self.user_img and this.user_img != "vidcraftavatar.png":
                 this.user_img.delete(save=False)
-            if this.profile_banner != self.profile_banner and this.profile_banner != "vidcraftavatar.png":
+            if this.profile_banner != self.profile_banner and this.profile_banner != "vidcraftavatar.png" and this.profile_banner != "vbanner.jpg":
                 this.profile_banner.delete(save=False)
         except: pass # when new photo then we do nothing, normal case
 

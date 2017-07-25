@@ -49,6 +49,86 @@ def subtract(x,y):
     return y-x
 
 
+# @task(name="convert_video_to_mp4")
+# def convert_video_to_mp4(instance):
+#   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
+#
+#    # print(output_name + ".mp4".replace("media/", ""))
+#         #instance.input_video = instance.video
+#
+#     video = instance.video.url#.replace("/", "", 1)
+#
+#     #video = os.path.abspath(instance.video.url)
+#     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
+#     filename, file_extension = os.path.splitext(instance.video.url)
+#     file_extension = file_extension.lower()
+#     if file_extension == ".mp4":
+#         filename = filename + "_V" #.replace("/", "", 1) + "_V"
+#     else:
+#         filename = filename #.replace("/", "", 1)
+#     subprocess.call("ffmpeg -re -i {input} -g 52 -ab 64k -vcodec libx264 -vb 448k -f mp4 -movflags frag_keyframe+empty_moov {output}.mp4".format(input=video, output=filename))
+#     newvideo = filename + ".mp4"
+#     # instance.video.delete(save=False)
+#     instance.video = os.path.relpath(newvideo, 'media')
+#     title = instance.title
+#     title = title.replace(" ", "_")
+#     title = title + "" + str(randint(0, 100000))
+#    # print(title)
+#    # print(video)
+#     subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title))
+#     thumbnail = title + ".jpg"
+#     shutil.move(thumbnail, 'media/thumbnails/')
+#    # os.rename(title, '/media/thumbnails')
+#     instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
+#     instance.save()
+#     print("This will print to the screen first")
+#     #  instance.input_video.delete(False)
+#     os.remove(video)
+#     return instance
+
+
+
+# @task(name="convert_video_to_mp4")
+# def convert_video_to_mp4(instance):
+#   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
+#
+#    # print(output_name + ".mp4".replace("media/", ""))
+#         #instance.input_video = instance.video
+#
+#     video = str(instance.video)#.replace("/", "", 1)
+#
+#     #video = os.path.abspath(instance.video.url)
+#     path = instance.video      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
+#     # filename, file_extension = os.path.splitext(instance.video)
+#     # file_extension = file_extension.lower()
+#     file_extension = ""
+#     filename = str(instance.video)
+#     if file_extension == ".mp4":
+#         filename = filename + "_V" #.replace("/", "", 1) + "_V"
+#     else:
+#         filename = filename #.replace("/", "", 1)
+#     subprocess.call("ffmpeg -re -i {input} -g 52 -ab 64k -vcodec libx264 -vb 448k -f mp4 -movflags frag_keyframe+empty_moov {output}.mp4".format(input=video, output=filename))
+#     newvideo = filename + ".mp4"
+#     # instance.video.delete(save=False)
+#     instance.video = os.path.relpath(newvideo, 'media')
+#     title = instance.title
+#     title = title.replace(" ", "_")
+#     title = title + "" + str(randint(0, 100000))
+#    # print(title)
+#    # print(video)
+#     subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title))
+#     thumbnail = title + ".jpg"
+#     shutil.move(thumbnail, 'media/thumbnails/')
+#    # os.rename(title, '/media/thumbnails')
+#     instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
+#     instance.save()
+#     print("This will print to the screen first")
+#     #  instance.input_video.delete(False)
+#     os.remove(video)
+#     return instance
+
+#PRODUCTION TASK
+
 @task(name="convert_video_to_mp4")
 def convert_video_to_mp4(instance):
   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
@@ -56,35 +136,74 @@ def convert_video_to_mp4(instance):
    # print(output_name + ".mp4".replace("media/", ""))
         #instance.input_video = instance.video
 
-    video = instance.video.url#.replace("/", "", 1)
+    video = instance.video.url.replace("/", "", 1)
 
     #video = os.path.abspath(instance.video.url)
     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
     filename, file_extension = os.path.splitext(instance.video.url)
     file_extension = file_extension.lower()
     if file_extension == ".mp4":
-        filename = filename + "_V" #.replace("/", "", 1) + "_V"
+        filename = filename#.replace("/", "", 1) + "_V"
     else:
-        filename = filename #.replace("/", "", 1)
-    subprocess.call("ffmpeg -re -i {input} -g 52 -ab 64k -vcodec libx264 -vb 448k -f mp4 -movflags frag_keyframe+empty_moov {output}.mp4".format(input=video, output=filename))
+        filename = filename#.replace("/", "", 1)
+   # subprocess.call("ffmpeg -i {input} {output}.mp4".format(input=video, output=filename))
+    subprocess.call("ffmpeg -re -i {input} -f mp4 -movflags frag_keyframe+empty_moov -f mp4 {output}.mp4".format(input=video, output=filename))
     newvideo = filename + ".mp4"
     # instance.video.delete(save=False)
     instance.video = os.path.relpath(newvideo, 'media')
-    title = instance.title
-    title = title.replace(" ", "_")
-    title = title + "" + str(randint(0, 100000))
-   # print(title)
-   # print(video)
-    subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title))
-    thumbnail = title + ".jpg"
-    shutil.move(thumbnail, 'media/thumbnails/')
-   # os.rename(title, '/media/thumbnails')
-    instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
+    if instance.thumbnail == "vidcraftavatar.png":
+        title = instance.title
+        title = title.replace(" ", "_")
+        title = title + "" + str(randint(0, 100000))
+       # print(title)
+       # print(video)
+        subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title))
+        thumbnail = title + ".jpg"
+        shutil.move(thumbnail, 'media/thumbnails/')
+       # os.rename(title, '/media/thumbnails')
+        instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
     instance.save()
     print("This will print to the screen first")
     #  instance.input_video.delete(False)
     os.remove(video)
     return instance
+#END PRODUCTION TASK
+# ORIGINAL WORKING ON LOCAL
 
-
-
+# @task(name="convert_video_to_mp4")
+# def convert_video_to_mp4(instance):
+#   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
+#
+#    # print(output_name + ".mp4".replace("media/", ""))
+#         #instance.input_video = instance.video
+#
+#     video = instance.video.url.replace("/", "", 1)
+#
+#     #video = os.path.abspath(instance.video.url)
+#     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
+#     filename, file_extension = os.path.splitext(instance.video.url)
+#     file_extension = file_extension.lower()
+#     if file_extension == ".mp4":
+#         filename = filename.replace("/", "", 1) + "_V"
+#     else:
+#         filename = filename.replace("/", "", 1)
+#     subprocess.call("ffmpeg -i {input} {output}.mp4".format(input=video, output=filename))
+#     newvideo = filename + ".mp4"
+#     # instance.video.delete(save=False)
+#     instance.video = os.path.relpath(newvideo, 'media')
+#     if instance.thumbnail == "vidcraftavatar.png":
+#         title = instance.title
+#         title = title.replace(" ", "_")
+#         title = title + "" + str(randint(0, 100000))
+#        # print(title)
+#        # print(video)
+#         subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title))
+#         thumbnail = title + ".jpg"
+#         shutil.move(thumbnail, 'media/thumbnails/')
+#        # os.rename(title, '/media/thumbnails')
+#         instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
+#     instance.save()
+#     print("This will print to the screen first")
+#     #  instance.input_video.delete(False)
+#     os.remove(video)
+#     return instance
