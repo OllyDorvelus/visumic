@@ -28,12 +28,16 @@ import os
 from celery import Celery
 
 from django.conf import settings
-
+DEFAULT_AMQP = "amqp://guest:guest@localhost//"
+DEFAULT_DB = "postgres://localhost"
+db_url = os.environ.get("DATABASE_URL", DEFAULT_DB)
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vidcraft.settings')
 
-app = Celery('vidcraft')
-
+#app = Celery('vidcraft')
+app = Celery("tasks", backend=db_url.replace("postgres://", "db+postgresql://"),
+             broker=os.environ.get("CLOUDAMQP_URL", DEFAULT_AMQP))
+app.BROKER_POOL_LIMIT = 1
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
 app.config_from_object('django.conf:settings')
