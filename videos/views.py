@@ -17,9 +17,65 @@ import shutil
 import os
 import subprocess
 User = get_user_model()
+
+#BOTO TESTING
+# import boto
+# import boto.s3
+# from boto.s3.key import Key
+# import sys
+#
+# from boto.s3.connection import S3Connection
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'AKIAIWPRIUTTARYHLUUA') #"AKIAIWPRIUTTARYHLUUA"
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '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') #"NJbxy1areLLTtuynZNiP7m8ZHZD95ftTdMlod5v6"
+# AWS_STORAGE_BUCKET_NAME = 'visumic-bucket'
+# REGION_HOST = 's3.us-east-2.amazonaws.com'
+# bucket_name = AWS_ACCESS_KEY_ID.lower() + '-dump'
+# # conn = boto.connect_s3(AWS_ACCESS_KEY_ID,
+# #         AWS_SECRET_ACCESS_KEY)
+# conn2 = boto.connect_s3(AWS_ACCESS_KEY_ID,
+#         AWS_SECRET_ACCESS_KEY, host=REGION_HOST)
+# # bucket = conn.create_bucket(bucket_name,
+# #     location=boto.s3.connection.Location.DEFAULT)
+# bucket2 = conn2.get_bucket(AWS_STORAGE_BUCKET_NAME)
+# samplevid = VideoModel.objects.get(pk=14)
+#
+# from boto.s3.key import Key
+#
+# import ntpath
+# from boto.s3.key import Key
+# def path_leaf(path):
+#     head, tail = ntpath.split(path)
+#     return tail or ntpath.basename(head)
+# path = samplevid.video.url
+# filename, file_extension = os.path.splitext(path)
+# file_extension = file_extension.lower()
+# print(file_extension)
+# filename = 'temp/' + path_leaf(filename)
+# print(filename)
+# # print(os.path.abspath("temp/copyme.html"))
+# testfile = os.path.abspath("temp/copyme.html") #os.path.abspath("media/mp4video/April.mkv")#
+# print('Uploading %s to Amazon S3 bucket %s' % \
+#    (testfile, AWS_STORAGE_BUCKET_NAME))
+
+# def percent_cb(complete, total):
+#     sys.stdout.write('.')
+#     sys.stdout.flush()
+# k = Key(bucket2)
+# k.key = 'media/mp4video/my test html file'
+# k.set_contents_from_filename(testfile,
+#     cb=percent_cb, num_cb=10)
+# print(k.get_contents_as_string())
+# print(k.get_contents_to_filename('media/mp4video/my test html file'))
+# url = k.generate_url(expires_in=0, query_auth=False, force_http=True)
+# print(k)
+# print(k.generate_url)
+# print(os.path.normpath('thumbnails'))
+# print(samplevid.video)
+#END BOTO
 # Create your views here.
 #print(settings.MEDIA_URL)
-shutil.copy('temp/copyme.html', settings.MEDIAFILES_LOCATION)
+# print('vidcraft.aws.utils.MediaRootS3BotoStorage')
+# shutil.copy('temp/copyme.html', 'vidcraft.aws.utils.MediaRootS3BotoStorage')
 # samplevid = VideoModel.objects.get(pk=14)
 # print(str(samplevid.video))
 # #path = os.path.relpath(samplevid.video.url, 'media')#os.path.relpath(samplevid.video.url, 'media')
@@ -27,7 +83,7 @@ shutil.copy('temp/copyme.html', settings.MEDIAFILES_LOCATION)
 # print(path)
 # print(samplevid.video.url)
 # filename = path
-#subprocess.call("ffmpeg -re -i {input} -g 52 -ab 64k -vcodec libx264 -vb 448k -f mp4 -movflags frag_keyframe+empty_moov {output}.mp4".format(input=path, output=filename))
+#subprocess.call("ffmpeg -re -i {input} -g 52 -ab 64k -vcodec libx264 -vb 448k -f mp4 -movflags frag_keyframe+empty_moov {output}.mp4".format(input=path, output='temp/testvideo'))
 class PostCountHitDetailView(HitCountDetailView):
     model = VideoModel        # your model goes here
     count_hit = True
