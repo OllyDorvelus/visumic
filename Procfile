@@ -1,3 +1,3 @@
 web: gunicorn vidcraft.wsgi
-worker: python manage.py celery worker --loglevel=info
+worker: python manage.py celery -A vidcraft worker -l info
 
