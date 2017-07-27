@@ -55,10 +55,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/accounts/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5345912" vertical-offset="0" max-vertical-offset="636">
+            <state vertical-scroll-proportion="-13.6" vertical-offset="0" max-vertical-offset="442">
               <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="e#25#63#0" expanded="true" />
@@ -121,11 +121,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="celery.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="celery.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.5740743" vertical-offset="311" max-vertical-offset="918">
-              <caret line="36" column="59" selection-start-line="36" selection-start-column="59" selection-end-line="36" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.49588138" vertical-offset="311" max-vertical-offset="918">
+              <caret line="36" column="77" selection-start-line="36" selection-start-column="77" selection-end-line="36" selection-end-column="77" />
               <folding>
                 <element signature="e#756#794#0" expanded="true" />
               </folding>
@@ -195,10 +195,10 @@
         <option value="$PROJECT_DIR$/videos/templates/videos/video_detail.html" />
         <option value="$PROJECT_DIR$/vidcraft/settings/local.py" />
         <option value="$PROJECT_DIR$/vidcraft/settings/production.py" />
-        <option value="$PROJECT_DIR$/vidcraft/celery.py" />
         <option value="$PROJECT_DIR$/vidcraft/settings/__init__.py" />
         <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/accounts/tasks.py" />
+        <option value="$PROJECT_DIR$/vidcraft/celery.py" />
       </list>
     </option>
   </component>
@@ -1125,16 +1125,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5740743" vertical-offset="311" max-vertical-offset="918">
-          <caret line="36" column="59" selection-start-line="36" selection-start-column="59" selection-end-line="36" selection-end-column="59" />
-          <folding>
-            <element signature="e#756#794#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.72" vertical-offset="0" max-vertical-offset="255">
@@ -1189,10 +1179,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accounts/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5345912" vertical-offset="0" max-vertical-offset="636">
+        <state vertical-scroll-proportion="-13.6" vertical-offset="0" max-vertical-offset="442">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#25#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49588138" vertical-offset="311" max-vertical-offset="918">
+          <caret line="36" column="77" selection-start-line="36" selection-start-column="77" selection-end-line="36" selection-end-column="77" />
+          <folding>
+            <element signature="e#756#794#0" expanded="true" />
           </folding>
         </state>
       </provider>
