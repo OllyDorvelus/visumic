@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'hitcount',
     'storages',
     "django_cron",
-   # "djcelery",
+    "djcelery",
    # "django_celery_results",
 
 
