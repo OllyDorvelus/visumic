@@ -18,4 +18,3 @@ def mul(x, y):
 def xsum(numbers):
     return sum(numbers)
 
-add.delay(7, 8)
