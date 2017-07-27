@@ -34,7 +34,7 @@ from django.conf import settings
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vidcraft.settings')
 
-app = Celery('vidcraft', broker="amqp://jm-ollyd:Lilynard8@localhost/jm-vhost")
+app = Celery('vidcraft', broker='amqp://guest@localhost//')
 # app = Celery("tasks", backend=db_url.replace("postgres://", "db+postgresql://"),
 #              broker=os.environ.get("CLOUDAMQP_URL", DEFAULT_AMQP))
 # app.BROKER_POOL_LIMIT = 1
