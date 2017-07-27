@@ -1,2 +1,2 @@
 web: gunicorn vidcraft.wsgi
-worker: worker: celery -A videos.tasks worker --loglevel=info --concurrency=1
+worker: worker: celery -A vidcraft worker -l info
