@@ -63,7 +63,8 @@ INSTALLED_APPS = [
 
 
 ]
-BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+#BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+BROKER_URL = 'amqp://jm-ollyd:Lilynard8@localhost/jm-vhost'
 BROKER_POOL_LIMIT = 1
 BROKER_CONNECTION_MAX_RETRIES = None
 
