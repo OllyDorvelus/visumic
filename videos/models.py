@@ -267,6 +267,7 @@ class VideoModel(models.Model, HitCountMixin):
 # print(ready2party.input_video.url)
 def post_save_video_receiver(sender, instance, created, *args, **kwargs):
     if created:
+        print("nice")
         convert_video_to_mp4.delay(instance)
       #   #instance.input_video = instance.video
       #   video = instance.video.url.replace("/", "", 1)

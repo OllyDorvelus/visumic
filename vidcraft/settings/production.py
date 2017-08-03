@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from vidcraft.aws.conf import *
 import djcelery
-djcelery.setup_loader()
+#djcelery.setup_loader()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -63,16 +63,17 @@ INSTALLED_APPS = [
 
 
 ]
-BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
-BROKER_POOL_LIMIT = 1
-BROKER_CONNECTION_MAX_RETRIES = None
+# BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+# BROKER_POOL_LIMIT = 1
+# BROKER_CONNECTION_MAX_RETRIES = None
 
-CELERY_TASK_SERIALIZER = "json"
-CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+# CELERY_TASK_SERIALIZER = "json"
+# CELERY_ACCEPT_CONTENT = ["json", "msgpack"]CELERY_TASK_SERIALIZER = "json"
+# CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
+# CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-if BROKER_URL == "django://":
-    INSTALLED_APPS += ("kombu.transport.django",)
+# if BROKER_URL == "django://":
+#     INSTALLED_APPS += ("kombu.transport.django",)
 
 
 CRON_CLASSES = [
