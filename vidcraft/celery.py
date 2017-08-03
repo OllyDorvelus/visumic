@@ -33,7 +33,7 @@ from django.conf import settings
 # db_url = os.environ.get("DATABASE_URL", DEFAULT_DB)
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vidcraft.settings')
-
+#app = Celery()
 app = Celery('vidcraft', broker='amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez')
 # app = Celery("tasks", backend=db_url.replace("postgres://", "db+postgresql://"),
 #              broker=os.environ.get("CLOUDAMQP_URL", DEFAULT_AMQP))

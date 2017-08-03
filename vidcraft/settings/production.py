@@ -63,12 +63,13 @@ INSTALLED_APPS = [
 
 
 ]
-# BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+
+BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
+#BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
 # BROKER_POOL_LIMIT = 1
 # BROKER_CONNECTION_MAX_RETRIES = None
-
+#
 # CELERY_TASK_SERIALIZER = "json"
-# CELERY_ACCEPT_CONTENT = ["json", "msgpack"]CELERY_TASK_SERIALIZER = "json"
 # CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
 # CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
