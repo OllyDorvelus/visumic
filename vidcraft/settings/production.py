@@ -166,7 +166,7 @@ utcoffset()
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 # CELERY_TIMEZONE = 'EST'
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/New_York'
 USE_TZ = True
 BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
 #BROKER_URL = os.environ.get('CLOUDAMQP_URL')
@@ -178,9 +178,9 @@ CELERY_SEND_EVENTS = False # Will not create celeryev.* queues
 CELERY_EVENT_QUEUE_EXPIRES = 60 # Will delete all celeryev. queues without consumers after 1 minute.
 # For celery
 #CELERY_ENABLE_UTC = False
-#TIME_ZONE = 'CT'
+TIME_ZONE = 'EST'
 CELERY_TASK_RESULT_EXPIRES = None
-CELERY_TIMEZONE = 'America/Chicago'
+CELERY_TIMEZONE = 'America/New_York'
 USE_I18N = True
 
 USE_L10N = True
