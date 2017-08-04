@@ -162,7 +162,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 from celery.utils.timeutils import utcoffset
 utcoffset()
-# Internationalization
+# Internationalization #
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 # CELERY_TIMEZONE = 'EST'
 LANGUAGE_CODE = 'en-us'
