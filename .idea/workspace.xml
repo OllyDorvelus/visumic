@@ -34,7 +34,7 @@
       <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/videos/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="20.88889" vertical-offset="2981" max-vertical-offset="5015">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2981" max-vertical-offset="5015">
               <caret line="109" column="47" selection-start-line="109" selection-start-column="42" selection-end-line="109" selection-end-column="47" />
               <folding>
                 <element signature="e#25#63#0" expanded="true" />
@@ -46,7 +46,7 @@
       <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/accounts/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.24" vertical-offset="0" max-vertical-offset="442">
+            <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="442">
               <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
               <folding>
                 <element signature="e#25#63#0" expanded="true" />
@@ -58,7 +58,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/videos/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-59.76" vertical-offset="2790" max-vertical-offset="6290">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2790" max-vertical-offset="6290">
               <caret line="269" column="21" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
               <folding />
             </state>
@@ -68,7 +68,7 @@
       <file leaf-file-name="video_detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/videos/templates/videos/video_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.581818" vertical-offset="262" max-vertical-offset="10659">
+            <state vertical-scroll-proportion="0.0" vertical-offset="262" max-vertical-offset="10659">
               <caret line="27" column="184" selection-start-line="27" selection-start-column="181" selection-end-line="27" selection-end-column="184" />
               <folding />
             </state>
@@ -78,7 +78,7 @@
       <file leaf-file-name="Procfile" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+            <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="153">
               <caret line="1" column="41" selection-start-line="1" selection-start-column="41" selection-end-line="1" selection-end-column="41" />
               <folding />
             </state>
@@ -88,7 +88,7 @@
       <file leaf-file-name="local.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vidcraft/settings/local.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.7407408" vertical-offset="2892" max-vertical-offset="3638">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2892" max-vertical-offset="3638">
               <caret line="182" column="28" selection-start-line="182" selection-start-column="27" selection-end-line="182" selection-end-column="28" />
               <folding>
                 <element signature="e#333#342#0" expanded="true" />
@@ -100,8 +100,8 @@
       <file leaf-file-name="production.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vidcraft/settings/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33278418" vertical-offset="2654" max-vertical-offset="3434">
-              <caret line="168" column="16" selection-start-line="168" selection-start-column="16" selection-end-line="168" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.7185535" vertical-offset="614" max-vertical-offset="3434">
+              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding>
                 <element signature="e#312#321#0" expanded="true" />
               </folding>
@@ -112,8 +112,8 @@
       <file leaf-file-name="celery.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.407408" vertical-offset="158" max-vertical-offset="918">
-              <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+            <state vertical-scroll-proportion="-14.28" vertical-offset="255" max-vertical-offset="918">
+              <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
               <folding>
                 <element signature="e#756#794#0" expanded="true" />
               </folding>
@@ -124,7 +124,7 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vidcraft/settings/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="255">
+            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="255">
               <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
               <folding />
             </state>
@@ -185,8 +185,8 @@
         <option value="$PROJECT_DIR$/accounts/tasks.py" />
         <option value="$PROJECT_DIR$/videos/models.py" />
         <option value="$PROJECT_DIR$/Procfile" />
-        <option value="$PROJECT_DIR$/vidcraft/celery.py" />
         <option value="$PROJECT_DIR$/vidcraft/settings/production.py" />
+        <option value="$PROJECT_DIR$/vidcraft/celery.py" />
       </list>
     </option>
   </component>
@@ -643,7 +643,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2082768" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2109905" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34039548" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1098,7 +1098,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="255">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="255">
           <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
           <folding />
         </state>
@@ -1106,7 +1106,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/local.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7407408" vertical-offset="2892" max-vertical-offset="3638">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2892" max-vertical-offset="3638">
           <caret line="182" column="28" selection-start-line="182" selection-start-column="27" selection-end-line="182" selection-end-column="28" />
           <folding>
             <element signature="e#333#342#0" expanded="true" />
@@ -1116,7 +1116,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accounts/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.24" vertical-offset="0" max-vertical-offset="442">
+        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="442">
           <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
           <folding>
             <element signature="e#25#63#0" expanded="true" />
@@ -1126,7 +1126,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/videos/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-59.76" vertical-offset="2790" max-vertical-offset="6290">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2790" max-vertical-offset="6290">
           <caret line="269" column="21" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
           <folding />
         </state>
@@ -1134,7 +1134,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/videos/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="20.88889" vertical-offset="2981" max-vertical-offset="5015">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2981" max-vertical-offset="5015">
           <caret line="109" column="47" selection-start-line="109" selection-start-column="42" selection-end-line="109" selection-end-column="47" />
           <folding>
             <element signature="e#25#63#0" expanded="true" />
@@ -1144,7 +1144,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/videos/templates/videos/video_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.581818" vertical-offset="262" max-vertical-offset="10659">
+        <state vertical-scroll-proportion="0.0" vertical-offset="262" max-vertical-offset="10659">
           <caret line="27" column="184" selection-start-line="27" selection-start-column="181" selection-end-line="27" selection-end-column="184" />
           <folding />
         </state>
@@ -1160,8 +1160,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.407408" vertical-offset="158" max-vertical-offset="918">
-          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+        <state vertical-scroll-proportion="-14.28" vertical-offset="255" max-vertical-offset="918">
+          <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
           <folding>
             <element signature="e#756#794#0" expanded="true" />
           </folding>
@@ -1170,8 +1170,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33278418" vertical-offset="2654" max-vertical-offset="3434">
-          <caret line="168" column="16" selection-start-line="168" selection-start-column="16" selection-end-line="168" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.7185535" vertical-offset="614" max-vertical-offset="3434">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
           <folding>
             <element signature="e#312#321#0" expanded="true" />
           </folding>

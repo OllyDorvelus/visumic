@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 
 ]
 
-BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
+#BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
 
 
 #BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
@@ -163,10 +163,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-
+# CELERY_TIMEZONE = 'EST'
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'EST'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
