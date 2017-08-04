@@ -178,7 +178,7 @@ CELERY_SEND_EVENTS = False # Will not create celeryev.* queues
 CELERY_EVENT_QUEUE_EXPIRES = 60 # Will delete all celeryev. queues without consumers after 1 minute.
 # For celery
 #CELERY_ENABLE_UTC = False
-TIME_ZONE = 'CT'
+#TIME_ZONE = 'CT'
 CELERY_TASK_RESULT_EXPIRES = None
 CELERY_TIMEZONE = 'America/Chicago'
 USE_I18N = True
