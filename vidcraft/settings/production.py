@@ -160,12 +160,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+from celery.utils.timeutils import utcoffset
+utcoffset()
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 # CELERY_TIMEZONE = 'EST'
 LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'America/Los_Angeles'
+TZINFO = 'UTC'
+USE_TZ = True
 
+# For celery
+CELERY_ENABLE_UTC = True
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
