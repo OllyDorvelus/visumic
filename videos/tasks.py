@@ -39,7 +39,8 @@ def convert_video_to_mp4(instance):
 
    # print(output_name + ".mp4".replace("media/", ""))
         #instance.input_video = instance.video
-
+   # from videos.models import VideoModel
+   # instance = VideoModel.objects.get(pk=instance_id)
     video = instance.video.url.replace("/", "", 1)
     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
     filename, file_extension = os.path.splitext(instance.video.url)

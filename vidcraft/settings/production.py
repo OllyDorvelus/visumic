@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 from vidcraft.aws.conf import *
-import djcelery
+#import djcelery
 #djcelery.setup_loader()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'hitcount',
     'storages',
     "django_cron",
-    "djcelery",
+    #"djcelery",
    # "django_celery_results",
 
 
@@ -160,27 +160,30 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-from celery.utils.timeutils import utcoffset
-utcoffset()
+# from celery.utils.timeutils import utcoffset
+# utcoffset()
 # Internationalization #
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 # CELERY_TIMEZONE = 'EST'
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/New_York'
 USE_TZ = True
-BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
+CELERY_ACCEPT_CONTENT = ['pickle']
+CELERY_TASK_SERIALIZER = 'pickle'
+
+#BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
 #BROKER_URL = os.environ.get('CLOUDAMQP_URL')
-BROKER_POOL_LIMIT = 1 # Will decrease connection usage
-BROKER_HEARTBEAT = None # We're using TCP keep-alive instead
-BROKER_CONNECTION_TIMEOUT = 30 # May require a long timeout due to Linux DNS timeouts etc
-CELERY_RESULT_BACKEND = None # AMQP is not recommended as result backend as it creates thousands of queues
-CELERY_SEND_EVENTS = False # Will not create celeryev.* queues
-CELERY_EVENT_QUEUE_EXPIRES = 60 # Will delete all celeryev. queues without consumers after 1 minute.
-# For celery
-#CELERY_ENABLE_UTC = False
-TIME_ZONE = 'EST'
-CELERY_TASK_RESULT_EXPIRES = None
-CELERY_TIMEZONE = 'America/New_York'
+# BROKER_POOL_LIMIT = 1 # Will decrease connection usage
+# BROKER_HEARTBEAT = None # We're using TCP keep-alive instead
+# BROKER_CONNECTION_TIMEOUT = 30 # May require a long timeout due to Linux DNS timeouts etc
+# CELERY_RESULT_BACKEND = None # AMQP is not recommended as result backend as it creates thousands of queues
+# CELERY_SEND_EVENTS = False # Will not create celeryev.* queues
+# CELERY_EVENT_QUEUE_EXPIRES = 60 # Will delete all celeryev. queues without consumers after 1 minute.
+# # For celery
+# #CELERY_ENABLE_UTC = False
+# TIME_ZONE = 'EST'
+# CELERY_TASK_RESULT_EXPIRES = None
+# CELERY_TIMEZONE = 'America/New_York'
 USE_I18N = True
 
 USE_L10N = True
