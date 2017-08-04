@@ -1,3 +1,3 @@
 web: gunicorn vidcraft.wsgi
-worker: celery -A vidcraft worker -l info
+worker: celery worker --app=vidcraft
 
