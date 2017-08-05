@@ -34,13 +34,13 @@ def percent_cb(complete, total):
     sys.stdout.flush()
 
 @task(name="convert_video_to_mp4")
-def convert_video_to_mp4(instance):
+def convert_video_to_mp4(instance_id):
   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
 
    # print(output_name + ".mp4".replace("media/", ""))
         #instance.input_video = instance.video
-   # from videos.models import VideoModel
-   # instance = VideoModel.objects.get(pk=instance_id)
+    from videos.models import VideoModel
+    instance = VideoModel.objects.get(pk=instance_id)
     video = instance.video.url.replace("/", "", 1)
     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
     filename, file_extension = os.path.splitext(instance.video.url)
@@ -92,7 +92,7 @@ def convert_video_to_mp4(instance):
     os.remove(newvideo)
     os.remove(thumbnail)
    # os.remove(video)
-    return instance
+    #return instance
 # @task(name="convert_video_to_mp4")
 # def convert_video_to_mp4(instance, video_file_path, output_name):
 #   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
