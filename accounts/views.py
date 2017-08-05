@@ -133,7 +133,7 @@ class UserDetailView(DetailView):
     template_name = "accounts/profile_detail.html"
     queryset = User.objects.all()
     context_object_name = 'User'
-    add.delay(3,2)
+
     def get_object(self):
 
         user = get_object_or_404(User, username__iexact=self.kwargs.get("username"))
@@ -198,6 +198,7 @@ class ProfileListView(ListView):
     # paginate_by = 10
 
     def get_queryset(self):
+        add.delay(3,2)
         return UserProfile.objects.all()
 
     # def get(self, request, *args, **kwargs):
