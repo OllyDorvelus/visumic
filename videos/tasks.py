@@ -48,7 +48,8 @@ def convert_video_to_mp4(instance_id):
     norm_file_extension = file_extension
     file_extension = file_extension.lower()
     filename = 'temp/' + path_leaf(filename)
-    video = 'mp4video/' + path_leaf(filename) + file_extension
+    video = '//s3.us-east-2.amazonaws.com/visumic-bucket/media/mp4video/Nas_-_Cherry_Wine_Explicit_ft._Amy_Winehouse.mp4'
+   # video = 'mp4video/' + path_leaf(filename) + file_extension
     if file_extension == ".mp4":
         filename = filename#.replace("/", "", 1) + "_V"
     else:
