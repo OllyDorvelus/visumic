@@ -19,7 +19,8 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from videos.forms import ShareEditForm
-
+from accounts.tasks import add
+add.delay(3,2)
 
 from django.core.exceptions import ValidationError
 
