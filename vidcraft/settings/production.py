@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 from vidcraft.aws.conf import *
-#import djcelery
-#djcelery.setup_loader()
+import djcelery
+djcelery.setup_loader()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -38,8 +38,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 SERVER_EMAIL = 'officialvisumic@gmail.com'
 DEFAULT_FORM_EMAIL = 'Visumic'
 
-import djcelery
-djcelery.setup_loader()
+# import djcelery
+# djcelery.setup_loader()
 
 # Application definition
 
@@ -167,14 +167,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 # CELERY_TIMEZONE = 'EST'
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'America/New_York'
-USE_TZ = True
+# TIME_ZONE = 'America/New_York'
+# USE_TZ = True
 # CELERY_ACCEPT_CONTENT = ['pickle']
 # CELERY_TASK_SERIALIZER = 'pickle'
 
 #BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
 BROKER_URL = os.environ.get('CLOUDAMQP_URL')# CLOUDAMQP_URL
-CELERY_RESULT_BACKEND = os.environ.get('CLOUDAMQP_URL')# CLOUDAMQP_URL
+#CELERY_RESULT_BACKEND = os.environ.get('CLOUDAMQP_URL')# CLOUDAMQP_URL
 BROKER_POOL_LIMIT = 1 # Will decrease connection usage
 BROKER_CONNECTION_MAX_RETRIES = None
 CELERY_TASK_SERIALIZER = "json"
