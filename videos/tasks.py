@@ -28,6 +28,7 @@ REGION_HOST = 's3.us-east-2.amazonaws.com'
 conn = boto.connect_s3(AWS_ACCESS_KEY_ID,
         AWS_SECRET_ACCESS_KEY, host=REGION_HOST)
 bucket = conn.get_bucket(AWS_STORAGE_BUCKET_NAME)
+print(bucket.list())
 
 def percent_cb(complete, total):
     sys.stdout.write('.')
@@ -59,7 +60,7 @@ def convert_video_to_mp4(instance_id):
     newvideoname = newvideo.replace("temp/", "")
     videofile = os.path.abspath(newvideo)
     videoKey = Key(bucket)
-    videoKey.key = 'media/mp4video/' + newvideoname
+    videoKey.key = 'mp4video/' + newvideoname
     videoKey.set_contents_from_filename(videofile,
     cb=percent_cb, num_cb=10)
     instance.video.delete(save=False)
