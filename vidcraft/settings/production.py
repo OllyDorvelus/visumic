@@ -172,7 +172,8 @@ USE_TZ = True
 # CELERY_TASK_SERIALIZER = 'pickle'
 
 #BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
-BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+BROKER_URL = os.environ.get('REDIS_URL')# CLOUDAMQP_URL
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')# CLOUDAMQP_URL
 BROKER_POOL_LIMIT = 1 # Will decrease connection usage
 BROKER_CONNECTION_MAX_RETRIES = None
 CELERY_TASK_SERIALIZER = "json"
