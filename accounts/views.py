@@ -20,7 +20,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from videos.forms import ShareEditForm
 from accounts.tasks import add
-add.delay(3,2)
+
 
 from django.core.exceptions import ValidationError
 
@@ -133,7 +133,7 @@ class UserDetailView(DetailView):
     template_name = "accounts/profile_detail.html"
     queryset = User.objects.all()
     context_object_name = 'User'
-
+    add.delay(3,2)
     def get_object(self):
 
         user = get_object_or_404(User, username__iexact=self.kwargs.get("username"))
