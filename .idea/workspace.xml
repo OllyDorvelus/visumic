@@ -31,10 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/videos/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8484849" vertical-offset="1366" max-vertical-offset="5032">
+            <state vertical-scroll-proportion="-19.722221" vertical-offset="805" max-vertical-offset="5032">
               <caret line="110" column="47" selection-start-line="110" selection-start-column="42" selection-end-line="110" selection-end-column="47" />
               <folding>
                 <element signature="e#25#63#0" expanded="true" />
@@ -56,8 +56,8 @@
       <file leaf-file-name="celery.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.7407408" vertical-offset="138" max-vertical-offset="901">
-              <caret line="20" column="2" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="2" />
+            <state vertical-scroll-proportion="-1.574074" vertical-offset="0" max-vertical-offset="901">
+              <caret line="5" column="68" selection-start-line="5" selection-start-column="68" selection-end-line="5" selection-end-column="68" />
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
               </folding>
@@ -87,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Procfile" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Procfile" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
-              <caret line="1" column="41" selection-start-line="1" selection-start-column="41" selection-end-line="1" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.025718609" vertical-offset="0" max-vertical-offset="661">
+              <caret line="1" column="69" selection-start-line="1" selection-start-column="69" selection-end-line="1" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -178,13 +178,13 @@
         <option value="$PROJECT_DIR$/videos/views.py" />
         <option value="$PROJECT_DIR$/videos/templates/videos/video_detail.html" />
         <option value="$PROJECT_DIR$/accounts/tasks.py" />
-        <option value="$PROJECT_DIR$/Procfile" />
         <option value="$PROJECT_DIR$/vidcraft/settings/local.py" />
         <option value="$PROJECT_DIR$/vidcraft/settings/__init__.py" />
         <option value="$PROJECT_DIR$/videos/models.py" />
         <option value="$PROJECT_DIR$/videos/tasks.py" />
         <option value="$PROJECT_DIR$/vidcraft/settings/production.py" />
         <option value="$PROJECT_DIR$/vidcraft/celery.py" />
+        <option value="$PROJECT_DIR$/Procfile" />
       </list>
     </option>
   </component>
@@ -1075,14 +1075,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Procfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
-          <caret line="1" column="41" selection-start-line="1" selection-start-column="41" selection-end-line="1" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.76" vertical-offset="0" max-vertical-offset="255">
@@ -1127,16 +1119,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7407408" vertical-offset="138" max-vertical-offset="901">
-          <caret line="20" column="2" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/videos/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.7407408" vertical-offset="4116" max-vertical-offset="6307">
@@ -1147,11 +1129,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/videos/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8484849" vertical-offset="1366" max-vertical-offset="5032">
+        <state vertical-scroll-proportion="-19.722221" vertical-offset="805" max-vertical-offset="5032">
           <caret line="110" column="47" selection-start-line="110" selection-start-column="42" selection-end-line="110" selection-end-column="47" />
           <folding>
             <element signature="e#25#63#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vidcraft/celery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.574074" vertical-offset="0" max-vertical-offset="901">
+          <caret line="5" column="68" selection-start-line="5" selection-start-column="68" selection-end-line="5" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Procfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.025718609" vertical-offset="0" max-vertical-offset="661">
+          <caret line="1" column="69" selection-start-line="1" selection-start-column="69" selection-end-line="1" selection-end-column="69" />
+          <folding />
         </state>
       </provider>
     </entry>
