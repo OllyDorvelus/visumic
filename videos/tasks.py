@@ -42,13 +42,13 @@ def convert_video_to_mp4(instance_id):
         #instance.input_video = instance.video
     from videos.models import VideoModel
     instance = VideoModel.objects.get(pk=instance_id)
-    video = instance.video.url #.replace("/", "", 1)
+    video = instance.video.url.replace("/", "", 1)
     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
     filename, file_extension = os.path.splitext(instance.video.url)
     norm_file_extension = file_extension
     file_extension = file_extension.lower()
     filename = 'temp/' + path_leaf(filename)
-    video = '//s3.us-east-2.amazonaws.com/visumic-bucket/media/mp4video/Nas_-_Cherry_Wine_Explicit_ft._Amy_Winehouse.mp4'
+   # video = '//s3.us-east-2.amazonaws.com/visumic-bucket/media/mp4video/Nas_-_Cherry_Wine_Explicit_ft._Amy_Winehouse.mp4'
    # video = 'mp4video/' + path_leaf(filename) + file_extension
     if file_extension == ".mp4":
         filename = filename#.replace("/", "", 1) + "_V"
