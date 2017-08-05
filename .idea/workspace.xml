@@ -121,7 +121,7 @@
         <entry file="file://$PROJECT_DIR$/vidcraft/settings/production.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.24876441" vertical-offset="2824" max-vertical-offset="3774">
-              <caret line="175" column="66" selection-start-line="175" selection-start-column="66" selection-end-line="175" selection-end-column="66" />
+              <caret line="175" column="53" selection-start-line="175" selection-start-column="53" selection-end-line="175" selection-end-column="53" />
               <folding>
                 <element signature="e#312#321#0" expanded="true" />
               </folding>
@@ -1141,7 +1141,7 @@
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/production.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24876441" vertical-offset="2824" max-vertical-offset="3774">
-          <caret line="175" column="66" selection-start-line="175" selection-start-column="66" selection-end-line="175" selection-end-column="66" />
+          <caret line="175" column="53" selection-start-line="175" selection-start-column="53" selection-end-line="175" selection-end-column="53" />
           <folding>
             <element signature="e#312#321#0" expanded="true" />
           </folding>
