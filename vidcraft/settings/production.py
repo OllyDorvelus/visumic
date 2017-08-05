@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'hitcount',
     'storages',
     "django_cron",
-    #"djcelery",
+    "djcelery",
    # "django_celery_results",
 
 
@@ -67,7 +67,7 @@ INSTALLED_APPS = [
 #BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
 
 
-#BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+#BROKER_URL = os.environ.get("CLOUDAMQP_URL")
 # BROKER_POOL_LIMIT = 1
 # BROKER_CONNECTION_MAX_RETRIES = None
 #
@@ -172,7 +172,7 @@ CELERY_ACCEPT_CONTENT = ['pickle']
 CELERY_TASK_SERIALIZER = 'pickle'
 
 #BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
-#BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+BROKER_URL = os.environ.get('CLOUDAMQP_URL')
 # BROKER_POOL_LIMIT = 1 # Will decrease connection usage
 # BROKER_HEARTBEAT = None # We're using TCP keep-alive instead
 # BROKER_CONNECTION_TIMEOUT = 30 # May require a long timeout due to Linux DNS timeouts etc
