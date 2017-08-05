@@ -38,7 +38,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 SERVER_EMAIL = 'officialvisumic@gmail.com'
 DEFAULT_FORM_EMAIL = 'Visumic'
 
-
+import djcelery
+djcelery.setup_loader()
 
 # Application definition
 
