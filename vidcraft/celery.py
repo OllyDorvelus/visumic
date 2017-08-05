@@ -1,7 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 import os
+import django
 from celery import Celery
-
+from django.conf import settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vidcraft.settings')
+django.setup()
 # set the default Django settings module for the 'celery' program.
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vidcraft.settings')
 #
@@ -26,8 +29,7 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 
 
-from django.conf import settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vidcraft.settings')
+
 # DEFAULT_AMQP = "amqp://guest:guest@localhost//"
 # DEFAULT_DB = "postgres://localhost"
 # db_url = os.environ.get("DATABASE_URL", DEFAULT_DB)
