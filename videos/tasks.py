@@ -48,7 +48,7 @@ def convert_video_to_mp4(instance_id):
     norm_file_extension = file_extension
     file_extension = file_extension.lower()
     filename = 'temp/' + path_leaf(filename)
-    video = 'media/mp4video/' + path_leaf(filename) + file_extension
+    video = 'mp4video/' + path_leaf(filename) + file_extension
     if file_extension == ".mp4":
         filename = filename#.replace("/", "", 1) + "_V"
     else:
@@ -60,7 +60,7 @@ def convert_video_to_mp4(instance_id):
     newvideoname = newvideo.replace("temp/", "")
     videofile = os.path.abspath(newvideo)
     videoKey = Key(bucket)
-    videoKey.key = 'mp4video/' + newvideoname
+    videoKey.key = 'media/mp4video/' + newvideoname
     videoKey.set_contents_from_filename(videofile,
     cb=percent_cb, num_cb=10)
     instance.video.delete(save=False)
