@@ -18,6 +18,8 @@ import os
 import subprocess
 User = get_user_model()
 myvideo = VideoModel.objects.get(pk=14)
+print(os.path.exists(myvideo.video.url.replace("/", "", 1)))
+print(myvideo.video.url)
 #print(os.path.abspath(myvideo.video.url))
 #BOTO TESTING
 # import boto
