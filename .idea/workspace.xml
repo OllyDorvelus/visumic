@@ -34,14 +34,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/videos/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5730337" vertical-offset="663" max-vertical-offset="5134">
+            <state vertical-scroll-proportion="-14.28" vertical-offset="663" max-vertical-offset="5134">
               <caret line="60" column="16" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="16" />
               <folding>
                 <element signature="e#25#63#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".buildpacks" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.buildpacks">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.025718609" vertical-offset="0" max-vertical-offset="661">
+              <caret line="1" column="47" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -125,7 +135,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/charts/templates/charts/chartbase.html" />
         <option value="$PROJECT_DIR$/charts/views.py" />
         <option value="$PROJECT_DIR$/charts/api/urls.py" />
         <option value="$PROJECT_DIR$/charts/templates/charts/chartlist_alltime.html" />
@@ -176,6 +185,7 @@
         <option value="$PROJECT_DIR$/videos/views.py" />
         <option value="$PROJECT_DIR$/accounts/tasks.py" />
         <option value="$PROJECT_DIR$/videos/tasks.py" />
+        <option value="$PROJECT_DIR$/.buildpacks" />
       </list>
     </option>
   </component>
@@ -596,7 +606,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1534" height="821" extended-state="1" />
+    <frame x="1" y="1" width="1534" height="821" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -742,13 +752,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/loginmodal.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5" vertical-offset="204" max-vertical-offset="1666">
-          <caret line="25" column="101" selection-start-line="25" selection-start-column="101" selection-end-line="25" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/registration/password_change_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="221">
@@ -1118,11 +1121,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/videos/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5730337" vertical-offset="663" max-vertical-offset="5134">
+        <state vertical-scroll-proportion="-14.28" vertical-offset="663" max-vertical-offset="5134">
           <caret line="60" column="16" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="16" />
           <folding>
             <element signature="e#25#63#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.buildpacks">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.025718609" vertical-offset="0" max-vertical-offset="661">
+          <caret line="1" column="47" selection-start-line="1" selection-start-column="47" selection-end-line="1" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
