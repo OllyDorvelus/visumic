@@ -17,7 +17,7 @@ import shutil
 import os
 import subprocess
 User = get_user_model()
-
+#video views
 #print(os.path.abspath(myvideo.video.url))
 #BOTO TESTING
 # import boto
