@@ -34,7 +34,8 @@ def percent_cb(complete, total):
     sys.stdout.write('.')
     sys.stdout.flush()
 
-@task(name="convert_video_to_mp4")
+#@task(name="convert_video_to_mp4")
+@shared_task
 def convert_video_to_mp4(instance_id):
   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
 
