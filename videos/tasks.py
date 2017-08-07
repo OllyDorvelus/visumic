@@ -43,7 +43,7 @@ def convert_video_to_mp4(instance_id):
         #instance.input_video = instance.video
     from videos.models import VideoModel
     instance = VideoModel.objects.get(pk=instance_id)
-    video = 'https://s3.us-east-2.amazonaws.com/visumic-bucket/media/mp4video/%5BRH%5D+Shigatsu+wa+Kimi+no+Uso+-+English+Trailer+%5BDual+Audio%5D+%5BBDRip%5D+%5B1080p%5D.mkv'
+    video = instance.video.url.replace("/", "", 1)
     #video = 'temp/April.mkv'
     #video = os.path.abspath(instance.video.url)
     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
@@ -67,8 +67,8 @@ def convert_video_to_mp4(instance_id):
     videoKey.key = 'media/mp4video/' + newvideoname
     videoKey.set_contents_from_filename(videofile,
     cb=percent_cb, num_cb=10)
-    # instance.video.delete(save=False)
-    # instance.video = 'mp4video/' + newvideoname
+    instance.video.delete(save=False)
+    instance.video = 'mp4video/' + newvideoname
     # instance.video.delete(save=False)
     # instance.video = os.path.relpath(newvideo, 'media')
     if instance.thumbnail == "vidcraftavatar.png":
@@ -90,13 +90,13 @@ def convert_video_to_mp4(instance_id):
         instance.thumbnail = 'thumbnails/' + thumbnailname
         #instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
 
-    #instance.save() uncomm
+    instance.save() #uncomm
     print("This will print to the screen first")
     #  instance.input_video.delete(False)
    # video = newvideoname.replace(".mp4", norm_file_extension)
    # video = "media/mp4video/" + video
-    #os.remove(newvideo) uncomm
-    #os.remove(thumbnail) uncomm
+    os.remove(newvideo) # uncomm
+    os.remove(thumbnail) #uncomm
    # os.remove(video)
     return instance
 # @task(name="convert_video_to_mp4")
