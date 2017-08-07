@@ -172,7 +172,7 @@ class UserDetailPlayListView(DetailView):
     def get_object(self):
         user = get_object_or_404(User, username__iexact=self.kwargs.get("username"))
         return user
-#hello
+#hello world
 
 class UserDetailLikedView(DeleteView):
     template_name = "accounts/profile_detail_liked.html"
