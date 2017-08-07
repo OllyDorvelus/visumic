@@ -61,7 +61,7 @@ def convert_video_to_mp4(instance_id):
     subprocess.call("ffmpeg -re -i {input} -f mp4 {output}.mp4".format(input=video, output=filename), shell=True)
     newvideo = filename + ".mp4"
     newvideoname = newvideo.replace("temp/", "")
-    videofile = os.path.abspath(newvideo)
+    videofile = os.path.abspath(newvideo).replace('/app/', '')
     videoKey = Key(bucket)
     videoKey.key = 'media/mp4video/' + newvideoname
     videoKey.set_contents_from_filename(videofile,
