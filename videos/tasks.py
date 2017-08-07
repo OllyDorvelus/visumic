@@ -77,7 +77,7 @@ def convert_video_to_mp4(instance_id):
         title = 'temp/' + title + "" + str(randint(0, 100000))
        # print(title)
        # print(video)
-        subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title))
+        subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title), shell=True)
         thumbnail = title + ".jpg"
         thumbnailname = thumbnail.replace("temp/", "")
         thumbnailfile = os.path.abspath(thumbnail)
