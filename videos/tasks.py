@@ -43,7 +43,7 @@ def convert_video_to_mp4(instance_id):
         #instance.input_video = instance.video
     from videos.models import VideoModel
     instance = VideoModel.objects.get(pk=instance_id)
-    video = instance.video.url.replace("/", "", 1)
+    video = 'https://s3.us-east-2.amazonaws.com/visumic-bucket/media/mp4video/%5BRH%5D+Shigatsu+wa+Kimi+no+Uso+-+English+Trailer+%5BDual+Audio%5D+%5BBDRip%5D+%5B1080p%5D.mkv'
     #video = 'temp/April.mkv'
     #video = os.path.abspath(instance.video.url)
     path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
@@ -63,14 +63,14 @@ def convert_video_to_mp4(instance_id):
     newvideo = filename + ".mp4"
     newvideoname = newvideo.replace("temp/", "")
     videofile = os.path.abspath(newvideo).replace('/app/', '')
-    # videoKey = Key(bucket)
-    # videoKey.key = 'media/mp4video/' + newvideoname
-    # videoKey.set_contents_from_filename(videofile,
-    # cb=percent_cb, num_cb=10)
+    videoKey = Key(bucket)
+    videoKey.key = 'media/mp4video/' + newvideoname
+    videoKey.set_contents_from_filename(videofile,
+    cb=percent_cb, num_cb=10)
     # instance.video.delete(save=False)
     # instance.video = 'mp4video/' + newvideoname
     # instance.video.delete(save=False)
-   # instance.video = os.path.relpath(newvideo, 'media')
+    # instance.video = os.path.relpath(newvideo, 'media')
     if instance.thumbnail == "vidcraftavatar.png":
         title = instance.title
         title = title.replace(" ", "_")
