@@ -58,7 +58,7 @@ def convert_video_to_mp4(instance_id):
         filename = filename#.replace("/", "", 1)
    # subprocess.call("ffmpeg -i {input} {output}.mp4".format(input=video, output=filename))
       #-f mp4 -movflags frag_keyframe+empty_moov
-    subprocess.call("ffmpeg -re -i {input} -f mp4 {output}.mp4".format(input=video, output=filename))
+    subprocess.call("ffmpeg -re -i {input} -f mp4 {output}.mp4".format(input=video, output=filename), shell=True)
     newvideo = filename + ".mp4"
     newvideoname = newvideo.replace("temp/", "")
     videofile = os.path.abspath(newvideo)
@@ -89,13 +89,13 @@ def convert_video_to_mp4(instance_id):
         instance.thumbnail = 'thumbnails/' + thumbnailname
         #instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
 
-    instance.save()
+    #instance.save() uncomm
     print("This will print to the screen first")
     #  instance.input_video.delete(False)
    # video = newvideoname.replace(".mp4", norm_file_extension)
    # video = "media/mp4video/" + video
-    os.remove(newvideo)
-    os.remove(thumbnail)
+    #os.remove(newvideo) uncomm
+    #os.remove(thumbnail) uncomm
    # os.remove(video)
     #return instance
 # @task(name="convert_video_to_mp4")
