@@ -97,7 +97,7 @@ def convert_video_to_mp4(instance_id):
     #os.remove(newvideo) uncomm
     #os.remove(thumbnail) uncomm
    # os.remove(video)
-    #return instance
+    return instance
 # @task(name="convert_video_to_mp4")
 # def convert_video_to_mp4(instance, video_file_path, output_name):
 #   #  -ac 2 -b:v 2000k -c:a aac -c:v libx264 -b:a 160k -vprofile high -bf 0 -strict experimental -f mp4
