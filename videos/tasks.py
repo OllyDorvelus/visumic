@@ -62,12 +62,12 @@ def convert_video_to_mp4(instance_id):
     newvideo = filename + ".mp4"
     newvideoname = newvideo.replace("temp/", "")
     videofile = os.path.abspath(newvideo).replace('/app/', '')
-    videoKey = Key(bucket)
-    videoKey.key = 'media/mp4video/' + newvideoname
-    videoKey.set_contents_from_filename(videofile,
-    cb=percent_cb, num_cb=10)
-    instance.video.delete(save=False)
-    instance.video = 'mp4video/' + newvideoname
+    # videoKey = Key(bucket)
+    # videoKey.key = 'media/mp4video/' + newvideoname
+    # videoKey.set_contents_from_filename(videofile,
+    # cb=percent_cb, num_cb=10)
+    # instance.video.delete(save=False)
+    # instance.video = 'mp4video/' + newvideoname
     # instance.video.delete(save=False)
    # instance.video = os.path.relpath(newvideo, 'media')
     if instance.thumbnail == "vidcraftavatar.png":
