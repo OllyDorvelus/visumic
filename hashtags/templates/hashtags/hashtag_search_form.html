@@ -1,0 +1,7 @@
+<form id='hashtag-search-form' class="" method='GET' action='{% url "hashtags" %}'>
+        <div class="form-group">
+            <input class="form-control searchinput" type='text' name='q' placeholder='Search Tags' value='{{ request.GET.q }}'/>
+            </div>
+        <input class="btn btn-default searchbtn" type='submit' value='Search'/>
+
+</form>

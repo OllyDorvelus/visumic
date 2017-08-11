@@ -64,7 +64,7 @@ $(document).ready(function(){
             console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
-                fetchUrl = "/api/tags/" + "{{ hashtag.tag }}" + "/"
+                fetchUrl = "/api/hashtag/" + "{{ hashtag.tag }}" + "/"
             } else {
                 fetchUrl = url
             }
@@ -111,6 +111,7 @@ $(document).ready(function(){
 updateHashLinks()
 })
 </script>
+    <title>#{{ hashtag.tag }}</title>
     <div class='container-fluid'><div class='row'>
         <h1 class="text-center hash">#{{ hashtag.tag }}</h1>
             <div id="tag-video-container">

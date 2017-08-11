@@ -8,7 +8,7 @@ from .serializers import (VideoModelSerializer, CommentModelSerializer, ShareMod
                           PlaylistModelSerializer)
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from .pagination import StandardResultsPagination, StandardResultsPagination2, RelatedResultsPagination
+from .pagination import StandardResultsPagination, StandardResultsPagination2, RelatedResultsPagination, ShareResultsPagination
 from accounts.models import UserProfile
 from videos.models import VideoModel, CommentModel, ShareModel, ShareCommentModel, GenreModel, PlaylistModel
 from rest_framework.response import Response
@@ -324,7 +324,7 @@ class ShareCommentModelListAPIView(generics.ListAPIView):
 
 class ShareFollowingAPIView(generics.ListAPIView):
     serializer_class = ShareModelSerializer
-    pagination_class = StandardResultsPagination
+    pagination_class = ShareResultsPagination
     permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self, *args, **kwargs):
         requestuser = self.request.user

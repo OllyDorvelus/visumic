@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+<title>Hashtags</title>
+{% block content %}
+<script>
+    $(document).ready(function() {
+
+        function attachHashtag(hashtagValue, prepend) {
+
+
+            var hashtagFormattedHtml = "<span class='hash'>#" + hashtagValue.tag + " " + "</span>"
+
+
+            if (prepend == true) {
+                $("#hashtag-container").prepend(hashtagFormattedHtml)
+            }
+            else {
+                $("#hashtag-container").append(
+                        hashtagFormattedHtml
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        //var ordering = getParameterByName('ordering')
+        var hashtagList = [];
+        var nextHashtagUrl;
+//        console.log(query)
+        function parseHashtags() {
+
+            if (hashtagList == 0) {
+                $("#hashtag-container").text("No Hashtags Currently Found")
+                $("#hashtag-container").addClass("text-center")
+            } else {
+                //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(hashtagList, function (key, value) {
+                    var profileKey = key
+                    attachHashtag(value)
+                    console.log(value)
+
+                })
+            }
+        }
+
+        function fetchHashtags(url) {
+            console.log("fethicng ...")
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/hashtags/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+                url: fetchUrl,
+                data: {
+                    "q": query
+                    //"ordering": ordering
+                },
+                beforeSend: function (data) {
+                    $("#loading-image").show();
+
+                },
+                method: "GET",
+                success: function (data) {
+                    $("#loading-image").hide();
+                    $('#loadmore').show()
+                    //console.log(data)
+                    hashtagList = data.results
+
+                    if (data.next) {
+                        nextHashtagUrl = data.next
+                    } else {
+                        $("#loadmore").css("display", "none");
+                        nextHashtagUrl = null
+                    }
+                    parseHashtags()
+                    updateHashLinks()
+                },
+
+                error: function (data) {
+                    console.log("error")
+                    console.log(data)
+                }
+            })
+        }
+
+        fetchHashtags()
+
+        $("#loadmore").click(function (event) {
+            event.preventDefault()
+            // load more items
+            if (nextHashtagUrl) {
+                fetchHashtags(nextHashtagUrl)
+            }
+
+        })
+
+        var typingTimer;
+        var doneInterval = 800; // in ms
+        var searchInput = $("#hashtag-search-form input[type=text]")
+        var searchQuery;
+        searchInput.keyup(function (event) {
+            searchQuery = $(this).val()
+            clearTimeout(typingTimer)
+            typingTimer = setTimeout(doneSearchTyping, doneInterval)
+
+        })
+        searchInput.keydown(function (event) {
+            clearTimeout(typingTimer)
+        })
+        function doneSearchTyping() {
+            if (searchQuery) {
+                // do search
+                var url = '/hashtags/?q=' + searchQuery
+                document.location.href = url;
+            }
+            else {
+                var url = '/hashtags/'
+                document.location.href = url;
+            }
+        }
+
+    });
+</script>
+    <div class="container-fluid">
+    <div class="row">
+
+        {% include "hashtags/hashtag_search_form.html" %}
+        <strong><h5 class="text-center">Create a hashtag by putting it in a video description only</h5></strong>
+        <div id="hashtag-container">
+
+        </div>
+    </div>
+    </div>
+{% endblock content %}

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<title>Visumic | Social</title>
 {#<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">#}
 {#<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>#}
 {#<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>#}
@@ -9,14 +10,8 @@
     $(document).ready(function() {
 
 
-        testprint()
-        console.log(2)
-        console.log(3)
 
 
-        function testprint() {
-            console.log("hello");
-        }
 
         function append() {
             //$('#ogsection').append("<h5>Hello World</h5>")
@@ -127,7 +122,9 @@
                     }
 
                     if (shareList == 0) {
-                        $("#userfollowers").text("Following No Profiles.")
+                        $("#ogsection").text("The users you follow have not shared any videos")
+                        $("#ogsection").addClass("text-center")
+
                     } else {
                         parseShares()
                         //var videos = videojs(document.getElementsByClassName("sharevideo"));

@@ -18,8 +18,8 @@ from django.contrib import admin
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from hashtags.views import HashTagView
-from hashtags.api.views import TagVideoAPIView
+from hashtags.views import HashTagView, HashTagList
+from hashtags.api.views import TagVideoAPIView, TagListAPIView
 from .views import home
 from accounts.views import UserLoginFormView
 from django.contrib.auth import views as auth_views
@@ -27,6 +27,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^about/', views.about, name='about'),
+    url(r'^hashtags/$', HashTagList.as_view(), name='hashtags'),
     url(r'^accounts/password_reset/$', auth_views.password_reset, name='password_reset'),
     url(r'^accounts/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
     url(r'^accounts/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
@@ -41,8 +42,10 @@ urlpatterns = [
     url(r'^', include('accounts.urls', namespace="accounts")),
 
     url(r'^', include('videos.urls', namespace="videos")),
-    url(r'^api/tags/(?P<hashtag>.*)/$', TagVideoAPIView.as_view(), name='tag-tweet-api'),
-    url(r'^tags/(?P<hashtag>.*)/$', HashTagView.as_view(), name='hashtag'),
+    url(r'^api/hashtag/(?P<hashtag>.*)/$', TagVideoAPIView.as_view(), name='tag-tweet-api'),
+    url(r'^api/hashtags/$', TagListAPIView.as_view(), name='tag-tweet-api'),
+    url(r'^hashtag/(?P<hashtag>.*)/$', HashTagView.as_view(), name='hashtag'),
+
     url(r'hitcount/', include('hitcount.urls', namespace='hitcount')),
 ]
 

@@ -27,10 +27,12 @@
     <ul class="sidebar-nav">
       <li><a href="{%  url 'accounts:profile_list' %}">Profiles</a>
       <li><a href="{% url 'videos:playlist_list' %}">Playlist</a></li>
-       {% if request.user.is_authenticated %}
-      <li><a href="{% url 'accounts:logout' %}?next={{request.path}}">Logout</a></li>
-        {% endif %}
-     <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'hashtags' %}">Hashtags</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+{#       {% if request.user.is_authenticated %}#}
+{#      <li><a href="{% url 'accounts:logout' %}?next={{request.path}}">Logout</a></li>#}
+{#        {% endif %}#}
+
 
     </ul>
       {% if request.user.is_authenticated %}

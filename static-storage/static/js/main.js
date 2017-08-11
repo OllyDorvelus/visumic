@@ -279,7 +279,7 @@ function preventModalClose() {
   function updateHashLinks() {
       $(".hash").each(function (data) {
           var hashtagRegex = /(^|\s)#([\w\d-]+)/g
-          var newText = $(this).html().replace(hashtagRegex, "$1<a href='/tags/$2/'>#$2</a>")
+          var newText = $(this).html().replace(hashtagRegex, "$1<a href='/hashtag/$2/'>#$2</a>")
           $(this).html(newText)
 
       })
