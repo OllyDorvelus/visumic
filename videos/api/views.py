@@ -114,7 +114,7 @@ class RandomVideoAPIView(generics.ListAPIView):
     def get_queryset(self):
         #qs = VideoModel.objects.all().order_by('?')[:1]
        # return random_vid_day.delay()
-        return randomvid
+        return VideoModel.objects.get(pk=20)
         #global randomvid2
         #return random_vid_day
 
