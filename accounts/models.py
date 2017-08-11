@@ -99,8 +99,11 @@ def post_save_user_receiver(sender, instance, created, *args, **kwargs):
         new_profile = UserProfile.objects.get_or_create(user=instance)
 
 def post_delete_user_receiver(sender, instance, *args, **kwargs):
-    instance.profile_banner.delete(False)
-    instance.user_img.delete(False)
+    if instance.user_img != "vidcraftavatar.png" and instance.user_img != "vbanner.jpg":
+        instance.user_img.delete(save=False)
+    if instance.profile_banner != "vbanner.jpg" and instance.profile_banner != "vidcraftavatar.png":
+        instance.profile_banner.delete(False)
+
 
 post_delete.connect(post_delete_user_receiver, sender=UserProfile)
 post_save.connect(post_save_user_receiver, sender=settings.AUTH_USER_MODEL)
