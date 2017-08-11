@@ -98,7 +98,10 @@ class UserRegisterForm(forms.Form):
             raise forms.ValidationError("This username is taken")
         if lower_username in non_usernames:
             raise forms.ValidationError("This is not allowed to be a username")
+        if " " in username:
+            raise forms.ValidationError("No Spaces Allowed")
         return username
+
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
