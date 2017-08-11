@@ -114,9 +114,22 @@ class RandomVideoAPIView(generics.ListAPIView):
     def get_queryset(self):
         #qs = VideoModel.objects.all().order_by('?')[:1]
        # return random_vid_day.delay()
-        return VideoModel.objects.get(pk=20)
+        qs = VideoModel.objects.all().order_by('pk')[:1]
+       # return randomvid
+        return qs
         #global randomvid2
         #return random_vid_day
+
+# class RandomVideoAPIView(generics.RetrieveAPIView):
+#     serializer_class= VideoModelSerializer
+#
+#     def get_queryset(self):
+#         #qs = VideoModel.objects.all().order_by('?')[:1]
+#        # return random_vid_day.delay()
+#         qs = VideoModel.objects.get(pk=84)
+#
+#         #global randomvid2
+#         #return random_vid_day
 
 class VideoModelDetailAPIView(mixins.DestroyModelMixin, mixins.UpdateModelMixin, generics.RetrieveAPIView):
     serializer_class = VideoModelSerializer
