@@ -59,15 +59,15 @@ class VideoModelListAPIView(generics.ListAPIView):
 
     serializer_class = VideoModelSerializer
     pagination_class = StandardResultsPagination
-    filter_backends = [SearchFilter, OrderingFilter]
-
+    filter_backends = [OrderingFilter]
+    ordering_fields = ('title','timestamp')
     #search_fields = ['title', 'timestamp']
     def get_queryset(self, *args, **kwargs):
 
         # im_following = self.request.user.profile.get_following()
         # qs1 = UserProfile.objects.filter(user__in=im_following).order_by("user.username")
         # qs2 = UserProfile.objects.filter(user=self.request.user)
-        qs = VideoModel.objects.all().order_by('timestamp')
+        qs = VideoModel.objects.all().order_by('-timestamp')
         query = self.request.GET.get("q", None)
         if query is not None:
             qs = qs.filter(
@@ -358,6 +358,8 @@ class VideoGenreAPIView(generics.ListAPIView):
 class VideoNewGenreAPIView(generics.ListAPIView):
     serializer_class = VideoModelSerializer
     pagination_class = StandardResultsPagination
+    filter_backends = [OrderingFilter]
+    ordering_fields = ('title','timestamp')
     def get_queryset(self, *args, **kwargs):
         categories = GenreModel.objects.filter(is_category=True)
         category = self.kwargs.get("category")
@@ -367,7 +369,7 @@ class VideoNewGenreAPIView(generics.ListAPIView):
        # genre = categories.get(genrename__iexact=self.kwargs.get("category"))
 
         videos = VideoModel.objects.filter(genre__parent_id=category.pk)
-        qs = videos.filter(genre_id=genre.pk)
+        qs = videos.filter(genre_id=genre.pk).order_by("-timestamp")
 
 
         # im_following = self.request.user.profile.get_following()
@@ -386,10 +388,12 @@ class VideoNewGenreAPIView(generics.ListAPIView):
 class VideoCategoryAPIView(generics.ListAPIView):
     serializer_class = VideoModelSerializer
     pagination_class = StandardResultsPagination
+    filter_backends = [OrderingFilter]
+    ordering_fields = ('title','timestamp')
     def get_queryset(self, *args, **kwargs):
         categories = GenreModel.objects.filter(is_category=True)
         genre = categories.get(genrename__iexact=self.kwargs.get("genrename"))
-        qs = VideoModel.objects.filter(genre__parent_id=genre.pk)
+        qs = VideoModel.objects.filter(genre__parent_id=genre.pk).order_by("-timestamp")
 
         # im_following = self.request.user.profile.get_following()
         # qs1 = UserProfile.objects.filter(user__in=im_following).order_by("user.username")

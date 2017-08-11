@@ -427,3 +427,42 @@ h6 {
 
 }
 
+.aboutpic {
+  height:100px;
+  width:125px;
+  display:inline;
+}
+/*END ABOUT*/
+/*Social Icons*/
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 60px;
+  text-align: center !important;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+#about a:hover {
+  text-decoration: none;
+}
+
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}

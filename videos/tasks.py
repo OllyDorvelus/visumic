@@ -43,6 +43,11 @@ def convert_video_to_mp4(instance_id):
         #instance.input_video = instance.video
     from videos.models import VideoModel
     instance = VideoModel.objects.get(pk=instance_id)
+    ogthumbnail = instance.thumbnail
+    print(ogthumbnail)
+    if ogthumbnail != "vthumbnail.jpg":
+        instance.thumbnail = "vthumbnail.jpg"
+        instance.save()
     video = instance.video.url.replace("/", "", 1)
     #video = 'temp/April.mkv'
     #video = os.path.abspath(instance.video.url)
@@ -59,25 +64,28 @@ def convert_video_to_mp4(instance_id):
         filename = filename#.replace("/", "", 1)
    # subprocess.call("ffmpeg -i {input} {output}.mp4".format(input=video, output=filename))
       #-f mp4 -movflags frag_keyframe+empty_moov
-    subprocess.call("ffmpeg -re -i {input} -f mp4 {output}.mp4".format(input=video, output=filename), shell=True)
-    newvideo = filename + ".mp4"
-    newvideoname = newvideo.replace("temp/", "")
-    videofile = os.path.abspath(newvideo).replace('/app/', '')
-    videoKey = Key(bucket)
-    videoKey.key = 'media/mp4video/' + newvideoname
-    videoKey.set_contents_from_filename(videofile,
-    cb=percent_cb, num_cb=10)
-    instance.video.delete(save=False)
-    instance.video = 'mp4video/' + newvideoname
+    if file_extension != ".mp4":
+        subprocess.call("ffmpeg -re -i {input} -f mp4 {output}.mp4".format(input=video, output=filename), shell=True)
+        newvideo = filename + ".mp4"
+        newvideoname = newvideo.replace("temp/", "")
+        videofile = os.path.abspath(newvideo).replace('/app/', '')
+        videoKey = Key(bucket)
+        videoKey.key = 'media/mp4video/' + newvideoname
+        videoKey.set_contents_from_filename(videofile,
+        cb=percent_cb, num_cb=10)
+        instance.video.delete(save=False)
+        instance.video = 'mp4video/' + newvideoname
+        os.remove(newvideo)
     # instance.video.delete(save=False)
     # instance.video = os.path.relpath(newvideo, 'media')
-    if instance.thumbnail == "vidcraftavatar.png":
+    instance.save()
+    if ogthumbnail == "vthumbnail.jpg":
         title = instance.title
         title = title.replace(" ", "_")
         title = 'temp/' + title + "" + str(randint(0, 100000))
        # print(title)
        # print(video)
-        subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=newvideo, thumbnail=title), shell=True)
+        subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=instance.video.url.replace("/", "", 1), thumbnail=title), shell=True)
         thumbnail = title + ".jpg"
         thumbnailname = thumbnail.replace("temp/", "")
         thumbnailfile = os.path.abspath(thumbnail)
@@ -88,15 +96,17 @@ def convert_video_to_mp4(instance_id):
         #shutil.move(thumbnail, 'media/thumbnails/')
        # os.rename(title, '/media/thumbnails')
         instance.thumbnail = 'thumbnails/' + thumbnailname
+        os.remove(thumbnail)
         #instance.thumbnail = os.path.normpath('thumbnails/' + thumbnail)
-
+    else:
+        instance.thumbnail = ogthumbnail
     instance.save() #uncomm
     print("This will print to the screen first")
     #  instance.input_video.delete(False)
    # video = newvideoname.replace(".mp4", norm_file_extension)
    # video = "media/mp4video/" + video
-    os.remove(newvideo) # uncomm
-    os.remove(thumbnail) #uncomm
+     # uncomm
+     #uncomm
    # os.remove(video)
     return instance
 # @task(name="convert_video_to_mp4")

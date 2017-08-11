@@ -59,7 +59,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     bio = models.TextField(blank=True)
-    timestamp = models.DateField(auto_now=False, auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     profile_banner = models.FileField(validators=[validate_file_extension], default="vbanner.jpg", upload_to='profile_banners')
     objects = UserProfileManager()
 

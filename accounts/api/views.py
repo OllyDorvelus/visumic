@@ -10,8 +10,9 @@ from accounts.models import UserProfile
 from videos.api.serializers import VideoModelSerializer, ShareModelSerializer
 from videos.models import VideoModel
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -41,6 +42,8 @@ class UserView(generics.ListAPIView):
 class UserProfileListAPIView(generics.ListAPIView):
     serializer_class = UserProfileSerializer
     pagination_class = StandardResultsPagination
+    filter_backends = [OrderingFilter]
+    ordering_fields = ('user__username','timestamp')
     def get_queryset(self, *args, **kwargs):
         # im_following = self.request.user.profile.get_following()
         # qs1 = UserProfile.objects.filter(user__in=im_following).order_by("user.username")
@@ -101,7 +104,7 @@ class UserVideoAPIView(generics.ListAPIView):
         username = self.kwargs['username']
         #pk = UserProfile.objects.get(pk=pk)
         user = User.objects.get(username=username)
-        qs = VideoModel.objects.filter(user_id=user.pk)
+        qs = VideoModel.objects.filter(user_id=user.pk).order_by("-timestamp")
         return qs
 
 
@@ -112,7 +115,7 @@ class UserLikedAPIView(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         username = self.kwargs.get("username")
         userprofile = UserProfile.objects.get(user__username=username)
-        return userprofile.user.liked.all()
+        return userprofile.user.liked.all().order_by("-timestamp")
 
 class UserSharedAPIView(generics.ListAPIView):
     serializer_class = ShareModelSerializer
@@ -121,7 +124,7 @@ class UserSharedAPIView(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         user = User.objects.get(username__iexact=self.kwargs.get("username"))
         userprofile = UserProfile.objects.get(pk=user.profile.pk)
-        return userprofile.user.shared.all()
+        return userprofile.user.shared.all().order_by("-timestamp")
 
 class UserFollowerAPIView(generics.ListAPIView):
     serializer_class = UserProfileSerializer

@@ -210,7 +210,7 @@ class GenreModel(models.Model):
 
 class VideoModel(models.Model, HitCountMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, related_name='videos')
-    thumbnail = models.FileField(validators=[validate_file_extension], default="vidcraftavatar.png", upload_to='thumbnails')
+    thumbnail = models.FileField(validators=[validate_file_extension], default="vthumbnail.jpg", upload_to='thumbnails')
     video = models.FileField(upload_to="mp4video", validators=[validate_file_video_extension])
     title = models.CharField(max_length=115)
     liked = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked')
@@ -298,7 +298,7 @@ def post_delete_video_receiver(sender, instance, *args, **kwargs):
    # os.close(video)
    # os.remove(video)
     instance.video.delete(save=False)
-    if instance.thumbnail != "vidcraftavatar.png":
+    if instance.thumbnail != "vidcraftavatar.png" and instance.thumbnail != "vthumbnail.jpg":
         instance.thumbnail.delete(save=False)
 
 

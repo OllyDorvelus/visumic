@@ -93,8 +93,11 @@ class UserRegisterForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
+        lower_username = str(username).lower()
         if User.objects.filter(username__icontains=username).exists():
             raise forms.ValidationError("This username is taken")
+        if lower_username in non_usernames:
+            raise forms.ValidationError("This is not allowed to be a username")
         return username
 
     def clean_email(self):
@@ -106,8 +109,10 @@ class UserRegisterForm(forms.Form):
     def clean_email2(self):
         email = self.cleaned_data.get('email')
         email2 = self.cleaned_data.get('email2')
-        email = email.lower()
-        email2 = email2.lower()
+        email = str(email).lower()
+        email2 = str(email2).lower()
         if email != email2:
             raise forms.ValidationError("Emails must match")
         return email2
+
+non_usernames = ['fuck', 'bitch', 'about', 'sex', 'dick', 'pussy', 'crafters', 'faggots', 'shit', 'playlist', 'videos', 'accounts']

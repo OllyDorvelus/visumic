@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% load staticfiles %}
+<div class='text-center' id='about'>
+  <h1>About Visumic</h1>
+  <img src='{% static 'static/img/visumic_black_logo.png' %}' style='width:260px;height:200px'>
+  <p>
+
+  </p>
+  <h2>One Mic, A Thousand Voices</h2>
+  <h3>A video streaming platform for creative arts such as music, poetry, film & dance.</h3>
+<a href='https://www.facebook.com/Visumic-1062682123868115/' target="_blank" class='fa fa-facebook'></a>
+<a href='https://twitter.com/real_visumic' class='fa fa-twitter' target="_blank"></a>
+<a href='https://www.instagram.com/real_visumic/' class='fa fa-instagram' target="_blank"></a>
+</div>
+<h2>Creators</h2>
+<div style='padding-top:20px'>
+<img src='{% static 'static/img/olly.jpg' %}'  class='img-responsive img-circle aboutpic'>
+<h3 class='inline' style='padding:10px'>Olivier Dorvelus</h3><h4 class='inline'>(Founder & Programmer)</h4>
+  <p style="padding-top:10px">Aims to create a competitive yet fun platform for people with different talents.</p>
+</div>
+
+<div style='padding-top:20px'>
+<img src='{% static 'static/img/chris.jpg' %}'  class='img-responsive img-circle aboutpic'>
+<h3 class='inline' style='padding:10px'>Christopher Dorvelus</h3><h4 class='inline'>(Creative Marketer)</h4>
+  <p style="padding-top:10px">Creative shape and forms data shaping narrative that is sensible , sellable and accessible finding new and innovating ways to sell and promote product</p>
+</div>
+
+<div style='padding-top:20px'>
+<img src='{% static 'static/img/daniel.jpg' %}'  class='img-responsive img-circle aboutpic'>
+<h3 class='inline' style='padding:10px'>Daniel Blanc</h3><h4 class='inline'>(Graphic Designer)</h4>
+    <p style="padding-top:10px">Product Designer</p>
+</div>
+</div>
+{% endblock content %}

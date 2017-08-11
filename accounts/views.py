@@ -198,7 +198,7 @@ class ProfileListView(ListView):
     # paginate_by = 10
 
     def get_queryset(self):
-        add.delay(3,2)
+        #add.delay(3,2)
         return UserProfile.objects.all()
 
     # def get(self, request, *args, **kwargs):

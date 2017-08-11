@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '^p#t67wi=goc+g&0v3-h-=hnt&v*ndrk=sji%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['visumic.herokuapp.com', 'www.visumic.com', '127.0.0.1:8002']
+ALLOWED_HOSTS = ['visumic.herokuapp.com', '.visumic.com', '127.0.0.1:8002']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
@@ -60,10 +60,15 @@ INSTALLED_APPS = [
     'storages',
     "django_cron",
     "djcelery",
+    "django_filters",
    # "django_celery_results",
 
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
 
 #BROKER_URL = 'amqp://ysokecez:tjw61OHXjU49cOFff7oTWZWhDursUxOH@wasp.rmq.cloudamqp.com/ysokecez'
 
