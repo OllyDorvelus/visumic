@@ -88,7 +88,7 @@ def convert_video_to_mp4(instance_id):
         subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=instance.video.url.replace("/", "", 1), thumbnail=title), shell=True)
         thumbnail = title + ".jpg"
         thumbnailname = thumbnail.replace("temp/", "")
-        thumbnailfile = os.path.abspath(thumbnail)
+        thumbnailfile = os.path.abspath(thumbnail).replace('/app/', '')
         thumbnailKey = Key(bucket)
         thumbnailKey.key = 'media/thumbnails/' + thumbnailname
         thumbnailKey.set_contents_from_filename(thumbnailfile,
