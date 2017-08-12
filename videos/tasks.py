@@ -58,10 +58,10 @@ def convert_video_to_mp4(instance_id):
     filename = 'temp/' + path_leaf(filename).replace('/app/', '')# uncomment
    # video = '//s3.us-east-2.amazonaws.com/visumic-bucket/media/mp4video/Nas_-_Cherry_Wine_Explicit_ft._Amy_Winehouse.mp4'
    # video = 'mp4video/' + path_leaf(filename) + file_extension
-   #  if file_extension == ".mp4":
-   #      filename = filename#.replace("/", "", 1) + "_V"
-   #  else:
-   #      filename = filename#.replace("/", "", 1)
+    if file_extension == ".mp4":
+        filename = filename#.replace("/", "", 1) + "_V"
+    else:
+        filename = filename#.replace("/", "", 1)
    # subprocess.call("ffmpeg -i {input} {output}.mp4".format(input=video, output=filename))
       #-f mp4 -movflags frag_keyframe+empty_moov
     if file_extension != ".mp4":
@@ -88,7 +88,7 @@ def convert_video_to_mp4(instance_id):
         subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=instance.video.url.replace("/", "", 1), thumbnail=title), shell=True)
         thumbnail = title + ".jpg"
         thumbnailname = thumbnail.replace("temp/", "")
-        thumbnailfile = os.path.abspath(thumbnail).replace('/app/', '')
+        thumbnailfile = os.path.abspath(thumbnail)
         thumbnailKey = Key(bucket)
         thumbnailKey.key = 'media/thumbnails/' + thumbnailname
         thumbnailKey.set_contents_from_filename(thumbnailfile,
