@@ -34,7 +34,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'officialvisumic@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_HOST_PASSWORD = 'Pebbles1!'
 SERVER_EMAIL = 'officialvisumic@gmail.com'
 DEFAULT_FORM_EMAIL = 'Visumic'
 
