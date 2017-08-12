@@ -59,23 +59,23 @@ def convert_video_to_mp4(instance_id):
    # video = '//s3.us-east-2.amazonaws.com/visumic-bucket/media/mp4video/Nas_-_Cherry_Wine_Explicit_ft._Amy_Winehouse.mp4'
    # video = 'mp4video/' + path_leaf(filename) + file_extension
     if file_extension == ".mp4":
-        filename = filename.replace("/", "", 1) + "_V"
+        filename = filename#.replace("/", "", 1) + "_V"
     else:
         filename = filename#.replace("/", "", 1)
    # subprocess.call("ffmpeg -i {input} {output}.mp4".format(input=video, output=filename))
       #-f mp4 -movflags frag_keyframe+empty_moov
-  #  if file_extension != ".mp4":
-    subprocess.call("ffmpeg -re -i {input} -f mp4 {output}.mp4".format(input=video, output=filename), shell=True)
-    newvideo = filename + ".mp4"
-    newvideoname = newvideo.replace("temp/", "")
-    videofile = os.path.abspath(newvideo).replace('/app/', '')
-    videoKey = Key(bucket)
-    videoKey.key = 'media/mp4video/' + newvideoname
-    videoKey.set_contents_from_filename(videofile,
-    cb=percent_cb, num_cb=10)
-    instance.video.delete(save=False)
-    instance.video = 'mp4video/' + newvideoname
-    os.remove(newvideo)
+    if file_extension != ".mp4":
+        subprocess.call("ffmpeg -re -i {input} -f mp4 {output}.mp4".format(input=video, output=filename), shell=True)
+        newvideo = filename + ".mp4"
+        newvideoname = newvideo.replace("temp/", "")
+        videofile = os.path.abspath(newvideo).replace('/app/', '')
+        videoKey = Key(bucket)
+        videoKey.key = 'media/mp4video/' + newvideoname
+        videoKey.set_contents_from_filename(videofile,
+        cb=percent_cb, num_cb=10)
+        instance.video.delete(save=False)
+        instance.video = 'mp4video/' + newvideoname
+        os.remove(newvideo)
     # instance.video.delete(save=False)
     # instance.video = os.path.relpath(newvideo, 'media')
     instance.save()
@@ -88,7 +88,7 @@ def convert_video_to_mp4(instance_id):
         subprocess.call("ffmpeg -i {video} -ss 00:00:20 -t 00:00:1 -s 1080x720 -r 1 -f singlejpeg {thumbnail}.jpg".format(video=instance.video.url.replace("/", "", 1), thumbnail=title), shell=True)
         thumbnail = title + ".jpg"
         thumbnailname = thumbnail.replace("temp/", "")
-        thumbnailfile = os.path.abspath(thumbnail)
+        thumbnailfile = os.path.abspath(thumbnail).replace('/app/', '')
         thumbnailKey = Key(bucket)
         thumbnailKey.key = 'media/thumbnails/' + thumbnailname
         thumbnailKey.set_contents_from_filename(thumbnailfile,
