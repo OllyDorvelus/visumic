@@ -58,7 +58,7 @@ class UserEditForm(forms.ModelForm):
             user = User.objects.get(username=username)
             print("Try suceed")
         except User.DoesNotExist:
-            if User.objects.filter(username__icontains=username).exists():
+            if User.objects.filter(username__iexact=username).exists():
                 raise forms.ValidationError("This username is taken")
             if lower_username in non_usernames:
                 raise forms.ValidationError("This is not allowed to be a username")
