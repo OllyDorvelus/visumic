@@ -82,6 +82,8 @@ def convert_video_to_mp4(instance_id):
     if ogthumbnail == "vthumbnail.jpg":
         title = instance.title
         title = title.replace(" ", "_")
+        title = title.replace("(", "_")
+        title = title.replace(")", "_")
         title = 'temp/' + title + "" + str(randint(0, 100000))
        # print(title)
        # print(video)
