@@ -51,9 +51,39 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ['username', 'email']
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        lower_username = str(username).lower()
+        try:
+            user = User.objects.get(username=username)
+            print("Try suceed")
+        except User.DoesNotExist:
+            if User.objects.filter(username__icontains=username).exists():
+                raise forms.ValidationError("This username is taken")
+            if lower_username in non_usernames:
+                raise forms.ValidationError("This is not allowed to be a username")
+            if " " in username:
+                raise forms.ValidationError("No Spaces Allowed")
+            return username
+        if str(username).lower() == str(user.username).lower():
+            return username
+        if User.objects.filter(username__icontains=username).exists():
+            raise forms.ValidationError("This username is taken")
+        if lower_username in non_usernames:
+            raise forms.ValidationError("This is not allowed to be a username")
+        if " " in username:
+            raise forms.ValidationError("No Spaces Allowed")
+        return username
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
-
+        username = self.cleaned_data.get('username')
+        try:
+            user  = User.objects.get(username__iexact=username)
+        except User.DoesNotExist:
+            return email
+        if str(email).lower() == str(user.email).lower():
+            return email
         if User.objects.filter(email__icontains=email).exclude().exists():
             raise forms.ValidationError("This email is already registered.")
         return email
