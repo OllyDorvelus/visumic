@@ -13,6 +13,11 @@
 </body>
 
     <script>
+        Cookies.set("timeSortCookieCat", "")
+        Cookies.set("searchQueryCookieCat", "")
+        Cookies.set("searchQueryCookieGen", "")
+        Cookies.set("timeSortCookieGen", "")
+        {% block searchCookie %}
 
 
     $(document).ready(function() {
@@ -159,9 +164,11 @@
          searchInput.keydown(function(event){
             clearTimeout(typingTimer)
         })
+var searchQueryCookie = Cookies.set("searchQueryCookie")
         function doneSearchTyping(){
           if (searchQuery){
             // do search
+              Cookies.set("searchQueryCookie", searchQuery)
             if(timeSortCookie) {
                 var url = '/videos/browse/?q=' + searchQuery + '&ordering=' + timeSortCookie
             }
@@ -171,7 +178,8 @@
             document.location.href = url;
           }
             else {
-              var url = '/videos/browse/'
+              Cookies.set("searchQueryCookie", "")
+              var url = '/videos/browse/?ordering=' + timeSortCookie
               document.location.href = url;
           }
         }
@@ -187,8 +195,9 @@
 
         if (selectedVal) {
             // do search
-            if(searchQuery) {
-            var url = '/videos/browse/?ordering=' + selectedVal + '&q=' + searchQuery
+            if(searchQueryCookie) {
+            var url = '/videos/browse/?ordering=' + selectedVal + '&q=' + searchQueryCookie
+
             }
             else {
                 var url = '/videos/browse/?ordering=' + selectedVal
@@ -197,14 +206,22 @@
             document.location.href = url;
         }
         else {
-            var url = '/videos/browse/'
-            document.location.href = url;
+            if(searchQueryCookie) {
+                var url = '/videos/browse/?q=' + searchQueryCookie
+            } else {
+
+                var url = '/videos/browse/'
+
+            }
+
+             document.location.href = url;
+
         }
     });
+console.log(document.location.href)
+console.log("Hello Man")
 
-
-
-var timeSortCookie = Cookies.set( "timeSortCookie" ),
+var timeSortCookie = Cookies.set( "timeSortCookie"),
     selElem = $('select[name=Sort]');
 console.log( timeSortCookie );
 selElem.on('change', function() {
@@ -212,9 +229,15 @@ selElem.on('change', function() {
 });
 if( timeSortCookie != undefined ) {
     selElem.val( timeSortCookie );
+
 } else {
     Cookies.set( "timeSortCookie", selElem.val() );
+
 }
+
+        {% endblock searchCookie %}
+
+
 
 
 

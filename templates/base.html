@@ -144,6 +144,19 @@
 <!-- Jquery -->
 
 <script>
+ {% block searchCookie %}
+     Cookies.set("timeSortCookie", "")
+    Cookies.set("searchQueryCookie", "")
+  {% endblock searchCookie %}
+{% block searchCookieCat %}
+    Cookies.set("timeSortCookieCat", "")
+   Cookies.set("searchQueryCookieCat", "")
+{% endblock searchCookieCat %}
+{% block searchCookieGen %}
+    Cookies.set("searchQueryCookieGen", "")
+    Cookies.set("timeSortCookieGen", "")
+{% endblock searchCookieGen %}
+
 
         Cookies.set("example");
     Cookies.set("menuOpen");

@@ -26,6 +26,7 @@ function getCookie(name) {
 }
 
 
+
 console.log(localStorage.getItem("sideOpen"))
 
 //global functions withload doc ready

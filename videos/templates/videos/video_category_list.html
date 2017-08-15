@@ -6,8 +6,13 @@
 
 
     <script>
+    Cookies.set("timeSortCookie", "")
+    Cookies.set("searchQueryCookie", "")
+    Cookies.set("searchQueryCookieGen", "")
+    Cookies.set("timeSortCookieGen", "")
 
-
+    {% block searchCookieCat %}
+var timeSortCookieCat = Cookies.set( "timeSortCookieCat" )
     $(document).ready(function() {
 
         function attachVideo(videoValue, prepend) {
@@ -45,6 +50,7 @@
         }
 
         var query = getParameterByName('q')
+        var ordering = getParameterByName('ordering')
         var videoList = [];
         var nextVideoUrl;
 //        console.log(query)
@@ -77,7 +83,8 @@
             $.ajax({
             url: fetchUrl,
             data: {
-                "q": query
+                "q": query,
+                "ordering": ordering
             },
             beforeSend: function() {
               $("#loading-image").show();
@@ -137,17 +144,30 @@
          searchInput.keydown(function(event){
             clearTimeout(typingTimer)
         })
+var searchQueryCookieCat = Cookies.set("searchQueryCookieCat")
         function doneSearchTyping(){
+
           if (searchQuery){
             // do search
-            var url = '/videos/category/' + "{{ category.genrename }}" + '/?q=' + searchQuery
+            Cookies.set("searchQueryCookieCat", searchQuery)
+            if(timeSortCookieCat) {
+                var url ='/videos/category/' + "{{ category.genrename }}" + '/?q=' + searchQuery + '&ordering=' + timeSortCookieCat
+            }
+              else {
+                url = '/videos/category/' + "{{ category.genrename }}" + '/?q=' + searchQuery
+            }
             document.location.href = url;
           }
             else {
-              var url = '/videos/browse'
+               Cookies.set("searchQueryCookieCat", "")
+              var url = '/videos/category/' + "{{ category.genrename }}" + "/?ordering=" + timeSortCookieCat
               document.location.href = url;
           }
         }
+
+
+
+
 
 
     $('select[name=Sort]').change(function () {
@@ -161,8 +181,8 @@
 
         if (selectedVal) {
             // do search
-            if(searchQuery) {
-            var url = '/videos/category/' + "{{ category.genrename }}" + '/?ordering=' + selectedVal + '&q=' + searchQuery
+            if(searchQueryCookieCat) {
+            var url = '/videos/category/' + "{{ category.genrename }}" + '/?ordering=' + selectedVal + '&q=' + searchQueryCookieCat
             }
             else {
                 var url = '/videos/category/' + "{{ category.genrename }}" + '/?ordering=' + selectedVal
@@ -171,25 +191,33 @@
             document.location.href = url;
         }
         else {
-            var url = '/videos/category/' + "{{ category.genrename }}"
-            document.location.href = url;
+            if(searchQueryCookieCat) {
+                var url = '/videos/category/' + "{{ category.genrename }}" + "/?q=" + searchQueryCookieCat
+            } else {
+
+                var url = '/videos/category/' + "{{ category.genrename }}" + "/"
+
+            }
+
+             document.location.href = url;
+
         }
     });
 
-var timeSortCookieCat = Cookies.set( "timeSortCookieCat" ),
+
     selElem = $('select[name=Sort]');
 console.log( timeSortCookieCat );
 selElem.on('change', function() {
     Cookies.set( "timeSortCookieCat", this.value );
 });
 if( timeSortCookieCat != undefined ) {
-    selElem.val( timeSortCookieCat );
+    selElem.val(timeSortCookieCat);
 } else {
     Cookies.set( "timeSortCookieCat", selElem.val() );
 }
 
 
-
+{% endblock searchCookieCat %}
     });
 </script>
 {% include "videos/video_search_form.html" %}
