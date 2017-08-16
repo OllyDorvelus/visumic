@@ -419,6 +419,7 @@ h6 {
 .randomvid {
   height:400px;
   width:50%;
+
 }
 
 #related-container {
@@ -465,4 +466,81 @@ h6 {
 .fa-instagram {
   background: #125688;
   color: white;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+
+.notification-menu {
+    width:250px;
+}
+.notification {
+    float:left;
+}
+.notification li {
+    color:black;
+    list-style:none;
+
+
+}
+
+.notification li:hover {
+    background-color:black;
+    color:white;
+}
+
+.menu {
+    text-align:center;
+    /*float:left;*/
+    /*background-color:#CCCCCC;*/
+    /*padding-top:10px;*/
+    /*padding-bottom:10px;*/
+    position:relative
+}
+
+.menu_label {
+    /*width:154px;*/
+    /*color:#FFFFFF;*/
+    /*background-color:#F43B05;*/
+    /*float:left;*/
+    /*padding:3px;*/
+    /*position:absolute;*/
+    /*top:5px;*/
+    font-size:12px;
+    display:inline;
+
+    /*left:5px;*/
+}
+
+.photoStyle{
+    max-width:50px;
+    border:0px;
+    margin:auto;
+}
+
+.notification-list {
+
+}
+
+.notification-list li {
+    text-decoration: none;
+    color:black;
+    list-style-type:none;
+    font-size:1.5em;
+    padding-top:10px;
+    display:table;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.notification-list li:hover {
+    color:white;
+    background-color:black !important;
+}
+
+.notification-list a:hover {
+    text-decoration: none;
 }

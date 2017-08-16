@@ -1,0 +1,26 @@
+
+
+<div class="alert alert-block alert-{{ notice.level }}">
+  <a class="close pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}">
+    <i class="icon-close"></i>
+  </a>
+
+  <h5>
+    <i class="icon-mail{% if notice.unread %}-alt{% endif %}"></i>
+<div class="text-center notification-list" style="display:inline">
+
+
+   {% if " shared your video: " in notice.verb  %}<a href="{% url 'accounts:social' %}"{% else %}<a href="{{ notice.target.get_absolute_url }}"{% endif %}><li>{{ notice.actor }} {{ notice.verb }}</li></a>
+</div>
+  </h5>
+
+  <p class="text-center">{{ notice.timesince }} ago</p>
+
+{#  <p>{{ notice.description|linebreaksbr }}</p>#}
+
+  <div class="notice-actions">
+    {% for action in notice.data.actions %}
+      <a class="btn" href="{{ action.href }}">{{ action.title }}</a>
+    {% endfor %}
+  </div>
+</div>

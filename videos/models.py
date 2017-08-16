@@ -3,6 +3,7 @@ import os
 from accounts.validators import validate_file_extension, validate_file_video_extension
 from hitcount.models import HitCount, HitCountMixin
 from django.utils import timezone
+from django.utils.timesince import timesince
 from django.db import models
 from django.conf import settings
 from django.urls import reverse_lazy, reverse
@@ -10,7 +11,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db.models.signals import post_save, post_delete, pre_delete
 import string
 import random
-
+from notifications.signals import notify
 
 import subprocess
 from django.db.utils import IntegrityError
@@ -139,6 +140,7 @@ class VideoModelManager(models.Manager):
         else:
             is_liked = True
             video_obj.liked.add(user)
+            notify.send(user, recipient=video_obj.user, verb=' liked your video: ' + video_obj.title, target=video_obj)
         return is_liked
 
     def likes_count(self, video_obj):
@@ -267,7 +269,6 @@ class VideoModel(models.Model, HitCountMixin):
 # print(ready2party.input_video.url)
 def post_save_video_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        print("nice")
         #videokey = instance.pk
         convert_video_to_mp4.delay(instance.pk)
       #   #instance.input_video = instance.video
@@ -325,6 +326,13 @@ class CommentModel(models.Model):
         return self.user.username + "-" + self.comment
 
 
+def post_save_comment_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        notify.send(instance.user, recipient=instance.video.user, verb=" commented on your video: " + instance.video.title, target=instance.video)
+
+post_save.connect(post_save_comment_receiver, sender=CommentModel)
+
+
 class ShareModel(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='shared')
     video = models.ForeignKey(VideoModel, related_name='shares', on_delete=models.CASCADE)
@@ -333,7 +341,12 @@ class ShareModel(models.Model):
 
     def __str__(self):
         return self.user.username + '-' + self.content
+def post_save_share_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        #videokey = instance.pk
+        notify.send(instance.user, recipient=instance.video.user, verb=" shared your video: " + instance.video.title, target= instance.video)
 
+post_save.connect(post_save_share_receiver, sender=ShareModel)
 
 class ShareCommentModel(models.Model):
     share = models.ForeignKey(ShareModel, related_name='sharecomments', on_delete=models.CASCADE)

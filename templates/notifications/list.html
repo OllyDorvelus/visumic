@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{#{% load notifications_tags %}#}
+{#    {% load staticfiles %}#}
+{#<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>#}
+{#{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' refresh_period='3' %}#}
+{#{% live_notify_badge  %}#}
+{#    {% live_notify_list classes='text-center read' %}#}
+{#    {% notifications_unread as unread_count %}#}
+<ul class="notifications">
+  {% for notice in notifications %}
+    {% include 'notifications/notice.html' %}
+  {% endfor %}
+</ul>
+{% endblock content %}

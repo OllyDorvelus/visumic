@@ -118,6 +118,29 @@
             <li><a href="{% url 'accounts:logout' %}?next={{request.path}}">Logout</a></li>
           </ul>
         </li>
+
+            {% load notifications_tags %}
+                {% load staticfiles %}
+
+            <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+
+            {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' refresh_period='3' fetch='100' %}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <div class="menu">
+              <img src="{% static 'static/img/noti4.png' %}" class="img-responsive img-circle navimg photoSytle read_notifications" style="display:inline">
+                  <span class="menu_label">{% live_notify_badge  %}</span>
+
+
+
+
+            </div>
+            </a>
+          <ul class="dropdown-menu scrollable-menu notification-menu">
+            {% live_notify_list classes='notification'  %}
+            <li class="text-center"><a href="{% url 'notifications:all' %}">See All</a></li>
+          </ul>
+        </li>
           {% else %}
                     <li><a href="#" class="login">Login <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a></li>
                     <li><a href="#" class="register">Register <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
@@ -284,6 +307,12 @@ $('#menu-toggle').click(function(e) {
             }
 
         })
+    $(".read_notifications").click(function(){
+    $.ajax({url: "{% url 'notifications:mark_all_as_read' %}", success: function(result){
+        console.log("got link")
+    }
+    });
+            })
             })
 
 </script>

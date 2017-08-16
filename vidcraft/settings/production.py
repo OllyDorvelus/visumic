@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "django_cron",
     "djcelery",
     "django_filters",
+    'notifications'
    # "django_celery_results",
 
 

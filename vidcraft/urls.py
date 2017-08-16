@@ -23,7 +23,7 @@ from hashtags.api.views import TagVideoAPIView, TagListAPIView
 from .views import home
 from accounts.views import UserLoginFormView
 from django.contrib.auth import views as auth_views
-
+import notifications.urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^about/', views.about, name='about'),
@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^accounts/reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
     url(r'^accounts/login/$', auth_views.login, name='authlogin'),
     url(r'^accounts/change_password/$', auth_views.password_change, {'post_change_redirect': 'accounts:home'}, name='password_change'),
+    url('^notifications/', include(notifications.urls, namespace='notifications')),
 
     url(r'^', include('charts.urls', namespace="charts")),
     url(r'^api/accounts/', include('accounts.api.urls', namespace='accountsapi')),
