@@ -347,6 +347,8 @@ class ShareFollowingAPIView(generics.ListAPIView):
         return qs
 
 
+# followingusers = userprofile.following.all()
+# print(followingusers)
 
 class VideoGenreAPIView(generics.ListAPIView):
     serializer_class = VideoModelSerializer

@@ -267,10 +267,17 @@ class VideoModel(models.Model, HitCountMixin):
 # ready2party.input_video = os.path.relpath(newvideo, 'media')
 # ready2party.save()
 # print(ready2party.input_video.url)
+from accounts.models import UserProfile
+from django.contrib.auth import get_user_model
+User = get_user_model()
 def post_save_video_receiver(sender, instance, created, *args, **kwargs):
     if created:
         #videokey = instance.pk
         convert_video_to_mp4.delay(instance.pk)
+        user = User.objects.get(pk=instance.user.pk)
+        followers = user.followed_by.all()
+        followers = User.objects.filter(profile__in=followers)
+        notify.send(instance.user, recipient=followers, verb=" uploaded a new video: " + instance.title, target=instance)
       #   #instance.input_video = instance.video
       #   video = instance.video.url.replace("/", "", 1)
       #   #video = os.path.abspath(instance.video.url)
@@ -345,6 +352,7 @@ def post_save_share_receiver(sender, instance, created, *args, **kwargs):
     if created:
         #videokey = instance.pk
         notify.send(instance.user, recipient=instance.video.user, verb=" shared your video: " + instance.video.title, target= instance.video)
+
 
 post_save.connect(post_save_share_receiver, sender=ShareModel)
 
