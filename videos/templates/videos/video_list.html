@@ -18,7 +18,7 @@
         Cookies.set("searchQueryCookieGen", "")
         Cookies.set("timeSortCookieGen", "")
         {% block searchCookie %}
-
+        {% endblock searchCookie %}
 
     $(document).ready(function() {
 
@@ -218,6 +218,7 @@ var searchQueryCookie = Cookies.set("searchQueryCookie")
 
         }
     });
+
 console.log(document.location.href)
 console.log("Hello Man")
 
@@ -244,8 +245,9 @@ if( timeSortCookie != undefined ) {
 
 
     });
-        {% endblock searchCookie %}
+
 </script>
+
 {% include "videos/video_search_form.html" %}
     <div class='container-fluid'><div class='row'>
 {#    <li class="dropdown" style="list-style:none;display:inline">#}

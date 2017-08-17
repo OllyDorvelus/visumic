@@ -11,7 +11,7 @@
     Cookies.set("timeSortCookie", "")
     Cookies.set("searchQueryCookie", "")
         {% block searchCookieGen %}
-
+        {% endblock searchCookieGen %}
     $(document).ready(function() {
 
         function attachVideo(videoValue, prepend) {
@@ -212,7 +212,7 @@ if( timeSortCookieGen != undefined ) {
 
 
     });
-{% endblock searchCookieGen %}
+
 </script>
 {% include "videos/video_search_form.html" %}
     <div class='container-fluid'><div class='row'>
