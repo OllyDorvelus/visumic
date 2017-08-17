@@ -181,7 +181,7 @@
 {% endblock searchCookieGen %}
 
 
-        Cookies.set("example");
+    Cookies.set("example");
     Cookies.set("menuOpen");
     localStorage.setItem('myCat', 'Tom');
     localStorage.setItem('sideMenuOpen', 'true');
@@ -307,12 +307,16 @@ $('#menu-toggle').click(function(e) {
             }
 
         })
-    $(".read_notifications").click(function(){
-    $.ajax({url: "{% url 'notifications:mark_all_as_read' %}", success: function(result){
-        console.log("got link")
-    }
-    });
+
+        $(".read_notifications").click(function() {
+            $.ajax({
+                url: "{% url 'notifications:mark_all_as_read' %}",
+                success: function(result) {
+                    console.log("got link")
+                }
             })
+        })
+
             })
 
 </script>
