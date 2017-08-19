@@ -179,7 +179,10 @@
     Cookies.set("searchQueryCookieGen", "")
     Cookies.set("timeSortCookieGen", "")
 {% endblock searchCookieGen %}
-
+ {% block searchCookieAcc %}
+    Cookies.set("searchQueryCookieProfile", "")
+    Cookies.set("timeSortCookieAcc", "")
+ {% endblock searchCookieAcc %}
 
     Cookies.set("example");
     Cookies.set("menuOpen");

@@ -17,6 +17,14 @@
 </body>
 </html>
 <script>
+        Cookies.set("timeSortCookie", "")
+        Cookies.set("searchQueryCookie", "")
+        Cookies.set("timeSortCookieCat", "")
+        Cookies.set("searchQueryCookieCat", "")
+        Cookies.set("searchQueryCookieGen", "")
+        Cookies.set("timeSortCookieGen", "")
+        {% block searchCookieAcc %}
+        {% endblock searchCookieAcc %}
             function getParameterByName(name, url) {
         if (!url) {
             url = window.location.href;
@@ -147,14 +155,22 @@
          searchInput.keydown(function(event){
             clearTimeout(typingTimer)
         })
+var searchQueryCookieProfile = Cookies.set("searchQueryCookieProfile")
         function doneSearchTyping(){
           if (searchQuery){
             // do search
-            var url = '/crafters/?q=' + searchQuery
+              Cookies.set("searchQueryCookieProfile", searchQuery)
+            if(timeSortCookieAcc) {
+                var url = '/crafters/?q=' + searchQuery + '&ordering=' + timeSortCookieAcc
+            }
+              else {
+                url = '/crafters/?q=' + searchQuery
+            }
             document.location.href = url;
           }
             else {
-              var url = '/crafters/'
+              Cookies.set("searchQueryCookieProfile", "")
+              var url = '/videos/browse/?ordering=' + timeSortCookieAcc
               document.location.href = url;
           }
         }
@@ -170,8 +186,9 @@
 
         if (selectedVal) {
             // do search
-            if(searchQuery) {
-            var url = '/crafters/?ordering=' + selectedVal + '&q=' + searchQuery
+            if(searchQueryCookieProfile) {
+            var url = '/crafters/?ordering=' + selectedVal + '&q=' + searchQueryCookieProfile
+
             }
             else {
                 var url = '/crafters/?ordering=' + selectedVal
@@ -180,8 +197,16 @@
             document.location.href = url;
         }
         else {
-            var url = '/crafters/'
-            document.location.href = url;
+            if(searchQueryCookie) {
+                var url = '/crafters/?q=' + searchQueryCookieProfile
+            } else {
+
+                var url = '/crafters/'
+
+            }
+
+             document.location.href = url;
+
         }
     });
 
