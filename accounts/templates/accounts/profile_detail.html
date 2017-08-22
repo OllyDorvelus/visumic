@@ -124,6 +124,7 @@
                 if (videoList == 0) {
                     $("#uservideos").text("No Uploaded Videos")
                     $("#uservideos").addClass('text-center')
+                    $("#userliked").removeClass("fix")
                 } else {
                     //tweets exist, parse & display them
 
@@ -232,7 +233,7 @@
     <div class="container-fluid">
 {% block profilecontent %}
 
-        <div class="row" id="uservideos" style="padding:20px;">
+        <div class="row fix" id="uservideos" style="padding:20px;">
 
 
     </div>

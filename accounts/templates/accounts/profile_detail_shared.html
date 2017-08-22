@@ -47,6 +47,7 @@
             if (videoList == 0) {
                 $("#usershared").text("Shared No Videos")
                 $("#usershared").addClass('text-center')
+                $("#usershared").removeClass("fix")
             } else {
                 //tweets exist, parse & display them
 
@@ -106,7 +107,7 @@
     })
 </script>
     <title>{% block title %}{{ User.username }} | Shared{% endblock title %}</title>
-<div class="row" id="usershared" style="padding:20px;">
+<div class="row fix" id="usershared" style="padding:20px;">
 
 
 

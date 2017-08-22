@@ -47,6 +47,7 @@
             if (videoList == 0) {
                 $("#userliked").text("No Liked Videos")
                 $("#userliked").addClass('text-center')
+                $("#userliked").removeClass("fix")
             } else {
                 //tweets exist, parse & display them
 
@@ -106,7 +107,7 @@
     })
 </script>
     <title>{% block title %}{{ User.username }} | Liked{% endblock title %}</title>
-<div class="row" id="userliked" style="padding:20px;">
+<div class="row fix" id="userliked" style="padding:20px;">
 
 
 
