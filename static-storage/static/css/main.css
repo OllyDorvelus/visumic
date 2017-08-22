@@ -544,3 +544,24 @@ h6 {
 .notification-list a:hover {
     text-decoration: none;
 }
+
+/*#video-container{display: -webkit-flex;*/
+   /*display: flex;*/
+   /*-webkit-justify-content: center;*/
+   /*justify-content: center;*/
+   /*-webkit-flex-direction: row;*/
+   /*flex-direction: row;*/
+   /*-webkit-flex-wrap: wrap;*/
+   /*flex-wrap: wrap;*/
+   /*-webkit-flex-flow: row wrap;*/
+   /*flex-flow: row wrap;*/
+  /*}*/
+/*.col-md-3{ padding:10px; min-height:100%; width:25%;float:left}*/
+
+
+
+.row.fix {
+  display: flex;
+  flex-wrap: wrap;
+  width:100%; /*not always necessary*/
+}
