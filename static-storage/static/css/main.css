@@ -177,6 +177,10 @@ h6 {
   display:inline;
 }
 
+.inline-block {
+    display:inline-block
+}
+
 .block {
     display:block;
 }
@@ -297,6 +301,8 @@ h6 {
   background-color:black;
 }
 
+
+
 .whiteline {
   height:1px;
   background-color:white;
@@ -304,6 +310,10 @@ h6 {
 
 .blacklink {
     color:black;
+}
+
+.blacklink:hover {
+    text-decoration: underline;
 }
 
 #profilelist  ul  li {
