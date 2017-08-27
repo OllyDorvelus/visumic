@@ -24,8 +24,13 @@ from .views import home
 from accounts.views import UserLoginFormView
 from django.contrib.auth import views as auth_views
 import notifications.urls
+from django.contrib.auth import views as auth_views
+
+#from vidcraft.core import views as core_views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^about/', views.about, name='about'),
     url(r'^hashtags/$', HashTagList.as_view(), name='hashtags'),
     url(r'^accounts/password_reset/$', auth_views.password_reset, name='password_reset'),

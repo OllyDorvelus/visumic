@@ -24,6 +24,7 @@
                                     <input type="hidden" name="next" value="{{ next }}">
                                 <a href= "#"  data-dismiss="modal" /><button type="button" class="btn btn-primary register">Register</button></a>
                                 <a href="{% url 'password_reset' %}" style="display:block;padding-top:10px">Forgot Password?</a>
+                            <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
                             </div>
                         </div>
                     </form>
