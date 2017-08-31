@@ -4,6 +4,7 @@
 <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 <script src="//vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 <script src="//vjs.zencdn.net/5.8.8/video.js"></script>
+
 <title>{{ video.title }}</title>
 
 <script>
@@ -45,7 +46,8 @@ $(document).ready(function() {
 
             if (prepend == true) {
                 $("#commentsection").prepend(commentFormatHtml)
-                commentFormatHtml
+              // commentFormatHtml
+                $('#commentsection').linkify();
             }
             else {
                 if(!commentValue.reply) {
@@ -99,7 +101,8 @@ $(document).ready(function() {
 "<h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><div class='row' style='padding-top:8px'><h6>" + commentValue.timesince + "</h6></div><hr></div></div>"
             if (prepend == true) {
                 $("#commentsection").prepend(commentFormatHtml)
-                commentFormatHtml
+
+                //commentFormatHtml
             }
             else {
                 if(!commentValue.reply) {
@@ -109,6 +112,7 @@ $(document).ready(function() {
                 }
                 else {
                     $('#' + commentParent.id ).append(commentFormatHtml2)
+                    $('#commentsection').linkify();
                 }
             }
 
@@ -187,6 +191,7 @@ $(document).ready(function() {
                     $("#loadmorecomments").css("display", "none");
                 }
                 parseComments()
+                $('#commentsection').linkify();
                 $("#loading-image").hide();
             },
             error: function(data){
@@ -220,6 +225,7 @@ $(document).ready(function() {
                     $("#loadmorereplies").css("display", "none");
                 }
                 parseCommentReplies()
+                $('#commentsection').linkify();
             },
             error: function(data){
                 console.log("error")
@@ -525,6 +531,7 @@ var commentId = 0
             }
 
         })
+$('#description').linkify();
 
 });
 

@@ -29,14 +29,20 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['visumic.herokuapp.com', '.visumic.com', '127.0.0.1:8002']
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'officialvisumic@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Pebbles1!'
+# SERVER_EMAIL = 'officialvisumic@gmail.com'
+# DEFAULT_FORM_EMAIL = 'Visumic'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'OJDorvelus'
+EMAIL_HOST_PASSWORD = 'Pebbles1'
 EMAIL_PORT = 587
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'officialvisumic@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pebbles1!'
-SERVER_EMAIL = 'officialvisumic@gmail.com'
-DEFAULT_FORM_EMAIL = 'Visumic'
+EMAIL_USE_TLS = True
 
 # import djcelery
 # djcelery.setup_loader()

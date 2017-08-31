@@ -252,7 +252,7 @@
   })
 
 
-
+$('#playlistdesc').linkify();
   })
 
 
@@ -262,7 +262,7 @@
 
 
 </div>
-    <h2 class='text-center'>{{ playlist.name }}</h2><h5 class="text-center">{{ playlist.description }}</h5>{% if request.user == playlist.user %}<span class="btn btn-primary playlistedit">Edit</span><span class="btn btn-primary deleteplaylist-btn">Delete</span>{% endif %}
+    <h2 class='text-center'>{{ playlist.name }}</h2><h5 class="text-center" id="playlistdesc">{{ playlist.description }}</h5>{% if request.user == playlist.user %}<span class="btn btn-primary playlistedit">Edit</span><span class="btn btn-primary deleteplaylist-btn">Delete</span>{% endif %}
     <div class='row'>
       <div class='col-md-12 blackline'></div>
     </div>
