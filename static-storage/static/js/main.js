@@ -287,13 +287,7 @@ function preventModalClose() {
   }
 
 
-  function updateUrlLinks() {
-      $(".url").each(function (data) {
-          var urlRegex = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-          var newText = $(this).html().replace(urlRegex, "$1<a href='/hashtag/$2/'>$1</a>")
-          $(this).html(newText)
-      })
-  }
+
 
 
 

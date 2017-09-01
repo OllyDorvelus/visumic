@@ -39,8 +39,8 @@ ALLOWED_HOSTS = ['visumic.herokuapp.com', '.visumic.com', '127.0.0.1:8002']
 # DEFAULT_FORM_EMAIL = 'Visumic'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'OJDorvelus'
-EMAIL_HOST_PASSWORD = 'Pebbles1'
+EMAIL_HOST_USER = os.environ.get("SENDGRID_USERNAME")
+EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

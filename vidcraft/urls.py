@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^accounts/reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
     url(r'^accounts/login/$', auth_views.login, name='authlogin'),
     url(r'^accounts/change_password/$', auth_views.password_change, {'post_change_redirect': 'accounts:home'}, name='password_change'),
+    url(r'^notifications/api/unread_list/$', views.live_unread_notification_list, name='live_unread_list'),
     url('^notifications/', include(notifications.urls, namespace='notifications')),
 
     url(r'^', include('charts.urls', namespace="charts")),
