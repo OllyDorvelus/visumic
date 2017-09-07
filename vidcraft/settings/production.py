@@ -68,7 +68,10 @@ INSTALLED_APPS = [
     "djcelery",
     "django_filters",
     'notifications',
-    'social_django'
+
+    'social_django',
+
+
    # "django_celery_results",
 
 

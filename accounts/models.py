@@ -83,10 +83,10 @@ class UserProfile(models.Model):
         super(UserProfile, self).save(*args, **kwargs)
 
 
-class UserMessages(models.Model):
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sender')
-    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='receiver')
-    message = models.TextField()
+# class UserMessages(models.Model):
+#     sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sender')
+#     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='receiver')
+#     message = models.TextField()
 
 
 

@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^accounts/change_password/$', auth_views.password_change, {'post_change_redirect': 'accounts:home'}, name='password_change'),
     url(r'^notifications/api/unread_list/$', views.live_unread_notification_list, name='live_unread_list'),
     url('^notifications/', include(notifications.urls, namespace='notifications')),
+    #url(r'^messages/', include('django_messages.urls')),
 
     url(r'^', include('charts.urls', namespace="charts")),
     url(r'^api/accounts/', include('accounts.api.urls', namespace='accountsapi')),

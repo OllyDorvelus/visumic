@@ -549,10 +549,11 @@ h6 {
 .notification-list li:hover {
     color:white;
     background-color:black !important;
+    text-decoration: none !important;
 }
 
 .notification-list a:hover {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 /*#video-container{display: -webkit-flex;*/

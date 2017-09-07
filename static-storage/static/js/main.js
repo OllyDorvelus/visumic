@@ -312,7 +312,7 @@ $(document).ready(function() {
 
         }
             updateHashLinks()
-            updateUrlLinks()
+
     });
 
     $(".morelink").click(function () {
