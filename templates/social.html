@@ -208,11 +208,12 @@
 </script>
 
 <div class="container-fluid">
-  <h1 class="text-center">Visumic | A Place To Enjoy The Arts</h1>
+  <h3 class="text-center"><strong>Visumic | A Place To Enjoy The Arts</strong></h3>
+
 <ul class="topbar text-center">
-  <div><li><a href="{% url 'accounts:home' %}">General</a></li></div>
-  <div><li><a href="{% url 'accounts:social' %}">Feed</a></li></div>
-   {% if request.user.is_authenticated %}
+  <div><li><a href="{% url 'accounts:home' %}"><strong>General</strong</a></li></div>
+  <div><li><a href="{% url 'accounts:social' %}"><strong>Feed</strong></a></li></div>
+    {% if request.user.is_authenticated %}
   <div><li><a href="{% url 'videos:video_upload' %}">Upload</a></li></div>
     {% endif %}
 </ul>

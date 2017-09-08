@@ -53,6 +53,7 @@
 
             if (recentVideoList == 0) {
                 $("#recentvidcontainer").text("No Videos Currently Found.")
+                $("#recentvidcontainer").addClass("text-center")
             } else {
                 //tweets exist, parse & display them
 
@@ -340,15 +341,26 @@
 
 <div class="container-fluid">
 <title>Visumic</title>
-  <h1 class="text-center">Visumic | A Place To Enjoy The Arts</h1>
+
+  <h3 class="text-center"><strong>Visumic | A Place To Enjoy The Arts</strong></h3>
+{% if  not request.user.is_authenticated %}
+    <h4 class="text-center">To begin uploading videos please <button class="btn btn-primary register">Register</button> or <button class="btn btn-primary login">Login</button></h4>
+  {% endif %}
 <ul class="topbar text-center">
-  <div><li><a href="{% url 'accounts:home' %}">General</a></li></div>
-  <div><li><a href="{% url 'accounts:social' %}">Feed</a></li></div>
+  <div><li><a href="{% url 'accounts:home' %}"><strong>General</strong></a></li></div>
+  <div><li><a href="{% url 'accounts:social' %}"><strong>Feed</strong></a></li></div>
     {% if request.user.is_authenticated %}
-  <div><li><a href="{% url 'videos:video_upload' %}">Upload</a></li></div>
+  <div><li><a href="{% url 'videos:video_upload' %}"><strong>Upload</strong></a></li></div>
     {% endif %}
 </ul>
-
+<div class="text-center">
+    <h4><strong>Check out the first web series on Visumic</strong></h4>
+  <h5 class="inline">{{ playlist.user.username }}</h5><h6 class="inline"><span class='glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>
+  {{ playlist.user.followed_by.count }}</h6>
+  <h6 class="inline"><span class= 'glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>{{ playlist.videos.all.count }}</h6>
+      <div><a href="{{ playlist.get_absolute_url }}"><img src="{{ thumbnail.url }}" class="thumbnail randomvid img-responsive centerimg" style="display:inline-block"/></a></div>
+      <a href="{{ playlist.get_absolute_url }}"/><h5 class="blacklink">{{ playlist.name }}</h5></a>
+</div>
 <div id="randomvid" class="text-center">
 {% load static %}
     <div id="myDiv" class="text-center">

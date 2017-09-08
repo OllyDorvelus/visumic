@@ -3,9 +3,11 @@ __author__ = 'OllyD'
 from django.shortcuts import render
 from django.forms import model_to_dict
 from django.http import JsonResponse
+from videos.models import PlaylistModel
 
 
 def home(request):
+
     return render(request, "index.html", {})
 
 def about(request):

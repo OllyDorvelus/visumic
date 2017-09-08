@@ -19,6 +19,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from videos.forms import ShareEditForm
+from videos.models import PlaylistModel
 from accounts.tasks import add
 
 
@@ -274,7 +275,14 @@ class UserUpdateView(UpdateView, LoginRequiredMixin):
 
 
 def home(request):
-    return render(request, "index.html", {})
+    try:
+        playlist = PlaylistModel.objects.get(pk=3)
+        video = playlist.videos.all()[0]
+        thumbnail = video.thumbnail
+    except PlaylistModel.DoesNotExist:
+        playlist = None
+        thumbnail = None
+    return render(request, "index.html", {'playlist':playlist,'thumbnail':thumbnail})
 
 def social(request):
     share_edit_form = ShareEditForm
