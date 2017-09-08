@@ -32,6 +32,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^about/', views.about, name='about'),
+    url(r'^help/', views.help, name='help'),
+    url(r'^policy/', views.policy, name='policy'),
     url(r'^hashtags/$', HashTagList.as_view(), name='hashtags'),
     url(r'^accounts/password_reset/$', auth_views.password_reset, name='password_reset'),
     url(r'^accounts/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),

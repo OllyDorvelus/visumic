@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<h1 class="text-center"><strong>Policy & Guidelines</strong></h1>
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-4"><h3 class="text-center"><strong>Accepted Content</strong></h3>
+<div class="text-center"><img src="{% static 'static/img/creative.png' %}" class="policypic img-cricle"/></div>
+<p>
+Visumic only allow videos that has to do with creative arts, the four major categories are <strong>MUSIC</strong>, <strong>POETRY</strong>, <strong>FILM</strong>,
+and <strong>DANCE</strong>. If an uploaded video has nothing
+to do with any of these categories then the user will be notified and the following video will be removed. If a video you are about to upload do not fall under any
+of the genres in the dropdown list then the video does not belong on here. Vlogs are allowed if it has to do with the arts, for example a vlog showing the recording process
+of a song, music video, film, etc.
+</p></div>
+
+<div class="col-md-4"><h3 class="text-center"><strong>Copyright & infringement</strong></h3>
+<div class="text-center"><img src="{% static 'static/img/copyright.png' %}" class="policypic img-circle"/></div>
+<p>Please refrain from stealing material and upload original material.
+Freestyles from established beats are allowed & covers without the original song playing in the background.
+Be aware of what you put in your films/web series. Uploaded Stolen Material/Infringement will be notified what is the
+copyrighted material and then taken down.</p>
+</div>
+
+<div class="col-md-4"><h3 class="text-center"><strong>Harassment</strong></h3></div>
+<div class="text-center"><img src="{% static 'static/img/cyber.jpg' %}" class="policypic img-circle"/></div>
+Any form of <strong>HARASSMENT</strong> will not be tolerated, <strong>three strikes</strong> and the account responsible will result into a <strong>BAN</strong>.
+</div>
+
+
+<div class="row">
+<div class="col-md-4"><h3 class="text-center"><strong>Privacy</strong></h3>
+<div class="text-center"><img src="{% static 'static/img/privacy.png' %}" class="policypic img-circle"/></div>
+<p>Please be mindful of who you share private information with and do not <strong>spread other's private</strong> information</p>
+</div>
+
+
+<div class="col-md-4"><h3 class="text-center"><strong>Spamming</strong></h3>
+<div class="text-center"><img src="{% static 'static/img/spam.jpg' %}" class="policypic img-circle"/></div>
+    <p>
+        Refrain from being <strong>overbearing</strong> and repeating the same actions such as commenting spam links that have nothing to do with arts etc
+    </p>
+</div>
+
+<div class="col-md-4"><h3 class="text-center"><strong>Threats & Speech</strong></h3></div>
+<div class="text-center"><img src="{% static 'static/img/threat.png' %}" class="policypic img-circle"/></div>
+<p>
+    Visumic is very tolerant on freedom of speech and won't condem anyone for expressing their point of views but <strong>THREATS</strong> are off limits
+    and will go by the three strike ban rule.
+</p>
+</div>
+</div>
+{% endblock content %}

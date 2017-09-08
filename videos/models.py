@@ -140,7 +140,8 @@ class VideoModelManager(models.Manager):
         else:
             is_liked = True
             video_obj.liked.add(user)
-            notify.send(user, recipient=video_obj.user, verb=' liked your video: ' + video_obj.title, target=video_obj)
+            if user != video_obj.user:
+                notify.send(user, recipient=video_obj.user, verb=' liked your video: ' + video_obj.title, target=video_obj)
         return is_liked
 
     def likes_count(self, video_obj):
@@ -335,7 +336,11 @@ class CommentModel(models.Model):
 
 def post_save_comment_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        notify.send(instance.user, recipient=instance.video.user, verb=" commented on your video: " + instance.video.title, target=instance.video)
+        if instance.user != instance.video.user:
+            if instance.reply:
+                notify.send(instance.user, recipient=instance.parent.user, verb=" replied to your comment on the video: " + instance.video.title, target=instance.video)
+            else:
+                notify.send(instance.user, recipient=instance.video.user, verb=" commented on your video: " + instance.video.title, target=instance.video)
 
 post_save.connect(post_save_comment_receiver, sender=CommentModel)
 
@@ -350,8 +355,8 @@ class ShareModel(models.Model):
         return self.user.username + '-' + self.content
 def post_save_share_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        #videokey = instance.pk
-        notify.send(instance.user, recipient=instance.video.user, verb=" shared your video: " + instance.video.title, target= instance.video)
+        if instance.user != instance.video.user:
+            notify.send(instance.user, recipient=instance.video.user, verb=" shared your video: " + instance.video.title, target= instance.video)
 
 
 post_save.connect(post_save_share_receiver, sender=ShareModel)

@@ -443,6 +443,24 @@ h6 {
   width:125px;
   display:inline;
 }
+
+.helppic {
+    height:700px;
+    width:700px;
+}
+
+.helpdiv {
+    padding-top:20px;
+}
+
+.helpdiv p {
+    font-size:20px;
+}
+
+.policypic {
+    height:185px;
+    width:200px;
+}
 /*END ABOUT*/
 /*Social Icons*/
 .fa {

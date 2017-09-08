@@ -35,7 +35,8 @@ class UserProfileManager(models.Manager):
                 return
             is_following = True
             user.profile.following.add(userProfile.user)
-            notify.send(user, recipient=userProfile.user, verb=' is now following you', target=user.profile)
+            if user != userProfile.user:
+                notify.send(user, recipient=userProfile.user, verb=' is now following you', target=user.profile)
         return is_following
 
     def follower_count(self, obj):

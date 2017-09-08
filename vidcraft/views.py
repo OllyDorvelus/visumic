@@ -11,6 +11,11 @@ def home(request):
 def about(request):
     return render(request, "about.html", {})
 
+def policy(request):
+    return render(request, "policy.html", {})
+
+def help(request):
+    return render(request, "help.html", {})
 
 
 def live_unread_notification_list(request):
