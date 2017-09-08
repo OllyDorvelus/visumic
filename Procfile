@@ -1,4 +1,4 @@
-web: waitress-serve --port=$PORT vidcraft.wsgi:application
+web: gunicorn vidcraft.wsgi
 worker: celery worker -A vidcraft -E -l debug
 
 
