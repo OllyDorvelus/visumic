@@ -103,7 +103,7 @@
 
         fetchVideos()
         fetchFollowingVideos()
-
+        fetchRandomVideo()
 
         fetchProfiles()
 
@@ -344,9 +344,7 @@
 <title>Visumic</title>
 
   <h3 class="text-center"><strong>Visumic | A Place To Enjoy The Arts</strong></h3>
-{% if  not request.user.is_authenticated %}
-    <h4 class="text-center">To begin uploading videos please <button class="btn btn-primary register">Register</button> or <button class="btn btn-primary login">Login</button></h4>
-  {% endif %}
+
 <ul class="topbar text-center">
   <div><li><a href="{% url 'accounts:home' %}"><strong>General</strong></a></li></div>
   <div><li><a href="{% url 'accounts:social' %}"><strong>Feed</strong></a></li></div>

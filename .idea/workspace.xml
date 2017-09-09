@@ -34,20 +34,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-77.32727" vertical-offset="1629" max-vertical-offset="7140">
-              <caret line="346" column="0" selection-start-line="346" selection-start-column="0" selection-end-line="348" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.38907284" vertical-offset="1550" max-vertical-offset="7106">
+              <caret line="105" column="25" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
               <folding>
-                <element signature="e#14682#14710#0#HTML" expanded="true" />
-                <element signature="e#15011#15032#0#HTML" expanded="true" />
-                <element signature="e#15227#15247#0#HTML" expanded="true" />
-                <element signature="e#15416#15436#0#HTML" expanded="true" />
-                <element signature="e#15826#15846#0#HTML" expanded="true" />
-                <element signature="e#15988#16008#0#HTML" expanded="true" />
-                <element signature="e#16367#16387#0#HTML" expanded="true" />
-                <element signature="e#16521#16541#0#HTML" expanded="true" />
+                <element signature="e#14470#14498#0#HTML" expanded="true" />
+                <element signature="e#14799#14820#0#HTML" expanded="true" />
+                <element signature="e#15015#15035#0#HTML" expanded="true" />
+                <element signature="e#15204#15224#0#HTML" expanded="true" />
+                <element signature="e#15614#15634#0#HTML" expanded="true" />
+                <element signature="e#15776#15796#0#HTML" expanded="true" />
+                <element signature="e#16155#16175#0#HTML" expanded="true" />
+                <element signature="e#16309#16329#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -105,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="production.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="production.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vidcraft/settings/production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33226836" vertical-offset="965" max-vertical-offset="4182">
-              <caret line="71" column="5" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+            <state vertical-scroll-proportion="-3.851852" vertical-offset="965" max-vertical-offset="4182">
+              <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -199,10 +199,10 @@
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/videos/api/pagination.py" />
         <option value="$PROJECT_DIR$/accounts/api/pagination.py" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/vidcraft/settings/local.py" />
         <option value="$PROJECT_DIR$/vidcraft/urls.py" />
         <option value="$PROJECT_DIR$/vidcraft/settings/production.py" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
       </list>
     </option>
   </component>
@@ -956,7 +956,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1548" height="840" extended-state="1" />
+    <frame x="-8" y="-8" width="1548" height="840" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1434,23 +1434,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-77.32727" vertical-offset="1629" max-vertical-offset="7140">
-          <caret line="346" column="0" selection-start-line="346" selection-start-column="0" selection-end-line="348" selection-end-column="13" />
-          <folding>
-            <element signature="e#14682#14710#0#HTML" expanded="true" />
-            <element signature="e#15011#15032#0#HTML" expanded="true" />
-            <element signature="e#15227#15247#0#HTML" expanded="true" />
-            <element signature="e#15416#15436#0#HTML" expanded="true" />
-            <element signature="e#15826#15846#0#HTML" expanded="true" />
-            <element signature="e#15988#16008#0#HTML" expanded="true" />
-            <element signature="e#16367#16387#0#HTML" expanded="true" />
-            <element signature="e#16521#16541#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="7.6" vertical-offset="190" max-vertical-offset="2380">
@@ -1513,9 +1496,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vidcraft/settings/production.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33226836" vertical-offset="965" max-vertical-offset="4182">
-          <caret line="71" column="5" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+        <state vertical-scroll-proportion="-3.851852" vertical-offset="965" max-vertical-offset="4182">
+          <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38907284" vertical-offset="1550" max-vertical-offset="7106">
+          <caret line="105" column="25" selection-start-line="105" selection-start-column="25" selection-end-line="105" selection-end-column="25" />
+          <folding>
+            <element signature="e#14470#14498#0#HTML" expanded="true" />
+            <element signature="e#14799#14820#0#HTML" expanded="true" />
+            <element signature="e#15015#15035#0#HTML" expanded="true" />
+            <element signature="e#15204#15224#0#HTML" expanded="true" />
+            <element signature="e#15614#15634#0#HTML" expanded="true" />
+            <element signature="e#15776#15796#0#HTML" expanded="true" />
+            <element signature="e#16155#16175#0#HTML" expanded="true" />
+            <element signature="e#16309#16329#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
