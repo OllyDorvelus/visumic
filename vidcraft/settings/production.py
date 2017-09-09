@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     "django_filters",
     'notifications',
 
-    'social_django',
+    #'social_django',
 
 
    # "django_celery_results",
@@ -109,7 +109,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    #'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'vidcraft.urls'
@@ -127,8 +127,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.login_form',
                 'accounts.context_processors.profilepicture',
-                'social_django.context_processors.backends',  # <--
-                'social_django.context_processors.login_redirect', # <--
+                # 'social_django.context_processors.backends',  # <--
+                # 'social_django.context_processors.login_redirect', # <--
             ],
         },
     },
@@ -136,13 +136,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vidcraft.wsgi.application'
 
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.facebook.FacebookOAuth2',
-
-    'django.contrib.auth.backends.ModelBackend',
-)
+# AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend',
+#     'social_core.backends.github.GithubOAuth2',
+#     'social_core.backends.twitter.TwitterOAuth',
+#     'social_core.backends.facebook.FacebookOAuth2',
+#
+# )
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 

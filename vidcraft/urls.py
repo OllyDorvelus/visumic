@@ -30,7 +30,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^oauth/', include('social_django.urls', namespace='social')),
+    #url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^about/', views.about, name='about'),
     url(r'^help/', views.help, name='help'),
     url(r'^policy/', views.policy, name='policy'),
