@@ -276,13 +276,13 @@ $('#menu-toggle').click(function(e) {
                 $.each(profileSideFollowingList, function (key, value) {
                     var profileKey = key
                     attachProfileSideFollowing(value)
-                    console.log(value)
+
 
             })
         }
         }
         function fetchProfilesSideFollowing(url) {
-            console.log("fethicng ...")
+
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/accounts/" + "{{ request.user.username }}" + "/following/"
@@ -296,7 +296,7 @@ $('#menu-toggle').click(function(e) {
             },
             method: "GET",
             success: function(data){
-               console.log(data)
+
                 profileSideFollowingList = data.results
                 if (data.next) {
                     nextProfileSideFollowingUrl = data.next
@@ -308,7 +308,7 @@ $('#menu-toggle').click(function(e) {
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
+
             }
         })
         }
@@ -327,7 +327,7 @@ $('#menu-toggle').click(function(e) {
             $.ajax({
                 url: "{% url 'notifications:mark_all_as_read' %}",
                 success: function(result) {
-                    console.log("got link")
+
                 }
             })
         })

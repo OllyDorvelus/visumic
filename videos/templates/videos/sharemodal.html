@@ -41,13 +41,11 @@ $(document).ready(function(){
         var this_ = $(this)
         var formData = this_.serialize()
         if (charCurrent >= 0) {
-            console.log("fethicng ...")
             $.ajax({
                 url: "/api/videos/" +"{{ video.pk }}" + "/shares/create/",
                 data: formData,
                 method: "POST",
                 success: function (data) {
-                    console.log(data)
                     $('#shareModal').modal('hide')
                     sweetAlert("Success!", "Video has been shared", "success");
                     //this_.find("input[type=text], textarea").val("")
@@ -59,14 +57,12 @@ $(document).ready(function(){
 
                 },
                 error: function (data) {
-                    console.log("error")
                     popUpLoginModal()
-                    console.log(data)
                 }
             })
 
         } else {
-            console.log("Cannot send, tweet too long")
+
         }
     })
     })

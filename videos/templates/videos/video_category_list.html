@@ -69,13 +69,11 @@ var timeSortCookieCat = Cookies.set( "timeSortCookieCat" )
                 $.each(videoList, function (key, value) {
                     var profileKey = key
                     attachVideo(value)
-                    console.log(value)
 
             })
         }
         }
         function fetchVideos(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/category/" + "{{ category.genrename }}" + "/"
@@ -97,7 +95,7 @@ var timeSortCookieCat = Cookies.set( "timeSortCookieCat" )
                 $("#loading-image").hide();
                 $('#loadmore').show()
 
-               console.log(data)
+
                 videoList = data.results
                 if (data.next) {
                     nextVideoUrl = data.next
@@ -109,7 +107,6 @@ var timeSortCookieCat = Cookies.set( "timeSortCookieCat" )
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
         }
@@ -208,7 +205,6 @@ var searchQueryCookieCat = Cookies.set("searchQueryCookieCat")
 
 
     selElem = $('select[name=Sort]');
-console.log( timeSortCookieCat );
 selElem.on('change', function() {
     Cookies.set( "timeSortCookieCat", this.value );
 });

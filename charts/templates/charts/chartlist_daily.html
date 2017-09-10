@@ -56,13 +56,12 @@ var counter = 0;
                     var profileKey = key
                     counter++;
                     attachVideo(value)
-                    console.log(value)
+
 
             })
         }
         }
         function fetchVideos(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/charts/daily"
@@ -81,7 +80,6 @@ var counter = 0;
            },
             success: function(data){
                 $("#loadmore").show();
-               console.log(data)
                 videoList = data.results
                 if (data.next) {
                     nextVideoUrl = data.next
@@ -94,7 +92,7 @@ var counter = 0;
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
+
             }
         })
         }

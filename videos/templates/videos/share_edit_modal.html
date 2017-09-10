@@ -17,13 +17,11 @@
          var shareId = this_.attr("data-id")
          globalShare = shareId
 
-         console.log("fethicng ...")
          $.ajax({
              url: "/api/videos/share/" + shareId + "/",
              data: formData,
              method: "GET",
              success: function (data) {
-                 console.log(data)
                //  console.log(data.thumbnail)
                  //this_.find("input[type=text], textarea").val("")
                  $("#share-edit-form .content").val(data.content)
@@ -39,7 +37,6 @@
              error: function (data) {
                  console.log("error")
                  popUpLoginModal()
-                 console.log(data)
              }
          })
      $("#shareEditModal").modal({})
@@ -54,7 +51,6 @@
         var this_ = $(this)
         var formData = this_.serialize()
 
-            console.log("fethicng ...")
             $.ajax({
                 url: "/api/videos/share/" + globalShare + "/",
                 data: formData,
@@ -62,7 +58,6 @@
                 success: function (data) {
                     $('#shareEditModal').modal('hide')
                     window.location.reload();
-                    console.log(data)
 {#                    this_.find("input[type=text], textarea").val("")#}
 {#                    this_.find("input[type=text], .title").val("")#}
 
@@ -80,7 +75,6 @@
                 error: function (data) {
                     console.log("error")
                     cannot()
-                    console.log(data)
                 }
             })
 

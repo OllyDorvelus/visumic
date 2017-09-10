@@ -38,14 +38,13 @@
                 $.each(hashtagList, function (key, value) {
                     var profileKey = key
                     attachHashtag(value)
-                    console.log(value)
 
                 })
             }
         }
 
         function fetchHashtags(url) {
-            console.log("fethicng ...")
+
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/hashtags/"
@@ -81,7 +80,6 @@
 
                 error: function (data) {
                     console.log("error")
-                    console.log(data)
                 }
             })
         }

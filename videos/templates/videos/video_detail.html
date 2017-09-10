@@ -137,7 +137,6 @@ $(document).ready(function() {
                 $.each(commentList, function (key, value) {
                     attachComment(value)
                     fetchReplies(value.id)
-                    console.log(value)
 
             })
         }
@@ -157,13 +156,11 @@ $(document).ready(function() {
                 //console.log(key)
                 $.each(commentReplyList, function (key, value) {
                     attachCommentReply(value)
-                    console.log(value)
 
             })
         }
         }
         function fetchComments(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/" + "{{ video.id }}" + "/comments"
@@ -183,7 +180,6 @@ $(document).ready(function() {
            },
             success: function(data){
                $("#loadmorecomments").show();
-               console.log(data)
                 commentList = data.results
                 if (data.next) {
                     nextCommentUrl = data.next
@@ -196,14 +192,12 @@ $(document).ready(function() {
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
         }
             fetchComments()
 
         function fetchReplies(id, url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/comment/" + id + "/replies"
@@ -217,7 +211,6 @@ $(document).ready(function() {
            //},
             method: "GET",
             success: function(data){
-               console.log(data)
                 commentReplyList = data.results
                 if (data.next) {
                     nextCommmentReplyUrl = data.next
@@ -229,7 +222,6 @@ $(document).ready(function() {
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
         }
@@ -244,7 +236,6 @@ $(document).ready(function() {
         })
 
            function fetchProfile(url) {
-               console.log("fethicng ...")
                var fetchUrl;
                if (!url) {
                    fetchUrl = "/api/accounts/" + "{{ video.user.username }}"
@@ -263,7 +254,6 @@ $(document).ready(function() {
                    },
                    error: function (data) {
                        console.log("error")
-                       console.log(data)
                    }
                })
            }
@@ -298,7 +288,6 @@ $(document).ready(function() {
 
 
            function fetchVideo(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/" + "{{ video.id }}"
@@ -310,15 +299,11 @@ $(document).ready(function() {
             url: fetchUrl,
             method: "GET",
             success: function(data){
-                console.log(data.user.username)
-                console.log(data.title)
-                console.log(data.user.email)
                 displayVideo(data)
 
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
         }
@@ -360,13 +345,11 @@ $(document).ready(function() {
         var this_ = $(this)
         var formData = this_.serialize()
         if (charCurrent >= 0) {
-            console.log("fethicng ...")
             $.ajax({
                 url: "/api/videos/" +"{{ video.pk }}" + "/comments/create/",
                 data: formData,
                 method: "POST",
                 success: function (data) {
-                    console.log(data)
                    // $("#commentsection").text("")
                     this_.find("input[type=text], textarea").val("")
                     attachComment(data, true)
@@ -378,12 +361,10 @@ $(document).ready(function() {
                 error: function (data) {
                     console.log("error")
                     popUpLoginModal()
-                    console.log(data)
                 }
             })
 
         } else {
-            console.log("Cannot send, tweet too long")
         }
     })
 
@@ -403,13 +384,12 @@ var commentId = 0
       //  var commentId = this_.attr("data-id")
         var formData = this_.serialize()
         if (true) {
-            console.log("fethicng ...")
+
             $.ajax({
                 url: "/api/videos/comment/" + commentId + "/reply/create/",
                 data: formData,
                 method: "POST",
                 success: function (data) {
-                    console.log(data)
                     $('#replyModal').modal('hide')
                     //this_.find("input[type=text], textarea").val("")
                     attachCommentReply(data)
@@ -422,12 +402,12 @@ var commentId = 0
                 error: function (data) {
                     console.log("error")
                     popUpLoginModal()
-                    console.log(data)
+
                 }
             })
 
         } else {
-            console.log("Cannot send, tweet too long")
+
         }
     })
 
@@ -475,13 +455,12 @@ var commentId = 0
                 $.each(videoList, function (key, value) {
                     var profileKey = key
                     attachVideo(value)
-                    console.log(value)
+
 
             })
         }
         }
         function fetchRelatedVideos(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/" + "{{ video.pk }}" + "/related/"
@@ -502,7 +481,7 @@ var commentId = 0
            },
             success: function(data){
                 $("#loadmorerelated").show();
-               console.log(data)
+
                 videoList = data.results
                 if (data.next) {
                     nextVideoUrl = data.next
@@ -516,7 +495,6 @@ var commentId = 0
 
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
 

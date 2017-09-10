@@ -62,14 +62,14 @@
                 $.each(recentVideoList, function (key, value) {
                     var profileKey = key
                     attachVideo(value, true)
-                    console.log(value)
+
 
                 })
             }
         }
 
         function fetchVideos(url) {
-            console.log("fethicng ...")
+
             var fetchUrl;
             if (!url) {
                 fetchUrl = "api/videos/recent"
@@ -84,7 +84,6 @@
                 method: "GET",
                 success: function (data) {
                     $("#recent").show()
-                    console.log(data)
                     recentVideoList = data.results
                     if (data.next) {
                         recentNextVideoUrl = data.next
@@ -96,7 +95,7 @@
                 },
                 error: function (data) {
                     console.log("error")
-                    console.log(data)
+
                 }
             })
         }
@@ -133,14 +132,13 @@
                 $.each(followingVideoList, function (key, value) {
                     var profileKey = key
                     attachVideo(value, false, true)
-                    console.log(value)
+
 
                 })
             }
         }
 
         function fetchFollowingVideos(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "api/accounts/videos/following"
@@ -155,7 +153,6 @@
                 method: "GET",
                 success: function (data) {
                     $("#following").show()
-                    console.log(data)
                     followingVideoList = data.results
                     if (data.next) {
                         followingNextVideoUrl = data.next
@@ -166,8 +163,6 @@
                     parseFollowingVideos()
                 },
                 error: function (data) {
-                    console.log("error")
-                    console.log(data)
                 }
             })
         }
@@ -230,13 +225,12 @@
                 $.each(profileList, function (key, value) {
                     var profileKey = key
                     attachProfile(value)
-                    console.log(value)
+
 
             })
         }
         }
         function fetchProfiles(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/accounts/"
@@ -251,7 +245,6 @@
             method: "GET",
             success: function(data){
                $("#userhome").show()
-               console.log(data)
                 profileList = data.results
                 if (data.next) {
                     nextProfileUrl = data.next
@@ -262,13 +255,11 @@
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
         }
 
         function fetchRandomVideo(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "api/videos/random"
@@ -286,7 +277,6 @@
 
            },
                 success: function (data) {
-                    console.log(data)
                     $("#loading-image").hide()
                     $.each(data, function (key, value) {
                     attachVideo(value, false, false, true)
@@ -296,7 +286,6 @@
                 },
                 error: function (data) {
                     console.log("error")
-                    console.log(data)
                 }
             })
         }

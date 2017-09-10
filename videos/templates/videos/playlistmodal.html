@@ -38,13 +38,11 @@ $(document).ready(function(){
                 //console.log(key)
                 $.each(playlistList, function (key, value) {
                     attachPlaylist(value)
-                    console.log(value)
 
             })
         }
         }
         function fetchPlaylist(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/" + "{{ request.user.username }}" + "/playlist"
@@ -64,7 +62,6 @@ $(document).ready(function(){
             success: function(data){
                 $("#loading-image").hide();
                $('#loadmoreplaylist').show()
-               console.log(data)
                 playlistList = data.results
                 if (data.next) {
                     nextPlaylistUrl = data.next
@@ -76,7 +73,6 @@ $(document).ready(function(){
 
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
         }
@@ -115,7 +111,6 @@ $(document).ready(function(){
         error: function(data){
             popUpLoginModal()
           console.log("error")
-          console.log(data)
         }
       })
   })
@@ -124,13 +119,11 @@ $(document).ready(function(){
         event.preventDefault()
         var this_ = $(this)
         var formData = this_.serialize()
-            console.log("fethicng ...")
             $.ajax({
                 url: "/api/videos/playlist/create/",
                 data: formData,
                 method: "POST",
                 success: function (data) {
-                    console.log(data)
                     attachPlaylist(data, true)
                     //this_.find("input[type=text], textarea").val("")
 
@@ -143,7 +136,6 @@ $(document).ready(function(){
                 error: function (data) {
                     console.log("error")
                     popUpLoginModal()
-                    console.log(data)
                 }
             })
 

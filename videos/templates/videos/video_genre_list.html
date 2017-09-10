@@ -67,13 +67,11 @@
                 $.each(videoList, function (key, value) {
                     var profileKey = key
                     attachVideo(value)
-                    console.log(value)
 
             })
         }
         }
         function fetchVideos(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/category/" + "{{ parent }}" + "/" + "{{ genre.genrename }}" + "/"
@@ -93,8 +91,6 @@
             success: function(data){
                 $("#loading-image").hide();
                 $('#loadmore').show()
-                console.log(fetchUrl)
-               console.log(data)
                 videoList = data.results
                 if (data.next) {
                     nextVideoUrl = data.next
@@ -106,7 +102,6 @@
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
             }
         })
         }
@@ -201,7 +196,6 @@
 
 var timeSortCookieGen = Cookies.set( "timeSortCookieGen" ),
     selElem = $('select[name=Sort]');
-console.log( timeSortCookieGen );
 selElem.on('change', function() {
     Cookies.set( "timeSortCookieGen", this.value );
 });

@@ -266,14 +266,19 @@ h6 {
 
 #commentsection {
   margin-left:3em;
+  height:10px;
+
 }
 
 #commentsection .listpic {
   display:inline;
-  width:50px;
-  height:50px;
+  width:40px;
+  height:30px;
 }
 
+#commentsection h5 {
+    word-wrap:break-word;
+}
 
 
 /*Profile Detail Section*/

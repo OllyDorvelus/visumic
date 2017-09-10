@@ -54,7 +54,6 @@
                 $.each(profileList, function (key, value) {
                     var profileKey = key
                     attachProfile(value)
-                    console.log(value)
 
             })
         }
@@ -74,7 +73,7 @@
             },
             method: "GET",
             success: function(data){
-               console.log(data)
+
                 profileList = data.results
                 if (data.next) {
                     nextProfileUrl = data.next
@@ -85,7 +84,7 @@
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
+
             }
         })
         }

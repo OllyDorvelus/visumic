@@ -50,7 +50,6 @@
              $('#userprofile').append(profileFormatedHtml + profileFormatedHtml2)
          }
        function fetchProfile(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/accounts/" + "{{ User.username }}"
@@ -65,9 +64,6 @@
 {#            },#}
             method: "GET",
             success: function(data){
-                console.log(data.user.username)
-                console.log(data.user_img)
-                console.log(data.user)
                 displayProfile(data)
                 $('#userprofile').linkify();
 
@@ -75,7 +71,7 @@
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
+              //  console.log(data)
             }
         })
         }
@@ -134,13 +130,13 @@
                 $.each(videoList, function (key, value) {
                     var profileKey = key
                     attachVideo(value)
-                    console.log(value)
+                    //console.log(value)
 
             })
         }
         }
         function fetchVideos(url) {
-            console.log("fethicng ...")
+           // console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/accounts/" + "{{ User.username }}" + "/videos"
@@ -155,7 +151,7 @@
             method: "GET",
             success: function(data){
                 $("#loadmorevids").show()
-               console.log(data)
+             //  console.log(data)
                 videoList = data.results
                 if (data.next) {
                     nextVideoUrl = data.next
@@ -169,7 +165,7 @@
             },
             error: function(data){
                 console.log("error")
-                console.log(data)
+               // console.log(data)
             }
         })
         }
@@ -220,7 +216,7 @@
                     error: function (data) {
                         cannot()
                         console.log("error")
-                        console.log(data)
+                        //console.log(data)
                     }
                 })
             })

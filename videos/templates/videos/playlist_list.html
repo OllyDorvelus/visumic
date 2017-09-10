@@ -51,14 +51,12 @@
                 $.each(videoList, function (key, value) {
                     var profileKey = key
                     attachPlaylist(value)
-                    console.log(value)
 
                 })
             }
         }
 
         function fetchPlaylist(url) {
-            console.log("fethicng ...")
             var fetchUrl;
             if (!url) {
                 fetchUrl = "/api/videos/playlist"
@@ -77,7 +75,6 @@
            },
                 success: function (data) {
                     $("#loadmore").show();
-                    console.log(data)
                     videoList = data.results
                     if (data.next) {
                         nextVideoUrl = data.next
@@ -90,7 +87,6 @@
                 },
                 error: function (data) {
                     console.log("error")
-                    console.log(data)
                 }
             })
         }

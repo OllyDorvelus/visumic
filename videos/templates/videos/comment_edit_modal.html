@@ -17,13 +17,12 @@
          var commentId = this_.attr("data-id")
          globalComment = commentId
 
-         console.log("fethicng ...")
+
          $.ajax({
              url: "/api/videos/comment/" + commentId + "/",
              data: formData,
              method: "GET",
              success: function (data) {
-                 console.log(data)
                //  console.log(data.thumbnail)
                  //this_.find("input[type=text], textarea").val("")
                  $("#comment-edit-form .comment").val(data.comment)
@@ -39,7 +38,6 @@
              error: function (data) {
                  console.log("error")
                  cannot()
-                 console.log(data)
              }
          })
      $("#commentEditModal").modal({})
@@ -54,7 +52,6 @@
         var this_ = $(this)
         var formData = this_.serialize()
 
-            console.log("fethicng ...")
             $.ajax({
                 url: "/api/videos/comment/" + globalComment + "/",
                 data: formData,
@@ -62,13 +59,11 @@
                 success: function (data) {
                     $('#commentEditModal').modal('hide')
                     window.location.reload();
-                    console.log(data)
 
                 },
                 error: function (data) {
                     console.log("error")
                     cannot()
-                    console.log(data)
                 }
             })
 

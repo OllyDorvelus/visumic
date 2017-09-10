@@ -15,13 +15,11 @@
          var this_ = $(this)
          var formData = this_.serialize()
 
-         console.log("fethicng ...")
          $.ajax({
              url: "/api/videos/playlist/" + "{{ playlist.pk }}" + "/",
              data: formData,
              method: "GET",
              success: function (data) {
-                 console.log(data)
                //  console.log(data.thumbnail)
                  //this_.find("input[type=text], textarea").val("")
                  $("#playlist-edit-form .name").val(data.name)
@@ -37,7 +35,6 @@
              error: function (data) {
                  console.log("error")
                  cannot()
-                 console.log(data)
              }
          })
      }
@@ -46,7 +43,6 @@
         var this_ = $(this)
         var formData = this_.serialize()
 
-            console.log("fethicng ...")
             $.ajax({
                 url: "/api/videos/playlist/" + "{{ playlist.pk }}" + "/",
                 data: formData,
@@ -54,7 +50,6 @@
                 success: function (data) {
                     $('#playlistEditModal').modal('hide')
                     window.location.reload();
-                    console.log(data)
 {#                    this_.find("input[type=text], textarea").val("")#}
 {#                    this_.find("input[type=text], .title").val("")#}
 
@@ -72,7 +67,6 @@
                 error: function (data) {
                     console.log("error")
                     cannot()
-                    console.log(data)
                 }
             })
 
