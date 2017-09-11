@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "djcelery",
     "django_filters",
     'notifications',
+    'django_private_chat',
 
     #'social_django',
 
@@ -76,7 +77,9 @@ INSTALLED_APPS = [
 
 
 ]
-
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }

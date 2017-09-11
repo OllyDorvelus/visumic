@@ -23,6 +23,7 @@ from hashtags.api.views import TagVideoAPIView, TagListAPIView
 from .views import home
 from accounts.views import UserLoginFormView
 from django.contrib.auth import views as auth_views
+from django_private_chat import urls as django_private_chat_urls
 import notifications.urls
 from django.contrib.auth import views as auth_views
 
@@ -43,6 +44,7 @@ urlpatterns = [
     url(r'^accounts/change_password/$', auth_views.password_change, {'post_change_redirect': 'accounts:home'}, name='password_change'),
     url(r'^notifications/api/unread_list/$', views.live_unread_notification_list, name='live_unread_list'),
     url('^notifications/', include(notifications.urls, namespace='notifications')),
+    url(r'^', include('django_private_chat.urls')),
     #url(r'^messages/', include('django_messages.urls')),
 
     url(r'^', include('charts.urls', namespace="charts")),
