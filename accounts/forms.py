@@ -148,4 +148,4 @@ class UserRegisterForm(forms.Form):
             raise forms.ValidationError("Emails must match")
         return email2
 
-non_usernames = ['fuck', 'bitch', 'about', 'sex', 'dick', 'pussy', 'crafters', 'faggots', 'shit', 'playlist', 'videos', 'accounts']
+non_usernames = ['fuck', 'bitch', 'about', 'sex', 'dick', 'pussy', 'crafters', 'faggots', 'shit', 'playlist', 'videos', 'accounts', 'events']

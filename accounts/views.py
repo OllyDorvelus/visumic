@@ -193,6 +193,15 @@ class UserDetailSharedView(DetailView):
         user = get_object_or_404(User, username__iexact=self.kwargs.get("username"))
         return user
 
+class UserDetailEventView(DetailView):
+    template_name = "accounts/profile_detail_events.html"
+    queryset = User.objects.all()
+    context_object_name = "User"
+
+    def get_object(self):
+        user = get_object_or_404(User, username__iexact=self.kwargs.get("username"))
+        return user
+
 class ProfileListView(ListView):
     template_name = 'accounts/profile_list.html'
     context_object_name = 'all_profiles'

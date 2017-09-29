@@ -1,0 +1,7 @@
+<form id='event-search-form' class="" method='GET' action='{% url "events:event_list" %}'>
+        <div class="form-group">
+            <input class="form-control searchinput" type='text' name='q' placeholder='Search Events' value='{{ request.GET.q }}'/>
+            </div>
+        <input class="btn btn-default searchbtn" type='submit' value='Search'/>
+
+</form>

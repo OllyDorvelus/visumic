@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{#<h1>{{ event.user.username }}</h1>#}
+{#<h1>{{ event.name }}</h1>#}
+{#<h2>{{ event.start_time }}</h2>#}
+{#    <h2>{{ event.end_time }}</h2>#}
+{#    <h2>{{ event.description }}</h2>#}
+{#    <h2>{{ event.zipcode}}</h2>#}
+{#    <h2>{{ event.date }}</h2>#}
+<script>
+$(document).ready(function() {
+        $(document.body).on("click", ".deleteevent-btn", function(e){
+      e.preventDefault()
+      //var this_ = $(this)
+     // var eventId = this_.attr("data-id")
+      var deleteEventUrl = '/api/events/' + "{{ event.pk }}"  + '/'
+        swal({
+        title: "Are you sure?",
+        text: "Are you sure that you want to delete this event?",
+        type: "warning",
+        showCancelButton: true,
+        allowOutsideClick: true,
+        closeOnConfirm: true,
+        confirmButtonText: "Yes, delete it!",
+        confirmButtonColor: "black"
+
+    },
+            function() {
+                // this_.text("Liked")
+                $.ajax({
+                    method: "DELETE",
+                    url: deleteEventUrl,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    },
+                    success: function (data) {
+                        console.log("deleted")
+                         {% if request.user.is_authenticated %}
+                        window.location.replace('{% url 'accounts:profile_detail-events' request.user.username %}')
+                        {% endif %}
+{#                        $('#' + "{{ playlist.id }}").hide(500)#}
+                    },
+                    error: function (data) {
+                        popUpLoginModal()
+                        console.log("error")
+                    }
+                })
+            })
+
+  })
+})
+</script>
+
+<div class='row'>
+
+  <div class='text-center'><img src='{{ event.picture.url }}' class='img-responsive event-img-detail' style="margin-right:auto;margin-left:auto"></div>
+  <h1 class='text-center'>{{ event.name }}</h1>
+  <h3 class='text-center'>{{ event.user.username }}</h3>
+  <h5 class='text-center'>{{ event.street_address }}, {{ event.city }}, {{ event.state }} {{ event.zipcode }}</h5>
+  <h5 class='text-center'>{{ event.date }}</h5>
+  <h5 class='text-center'>{{ event.start_time }} - {{ event.end_time }}</h5>
+  <div class='text-center'><span class='btn btn-primary text-center attend-btn' data-id="{{ event.pk }}">{% if request.user in event.attending.all %}
+      Attending {{ event.attending.all.count }}{% else %} Attend {{ event.attending.all.count }}
+  {% endif %}</span></div>
+  <p class='text-center'>
+    {{ event.description }}
+  </p>
+{% if request.user == event.user %}<div class="text-center"><a href="{% url 'events:event_update' event.pk %}"><span class="btn btn-primary">Update Event</span></a></div>
+    <div class="text-center"><span class="btn btn-primary deleteevent-btn">Delete Event</span></div>
+{% endif %}
+</div>
+{% endblock content %}

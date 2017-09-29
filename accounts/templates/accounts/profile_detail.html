@@ -31,6 +31,7 @@
             var sharedurl = "{% url 'accounts:profile_detail-shared' User.username  %}";
             var videourl = "{% url 'accounts:profile_detail' User.username %}"
             var playlisturl = "{% url 'accounts:profile_detail-playlist' User.username %}"
+            var eventurl = "{% url 'accounts:profile_detail-events' User.username %}"
          function displayProfile(profileValue) {
              var profileUser = profileValue.user
              var verb = "Follow"
@@ -46,7 +47,7 @@
              "<div class='col-md-1'><h5>Likes: " + profileUser.all_likes.liked__count + "</h5><h5>Shares: " + profileUser.all_shares.shares__count + "</h5><h5>Comments:" + profileUser.all_comments + "</h5></div><div class='col-md-5'><h5>" + profileValue.bio + "</h5></div></div>"
 
              profileFormatedHtml2 = "<div class='row' id='profilelist'><div class='col-md-9'><ul class='inline'><li><a href='" + videourl + "'>Videos </a></li>|<li><a href='" + likedurl + "'>Liked</a></li>|" +
-             "<li><a href='" + followerurl + "'>Followers</a></li>|<li><a href='" + followingurl + "'>Following</a></li>|<li><a href='" + sharedurl + "'>Shared</a></li>|<li><a href='" + playlisturl + "'>Playlist</a></li></ul></div></div><div class='row'><div class='col-md-9 blackline'></div></div>"
+             "<li><a href='" + followerurl + "'>Followers</a></li>|<li><a href='" + followingurl + "'>Following</a></li>|<li><a href='" + sharedurl + "'>Shared</a></li>|<li><a href='" + playlisturl + "'>Playlist</a></li>|<li><a href='" + eventurl + "'>Events</a></li></ul></div></div><div class='row'><div class='col-md-9 blackline'></div></div>"
              $('#userprofile').append(profileFormatedHtml + profileFormatedHtml2)
          }
        function fetchProfile(url) {

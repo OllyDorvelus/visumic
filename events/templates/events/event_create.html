@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+<title>Create An Event</title>
+<div class="container-fluid" style="margin-left:200px">
+        <div class="row">
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Create Event</h3>
+                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+{#                        {{ second_model }}#}
+
+    {% for field in form %}
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <span class="text-danger small">{{ field.errors }}</span>
+
+        </div>
+        <label class="control-label col-sm-2">{{ field.label_tag }}</label>
+        {% if field.name == "date" %}
+        <div class="col-sm-10">{{ field }}</div>
+{#            <p>Date: <input type="text" id="datepicker"></p>#}
+            {% else %}
+            <div class="col-sm-10">{{ field }}</div>
+        {% endif %}
+
+
+    </div>
+
+{% endfor %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+</div>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+{% endblock content %}

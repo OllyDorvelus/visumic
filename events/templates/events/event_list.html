@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block content %}
+    <title>Playlist</title>
+<script>
+    $(document).ready(function() {
+        {% load static %}
+
+        function attachPlaylist(eventValue, prepend) {
+
+
+
+            var eventUser = eventValue.user
+            var profileValue = eventUser.profile
+            var playlistImg = "{% static 'static/img/VPlaylist.jpg' %}"
+                        var verb = "Attend"
+            var attending_count = eventValue.attending_count
+            if(eventValue.is_attending) {
+                verb = "Attending"
+            }
+
+
+            var eventFormatHtml = "<div class='row'><div class='col-md-2 col-md-offset-2'><a href='" + eventValue.url + "'><img src='" + eventValue.picture + "'class='event-img thumbnail img-responsive' style='display:inline'></a></div><div class='col-md-6'>" +
+                    "<a href='" + eventValue.url + "'><h4 class='inline'>" + eventUser.username + "</h4>  <a href='#'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive' style='display:inline;height:30px;width:30px'></a><br><h3 class='inline blacklink' style='padding-bottom:10px'>" + eventValue.name + "</h3></a><p>" + eventValue.description + "<h5>" + eventValue.address + "</h5><h5>" + eventValue.display_date + "</h5>" +
+                    "<h5>" + eventValue.time + "</h5></p><span data-id='" + eventValue.id + "'class='btn btn-primary attend-btn' >" + verb + " " + eventValue.attending_count + "</span></div></div>"
+
+            if (prepend == true) {
+                $("#event-container").prepend(eventFormatHtml)
+            }
+            else {
+                $("#event-container").append(
+                        eventFormatHtml
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var eventList = [];
+        var nextEventUrl;
+//        console.log(query)
+        function parseEvents() {
+
+            if (eventList == 0) {
+                $("#event-container").text("No Playlist")
+                $("#event-container").addClass('text-center')
+            } else {
+                //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(eventList, function (key, value) {
+                    var profileKey = key
+                    attachPlaylist(value)
+
+                })
+            }
+        }
+
+        function fetchEvents(url) {
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = "/api/events/"
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+                url: fetchUrl,
+                data: {
+                    "q": query
+                },
+                method: "GET",
+        beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+                success: function (data) {
+                    $("#loadmore").show();
+                    eventList = data.results
+                    if (data.next) {
+                        nextEventUrl = data.next
+                    } else {
+                        $("#loadmore").css("display", "none");
+                        nextEventUrl = null
+                    }
+                    parseEvents()
+                    $("#loading-image").hide();
+                },
+                error: function (data) {
+                    console.log("error")
+                }
+            })
+        }
+
+        fetchEvents()
+
+        $("#loadmore").click(function (event) {
+            event.preventDefault()
+            // load more items
+            if (nextEventUrl) {
+                fetchEvents(nextEventUrl)
+            }
+
+        })
+
+        var typingTimer;
+        var doneInterval = 800; // in ms
+        var searchInput = $("#event-search-form input[type=text]")
+        var searchQuery;
+        searchInput.keyup(function(event){
+            searchQuery =  $(this).val()
+            clearTimeout(typingTimer)
+            typingTimer = setTimeout(doneSearchTyping, doneInterval)
+
+        })
+         searchInput.keydown(function(event){
+            clearTimeout(typingTimer)
+        })
+        function doneSearchTyping(){
+          if (searchQuery){
+            // do search
+            var url = '/events/?q=' + searchQuery
+            document.location.href = url;
+          }
+            else {
+              var url = '/events/'
+              document.location.href = url;
+          }
+        }
+
+    })
+</script>
+{% include "events/event_search_form.html" %}
+    <div class='container-fluid'><div class='row'>
+            <div id="event-container">
+
+            </div>
+        </div>
+        </div>
+            <div class="text-center" style="padding-top:30px"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Events</h5></span></div>
+    {% load static %}
+    <div id="myDiv" class="text-center">
+        <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
+    </div>
+{% endblock content %}

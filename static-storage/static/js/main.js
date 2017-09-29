@@ -181,6 +181,42 @@ $(document).ready(function(){
       })
   })
 
+      $(document.body).on("click", ".attend-btn", function(e){
+
+      e.preventDefault()
+      var this_ = $(this)
+      var eventId = this_.attr("data-id")
+      var eventUrl = '/api/events/' + eventId + '/attend/'
+
+      // this_.text("Liked")
+      $.ajax({
+        method:"GET",
+        url: eventUrl,
+        success: function(data){
+          if (data.attending){
+            this_.text("Attending " + data.attending_count)
+            this_.css("color", "black")
+            this_.addClass("btn btn-primary")
+            //this_.mouseover(function(){
+            //    this_.css("color", "white")
+            //})
+
+          } else {
+            this_.text("Attend " + data.attending_count)
+            this_.css("color", "black")
+            this_.addClass("btn btn-primary")
+            //this_.mouseover(function(){
+            //    this_.css("color", "white")
+            //})
+          }
+        },
+        error: function(data){
+            popUpLoginModal()
+          console.log("error")
+          console.log(data)
+        }
+      })
+  })
 
       $(document.body).on("click", ".cmt-like-btn", function(e){
       e.preventDefault()

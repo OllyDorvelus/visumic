@@ -279,33 +279,11 @@ def post_save_video_receiver(sender, instance, created, *args, **kwargs):
         followers = user.followed_by.all()
         followers = User.objects.filter(profile__in=followers)
         notify.send(instance.user, recipient=followers, verb=" uploaded a new video: " + instance.title, target=instance)
-      #   #instance.input_video = instance.video
-      #   video = instance.video.url.replace("/", "", 1)
-      #   #video = os.path.abspath(instance.video.url)
-      #   path = instance.video.url      # newvideo = convert_video_to_mp4(video, "media/mp4video/" + instance.title
-      #   filename, file_extension = os.path.splitext(instance.video.url)
-      #   file_extension = file_extension.lower()
-      #   if file_extension == ".mp4":
-      #       filename = filename.replace("/", "", 1) + "_V"
-      #   else:
-      #       filename = filename.replace("/", "", 1)
-      #   newvideo = convert_video_to_mp4.delay(video, filename)
-      #  # instance.video.delete(save=False)
-      #   instance.video = os.path.relpath(newvideo, 'media')
-      #   instance.save()
-      #   print("This will print to the screen first")
-      # #  instance.input_video.delete(False)
-      #   os.remove(video)
 
-        #new_profile = UserProf.objects.get_or_create(user=instance)
 
 post_save.connect(post_save_video_receiver, sender=VideoModel)
 def post_delete_video_receiver(sender, instance, *args, **kwargs):
 
-   # video = instance.video.url.replace("/", "", 1)
-    #instance.video.close()
-   # os.close(video)
-   # os.remove(video)
     instance.video.delete(save=False)
     if instance.thumbnail != "vidcraftavatar.png" and instance.thumbnail != "vthumbnail.jpg":
         instance.thumbnail.delete(save=False)
@@ -316,8 +294,7 @@ def post_delete_video_receiver(sender, instance, *args, **kwargs):
 
 post_delete.connect(post_delete_video_receiver, sender=VideoModel)
 
-# print(os.path.relpath('myfr.jpg', 'media'))
-# print(os.path.exists('media/thumbnails/myframe.jpg'))
+
 
 
 class CommentModel(models.Model):
@@ -396,10 +373,7 @@ class PlaylistModel(models.Model):
     #            '-c:v', 'libx264', '-strict', 'experimental', '-c:a', 'aac', '-crf', '20', '-maxrate', '500k',
     #            '-bufsize', '500k', '-r', '25', '-f', 'mp4', video, '-y'])
 
-def hello_world():
-    print("Hello World")
 
-hello_world()
 
 
 #convert_video_to_mp4(video, "somebodywork4")

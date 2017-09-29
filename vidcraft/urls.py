@@ -32,6 +32,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     #url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^', include('events.urls', namespace="events")),
     url(r'^about/', views.about, name='about'),
     url(r'^help/', views.help, name='help'),
     url(r'^policy/', views.policy, name='policy'),
@@ -48,11 +49,11 @@ urlpatterns = [
     #url(r'^messages/', include('django_messages.urls')),
 
     url(r'^', include('charts.urls', namespace="charts")),
-    url(r'^api/accounts/', include('accounts.api.urls', namespace='accountsapi')),
     url(r'^api/videos/', include('videos.api.urls', namespace='videosapi')),
+    url(r'^api/accounts/', include('accounts.api.urls', namespace='accountsapi')),
+    url(r'^api/events/', include('events.api.urls', namespace='eventsapi')),
     url(r'^api/charts/', include('charts.api.urls', namespace='chartsapi')),
     url(r'^', include('accounts.urls', namespace="accounts")),
-
     url(r'^', include('videos.urls', namespace="videos")),
     url(r'^api/hashtag/(?P<hashtag>.*)/$', TagVideoAPIView.as_view(), name='tag-tweet-api'),
     url(r'^api/hashtags/$', TagListAPIView.as_view(), name='tag-tweet-api'),

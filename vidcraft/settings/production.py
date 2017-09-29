@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'videos',
     'hashtags',
     'charts',
+    'events',
     'hitcount',
     'storages',
     "django_cron",
@@ -69,6 +70,7 @@ INSTALLED_APPS = [
     "django_filters",
     'notifications',
     'django_private_chat',
+    'localflavor'
 
     #'social_django',
 

@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^(?P<username>[\w.@+-]+)/liked/$', views.UserDetailLikedView.as_view(), name='profile_detail-liked'),
     url(r'^(?P<username>[\w.@+-]+)/shared/$', views.UserDetailSharedView.as_view(), name='profile_detail-shared'),
     url(r'^(?P<username>[\w.@+-]+)/playlist/$', views.UserDetailPlayListView.as_view(), name='profile_detail-playlist'),
+    url(r'^(?P<username>[\w.@+-]+)/events/$', views.UserDetailEventView.as_view(), name='profile_detail-events'),
 
     #url(r'^(?P<pk>[0-9]+)/manage/$', views.ProfileUpdateView.as_view(), name='profile_update')
 

@@ -13,6 +13,8 @@ from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from django_filters.rest_framework import DjangoFilterBackend
+from events.models import EventModel
+from events.api.serializers import EventModelSerializer
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -156,5 +158,13 @@ class FollowingVideosAPIView(generics.ListAPIView):
         return qs
 
 
+class UserEventsAPIVIew(generics.ListAPIView):
+    serializer_class = EventModelSerializer
+    pagination_class = StandardResultsPagination
+    def get_queryset(self, *args, **kwargs):
+        username = self.kwargs.get("username")
+        user = User.objects.get(username=username)
+        events = user.events.all().order_by("date")
+        return events
 
 

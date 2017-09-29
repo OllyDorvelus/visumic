@@ -598,3 +598,15 @@ h6 {
   flex-wrap: wrap;
   width:100%; /*not always necessary*/
 }
+
+/*EVENTS*/
+
+.event-img {
+  height:200px;
+  width:175px;
+}
+
+.event-img-detail {
+  height:500px;
+  width:60%;
+}

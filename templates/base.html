@@ -97,18 +97,13 @@ and view artist work.'/>
             <li><a href='{% url 'videos:video_category_list' 'Poetry' %}'>Poetry</a></li>
             <li><a href='{% url 'videos:video_category_list' 'Film' %}'>Film</a></li>
             <li><a href='{% url 'videos:video_category_list' 'Dance' %}'>Dance</a></li>
-{#            <li><a href='{% url 'videos:video_genre_list' 'spoken-word' %}'>Spoken-Word</a></li>#}
-{#            <li><a href='{% url 'videos:video_genre_list' 'Techno' %}'>Techno</a></li>#}
-{#            <li><a href='{% url 'videos:video_genre_list' 'hiphop' %}'>Hiphop</a></li>#}
-{#            <li><a href='{% url 'videos:video_genre_list' 'rnb' %}'>RNB</a></li>#}
-{#            <li><a href='{% url 'videos:video_genre_list' 'rock' %}'>Rock</a></li>#}
-{#            <li><a href='{% url 'videos:video_genre_list' 'pop' %}'>Pop</a></li>#}
-{#            <li><a href='{% url 'videos:video_genre_list' 'spoken-word' %}'>Spoken-Word</a></li>#}
-{#            <li><a href='{% url 'videos:video_genre_list' 'Techno' %}'>Techno</a></li>#}
-{#            <li role="separator" class="divider"></li>#}
-{#            <li><a href="#">Separated link</a></li>#}
-{#            <li role="separator" class="divider"></li>#}
-{#            <li><a href="#">One more separated link</a></li>#}
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Events<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href='{% url 'events:event_list' %}'>View Events</a></li>
+            <li><a href='{% url 'events:event_create' %}'>Create Event</a></li>
           </ul>
         </li>
       </ul>
