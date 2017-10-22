@@ -4,7 +4,12 @@
 <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 <script src="//vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 <script src="//vjs.zencdn.net/5.8.8/video.js"></script>
-
+<head>
+<meta property='og:title' content="Visumic: {{ video.title }}"/>
+<meta property='og:image' content="{{ video.video.url }}"/>
+<meta property='og:description' content="{{ video.description }}"/>
+<meta property='og:url' content='{{ video.get_absolute_url }}' />
+</head>
 <title>{{ video.title }}</title>
 
 <script>
