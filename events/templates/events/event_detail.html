@@ -8,6 +8,13 @@
 {#    <h2>{{ event.description }}</h2>#}
 {#    <h2>{{ event.zipcode}}</h2>#}
 {#    <h2>{{ event.date }}</h2>#}
+
+    {% block metatags %}
+        <meta property='og:title' content="Visumic: {{ event.name }}"/>
+        <meta property='og:image' content='{{ event.picture.url }}'/>
+        <meta property='og:description' content="{{ event.description }}"/>
+        <meta property='og:url' content='{{ event.get_absolute_url }}' />
+    {% endblock metatags %}
 <script>
 $(document).ready(function() {
         $(document.body).on("click", ".deleteevent-btn", function(e){

@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>{{ playlist.name }}</title>
+    {% block metatags %}
+        <meta property='og:title' content="Visumic: {{ playlist.name }}"/>
+        <meta property='og:image' content="{% static 'static/img/Vplaylist.jpg'  %}"/>
+        <meta property='og:description' content="{{ playlist.description }}"/>
+        <meta property='og:url' content='{{ playlist.get_absolute_url }}' />
+    {% endblock metatags %}
 
 {#<body>#}
 {#    <h1>{{ User.username }}</h1>#}

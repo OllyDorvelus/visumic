@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Crafters</title>
+
+    {% block metatags %}
+        <meta property='og:title' content="Visumic: View Artists"/>
+        <meta property='og:image' content='{% static 'static/img/visumic_white_logo.png'  %}'/>
+        <meta property='og:description' content="Browse through artist uploaded videos"/>
+        <meta property='og:url' content='{% url 'videos:video_list' %}' />
+    {% endblock metatags %}
 </head>
 <body>
 

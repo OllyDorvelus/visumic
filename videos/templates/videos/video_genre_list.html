@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load staticfiles %}
     <title>{{ genre.parent.genrename }} | {{ genre.genrename }}</title>
-
+    {% block metatags %}
+        <meta property='og:title' content="Visumic: View {{ genre.genrename }} Videos!"/>
+        <meta property='og:image' content="{% static 'static/img/visumic_white_logo.png'  %}"/>
+        <meta property='og:description' content="Browse though all {{ genre.genrename }} videos uploaded by talented artist"/>
+        <meta property='og:url' content='{% url 'videos:video_genre_list' genre.parent.genrename genre.genrename %}' />
+{% endblock metatags %}
 
     <script>
     Cookies.set("timeSortCookie", "")

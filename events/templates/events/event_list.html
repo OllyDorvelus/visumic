@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% load staticfiles %}
     <title>Playlist</title>
+
+    {% block metatags %}
+        <meta property='og:title' content="Visumic: View Events"/>
+        <meta property='og:image' content='{% static 'static/img/visumic_white_logo.png'  %}'/>
+        <meta property='og:description' content="Browse through artist events and attend them"/>
+        <meta property='og:url' content='{% url 'events:event_list' %}' />
+    {% endblock metatags %}
 <script>
     $(document).ready(function() {
         {% load static %}
