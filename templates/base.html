@@ -14,7 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.min.js"></script>
 <script src="https://use.fontawesome.com/98870766b6.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="shortcut icon" type="image/png" href="{% static 'static/img/visumic_logo.png' %}"/>
+<link rel="shortcut icon" type="image/png" href="{% static 'static/img/visumic_logo_bit.png' %}"/>
 <script src = "{% static 'static/js/main.js' %}" ></script>
 <script src = "{% static 'static/js/linkify/linkify.min.js' %}"></script>
 <script src = "{% static 'static/js/linkify/linkify-jquery.min.js' %}"></script>
@@ -29,7 +29,380 @@ and view artist work. Special Thanks to all artist'/>
 {#<link rel="stylesheet" type="text/css" href="{% static 'static/sweetalert.css' %}">#}
 {#    <script src="../../Scripts/node_modules/sweetalert/dist/sweetalert.min.js"></script>#}
 {#<link rel="stylesheet" type="text/css" href="../../Scripts/node_modules/sweetalert/dist/sweetalert.css">#}
+<script>
+    //Load Video Data
+    function loadVideoContainer(videoContainerID, isVideoValue) {
 
+        var videoContainer;
+        var videoList = [];
+        var nextVideoUrl;
+        if(videoContainerID) {
+            videoContainer = $("#" + videoContainerID)
+        }
+        else {
+             videoContainer = $('#video-container')
+        }
+
+        var initialURL = videoContainer.attr("data-url") || "/api/videos/";
+
+        function attachVideo(videoValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+            if(!isVideoValue) {
+                var videoUser = videoValue.user
+                var profileValue = videoUser.profile
+            }
+            else {
+                videoValue = videoValue.video
+                var videoUser = videoValue.user
+                var profileValue = videoUser.profile
+            }
+            var verb = "Follow"
+          //  var follower_count = profileValue.follower_count
+           // if(profileValue.is_following) {
+           //     verb = "Unfollow"
+           // }
+
+            //var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+           //         "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'><h6><a href='#' class='follow-btn' data-id="+ profileValue.id +">" + verb +  profileValue.follower_count + "|" +
+             //       "</a></h6></span><span class='glyphicon glyphicon-play' aria-hidden='true'><h6>Videos:" + profileUser.video_count + "</h6></span></div>"
+
+{##}
+{#            var videoFormatHtml = "<div class='col-md-3' style='padding-bottom:20px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +#}
+{#                    "<h6 class='inline'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +#}
+{#                    "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='" + videoValue.genre.url + "' class='blacklink' style=''><h6 class='inline genre'>" + videoValue.genre.genrename + "</h6></a>" +#}
+{#                    "<a href='"+ videoValue.url +"'><div class='container'><img src='" + videoValue.thumbnail + "'class='thumbnail img-responsive'></a>" +#}
+{#                    "</div><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 class='text-center'>" + videoValue.timesince + "</h6></div>"#}
+                    var videoFormatHtml = "<div class='col-md-3' style='padding-bottom:20px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
+                    "<h6 class='inline'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
+                    "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='" + videoValue.genre.url + "' class='blacklink' style='margin-left:3px'><h6 class='inline genre'>" + videoValue.genre.genrename + "</h6></a>" +
+                            "<a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 class='text-center'>" + videoValue.timesince + "</h6></div>"
+
+            if (prepend == true) {
+                videoContainer.prepend(profileFormattedHtml)
+            }
+            else {
+                videoContainer.append(
+                        videoFormatHtml
+
+                )
+            }
+        }
+
+
+        var query = getParameterByName('q')
+        var ordering = getParameterByName('ordering')
+
+//        console.log(query)
+        function parseVideos() {
+
+                if (videoList == 0) {
+                    videoContainer.text("No Videos Currently Found.")
+                    videoContainer.addClass("text-center")
+                    videoContainer.removeClass('fix')
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(videoList, function (key, value) {
+                    var profileKey = key
+                    attachVideo(value)
+
+            })
+        }
+        }
+        function fetchVideos(url) {
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = initialURL;
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query,
+                "ordering": ordering
+            },
+            type: "GET",
+
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+            success: function(data){
+                $("#loadmore").show();
+                videoList = data.results
+                if (data.next) {
+                    nextVideoUrl = data.next
+                } else {
+
+                    $("#loadmore").css("display", "none");
+
+                }
+                parseVideos()
+                $("#loading-image").hide();
+            },
+
+            error: function(data){
+                console.log("error")
+            }
+        })
+
+        }
+            fetchVideos()
+
+        $("#loadmore").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+            }
+
+        })
+    }
+
+    //Fetch Profiles
+    function loadProfileContainer(profileContainerID, notProfileUser) {
+        var profileList = [];
+        var nextProfileUrl;
+        var profileContainer;
+                if(profileContainerID) {
+                profileContainer = $("#" + profileContainerID)
+        }
+        else {
+             profileContainer = $('#profile-container')
+        }
+
+        var initialURL = profileContainer.attr("data-url") || "/api/accounts/";
+
+
+        function attachProfile(profileValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+            if(notProfileUser) {
+                profileValue = profileValue.profile
+            }
+
+                var profileUser = profileValue.user
+                var verb = "Follow"
+                var follower_count = profileValue.follower_count
+
+            if(profileValue.is_following) {
+                verb = "Unfollow"
+            }
+            var profileFormattedHtml = "<div class=\"media\"><div class=\"media-body\">" +  "<br> via <a href='" + profileUser.url + "'>" +
+                    profileUser.username + " videos: " + profileUser.video_count + "</a> | " +  " | " + "<a href='#'>View "  +  "  | <a href='#' class='follow-btn btn btn-primary' data-id=" + profileValue.id + ">" + verb + " " + profileValue.follower_count + "</a></div></div><hr>"
+
+
+            var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+                    "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'></span><h6><a href='#' class='follow-btn btn btn-primary btn-sm' data-id="+ profileUser.username +">" + verb + " " +  profileValue.follower_count + "" +
+                    "</a></h6><span class='glyphicon glyphicon-play' aria-hidden='true'></span><h6>Videos:" + profileUser.video_count + "</h6></div>"
+            if (prepend == true) {
+                profileContainer.prepend(profileFormattedHtml)
+            }
+            else {
+                profileContainer.append(
+                        profileFormattedHtml2
+
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var ordering = getParameterByName('ordering')
+
+//        console.log(query)
+        function parseProfiles() {
+
+                if (profileList == 0) {
+                    profileContainer.text("No Profiles Currently Found")
+                    profileContainer.addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(profileList, function (key, value) {
+                    var profileKey = key
+                    attachProfile(value)
+
+
+            })
+        }
+        }
+        function fetchProfiles(url) {
+
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = initialURL
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query,
+                "ordering": ordering
+            },
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+            method: "GET",
+            success: function(data){
+                $("#loading-image").hide();
+                $('#loadmore').show()
+                profileList = data.results
+
+                if (data.next) {
+                    nextProfileUrl = data.next
+                } else {
+                    nextProfileUrl = null
+                    $("#loadmore").hide()
+                  //  $("#loadmore").css("display", "none");
+
+                }
+
+                parseProfiles()
+            },
+
+            error: function(data){
+                console.log("error")
+            }
+        })
+        }
+            fetchProfiles()
+
+        $("#loadmore").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextProfileUrl) {
+                fetchProfiles(nextProfileUrl)
+            }
+
+        })
+    }
+
+    //Chart Videos
+    function loadChartContainer(chartContainerID) {
+        var chartContainer;
+        var videoList = [];
+        var nextVideoUrl;
+        if(chartContainerID) {
+            chartContainer = $("#" + chartContainerID)
+        }
+        else {
+             chartContainer = $('#alltime-container')
+        }
+
+        var initialURL = chartContainer.attr("data-url") || "/api/videos/";
+            function attachVideo(videoValue, prepend) {
+
+            //var profiletImg = profileValue.user_img
+
+
+
+            var videoUser = videoValue.user
+            var profileValue = videoUser.profile
+            var verb = "Follow"
+          //  var follower_count = profileValue.follower_count
+           // if(profileValue.is_following) {
+           //     verb = "Unfollow"
+           // }
+
+            //var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
+           //         "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'><h6><a href='#' class='follow-btn' data-id="+ profileValue.id +">" + verb +  profileValue.follower_count + "|" +
+             //       "</a></h6></span><span class='glyphicon glyphicon-play' aria-hidden='true'><h6>Videos:" + profileUser.video_count + "</h6></span></div>"
+
+
+            var videoFormatHtml =  "<div class='row'><div class='col-md-offset-1 col-md-2' style='margin-top:5em'><h4><strong>" + counter + ".</strong></h4></div><div class='col-md-3 col-md-offset-1'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "'class='videolistpic img-responsive img-circle' style='display:inline'></a>" +
+                    "<h5 class='inline'>" + videoUser.username + "</h5><h6 class='inline'><span class='glyphicon glyphicon-user' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' aria-hidden='true'></span>" + " " + videoValue.likes_count + " " + "</h6><a href='" + videoValue.genre.url + "' class='blacklink' style='padding-left:3px'><h6 class='inline genre'>" + videoValue.genre.genrename + "</h6></a>" +
+                    "<a href='" + videoValue.url + "'><img src='" + videoValue.thumbnail + "' class='thumbnail chart-thumbnail img-responsive'></a><a href='" + videoValue.url + "'><h5 class='text-center blacklink'>" + videoValue.title + "</h5></a></div><div class='col-md-3' style='margin-top:5em;position:relative'><h4>Views: <strong>" + videoValue.views + "</strong></h4></div></div>"
+
+            if (prepend == true) {
+                chartContainer.prepend(profileFormattedHtml)
+            }
+            else {
+                chartContainer.append(
+                        videoFormatHtml
+
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+
+//        console.log(query)
+        function parseVideos() {
+
+                if (videoList == 0) {
+                    chartContainer.text("No Videos Currently Found.")
+                    chartContainer.addClass("text-center")
+                } else {
+                    //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(videoList, function (key, value) {
+                    var profileKey = key
+                    counter++;
+                    attachVideo(value)
+
+            })
+        }
+        }
+        function fetchVideos(url) {
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = initialURL
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+            url: fetchUrl,
+            data: {
+                "q": query
+            },
+            type: "GET",
+            beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+            success: function(data){
+                $("#loadmore").show();
+
+                videoList = data.results
+                if (data.next) {
+                    nextVideoUrl = data.next
+                } else {
+                    $("#loadmore").css("display", "none");
+                    //nextVideoUrl = null
+                }
+                parseVideos()
+                $("#loading-image").hide();
+            },
+            error: function(data){
+                console.log("error")
+
+            }
+        })
+        }
+            fetchVideos()
+
+        $("#loadmore").click(function(event){
+            event.preventDefault()
+            // load more items
+            if (nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+            }
+
+        })
+    }
+</script>
 </head>
 <body>
 <div id="wrapper">
@@ -81,8 +454,8 @@ and view artist work. Special Thanks to all artist'/>
       <a href="#" class="btn btn-lg navbar-brand" id="menu-toggle">
     <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
       </a>
-<a href={% url 'accounts:home' %}><img src="{% static 'static/img/visumic_white_logo.png' %}"style='height:60px;width:75px;margin-top:-3px;display:inline' class='navbar-brand'></a>
-<a class="navbar-brand" href={% url 'accounts:home' %}>Visumic</a>
+{#<a href={% url 'accounts:home' %}><img src="{% static 'static/img/visumic_word_white_trans.png' %}"style='height:3em;width:3em;margin-top:-3px;display:inline' class='navbar-brand'></a>#}
+<a class="navbar-brand" href="{% url 'accounts:home' %}" style='margin-top:-24px;display:inline'><img src="{% static 'static/img/visumic_word_white_trans.png' %}" style='height:4em;width:4em;margin-top:-3px;display:inline'></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -198,6 +571,7 @@ and view artist work. Special Thanks to all artist'/>
     Cookies.set("timeSortCookieAcc", "")
  {% endblock searchCookieAcc %}
 
+
     Cookies.set("example");
     Cookies.set("menuOpen");
     localStorage.setItem('myCat', 'Tom');
@@ -214,12 +588,12 @@ and view artist work. Special Thanks to all artist'/>
     }
             if(localStorage.getItem("sideOpen") == "true") {
         $('#wrapper').removeClass("menuNotDisplayed")
-            console.log("Open")
+          //  console.log("Open")
     }
     else {
-        $('#wrapper').addClass("menuNotDisplayed").delay(1000000)
+        $('#wrapper').addClass("menuNotDisplayed")
        // $('#wrapper').detach("menuNotDisplayed");
-            console.log("Close")
+           // console.log("Close")
     }
 
 //var menuOutBoolean = Cookies.get("menuOutB") || false;
@@ -231,7 +605,8 @@ $('#menu-toggle').click(function(e) {
        localStorage.setItem("sideOpen", "false")
    }
     else {
-       $('#wrapper').removeClass("menuNotDisplayed");
+{#       $('#wrapper').removeClass("menuNotDisplayed")#}
+       $('#wrapper').removeClass("menuNotDisplayed")
        localStorage.setItem("sideOpen", "true")
    }
 
@@ -335,5 +710,7 @@ $('#menu-toggle').click(function(e) {
         })
 
             })
+
+
 
 </script>

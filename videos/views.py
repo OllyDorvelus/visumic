@@ -233,9 +233,16 @@ class PlaylistDetailView(DetailView):
     qs = PlaylistModel.objects.all()
     template_name = "videos/playlist_detail.html"
     context_object_name = "playlist"
+    x = 3
 
     def get_context_data(self, *args, **kwargs):
         context = super(PlaylistDetailView, self).get_context_data(*args, **kwargs)
+        # pk = self.kwargs['pk']
+        # playlist = PlaylistModel.objects.get(pk=pk)
+        # if(playlist.videos.all.count() != 0):
+        #     video = playlist.videos.all()[:1].get()
+        # else:
+        #     playlistimg =
         context['playlist_edit_form'] = PlaylistEditForm
         context['playlist_url'] = reverse_lazy("accounts:home")
         return context

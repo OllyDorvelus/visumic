@@ -70,7 +70,8 @@ INSTALLED_APPS = [
     "django_filters",
     'notifications',
     'django_private_chat',
-    'localflavor'
+    'localflavor',
+    'django_social_share',
 
     #'social_django',
 
@@ -132,6 +133,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.login_form',
                 'accounts.context_processors.profilepicture',
+                'django.template.context_processors.request',
                 # 'social_django.context_processors.backends',  # <--
                 # 'social_django.context_processors.login_redirect', # <--
             ],

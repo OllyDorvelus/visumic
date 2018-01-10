@@ -63,7 +63,7 @@ $(document).ready(function() {
 
   <div class='text-center'><img src='{{ event.picture.url }}' class='img-responsive event-img-detail' style="margin-right:auto;margin-left:auto"></div>
   <h1 class='text-center'>{{ event.name }}</h1>
-  <h3 class='text-center'>{{ event.user.username }}</h3>
+  <a href="{% url 'accounts:profile_detail' event.user.username %}" class="blacklink"><h3 class='text-center'>{{ event.user.username }}</h3></a>
   <h5 class='text-center'>{{ event.street_address }}, {{ event.city }}, {{ event.state }} {{ event.zipcode }}</h5>
   <h5 class='text-center'>{{ event.date }}</h5>
   <h5 class='text-center'>{{ event.start_time }} - {{ event.end_time }}</h5>

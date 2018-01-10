@@ -1,0 +1,96 @@
+/*.video-js {*/
+  /* The base font size controls the size of everything, not just text.*/
+     /*All dimensions use em-based sizes so that the scale along with the font size.*/
+     /*Try increasing it to 15px and see what happens. */
+  /*font-size: 12px !important;*/
+
+  /* The main font color changes the ICON COLORS as well as the text */
+  /*color: black !important;*/
+/*}*/
+.video-js {
+  /* The base font size controls the size of everything, not just text.
+     All dimensions use em-based sizes so that the scale along with the font size.
+     Try increasing it to 15px and see what happens. */
+  font-size: 12px;
+
+  /* The main font color changes the ICON COLORS as well as the text */
+  color: black !important;
+}
+
+.vjs-default-skin .vjs-big-play-button {
+  /* The font size is what makes the big play button...big.
+     All width/height values use ems, which are a multiple of the font size.
+     If the .video-js font-size is 10px, then 3em equals 30px.*/
+  font-size: 6em;
+
+  /* We're using SCSS vars here because the values are used in multiple places.
+     Now that font size is set, the following em values will be a multiple of the
+     new font size. If the font-size is 3em (30px), then setting any of
+     the following values to 3em would equal 30px. 3 * font-size. */
+  /*$big-play-width: 3em; */
+  /* 1.5em = 45px default */
+  /*$big-play-height: 1.5em;*/
+
+  line-height: 1.5em;
+  height: 1.5em;
+  width: 3em;
+
+  /* 0.06666em = 2px default */
+  border: 0.06666em solid black !important;
+  /* 0.3em = 9px default */
+  border-radius: 0.3em;
+
+  /*@if $center-big-play-button {*/
+    /* Align center */
+    /*left: 50%;*/
+    /*top: 50%;*/
+    /*margin-left: -($big-play-width / 2);*/
+    /*margin-top: -($big-play-height / 2);   */
+  /*} @else {*/
+    /* Align top left. 0.5em = 15px default */
+    /*left: 0.5em;*/
+    /*top: 0.5em;*/
+  /*}*/
+}
+
+
+
+.video-js .vjs-control-bar,
+.video-js .vjs-big-play-button,
+.video-js .vjs-menu-button .vjs-menu-content {
+  /* IE8 - has no alpha support */
+  background-color: #fff !important;
+  background-color:rgba(255, 255, 255, 0.7) !important;
+}
+
+.video-js .vjs-slider {
+  /*background-color: #fff;*/
+  background-color:grey;
+    filter:brightness(150%);
+  opacity:0.8;
+  /*background-color: rgba(255, 255, 255 0.5);*/
+
+}
+
+.video-js .vjs-volume-level,
+.video-js .vjs-play-progress,
+.video-js .vjs-slider-bar {
+  background: black !important;
+}
+
+.video-js .vjs-load-progress {
+  /* For IE8 we'll lighten the color */
+    background: #fff !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+
+
+
+  /* Otherwise we'll rely on stacked opacities */
+}
+
+.video-js .vjs-load-progress div {
+    background: #fff !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    filter:brightness(200%) !important;
+}
+

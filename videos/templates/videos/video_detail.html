@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+    {% load staticfiles %}
+<link href="//vjs.zencdn.net/6.6.0/video-js.css" rel="stylesheet">
+<link href="{% static 'static/css/videostyle.css' %}" rel="stylesheet">
 <script src="//vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-<script src="//vjs.zencdn.net/5.8.8/video.js"></script>
+ <script src="//vjs.zencdn.net/6.6.0/video.js"></script>
 
 {% block metatags %}
 <meta property='og:title' content="Visumic: {{ video.title }}!"/>
@@ -430,7 +432,8 @@ var commentId = 0
 
             var videoRelatedFormatHtml = "<div class='col-md-9 col-md-offset-3' style='padding-top:0px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videorelatedlistpic img-responsive img-circle' style='display:inline'></a><h6 class='inline smallfont'>" + videoUser.username + "</h6>" +
                     "<h6 class='inline smallfont'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline smallfont'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
-                    "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail related-thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 style='display:block;font-size:8px'>" + videoValue.timesince + "</h6></div>"
+                    "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline smallfont'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='" + videoValue.genre.url + "' class='blacklink' style='margin-left:3px'><h6 class='inline genre' style='font-size:9px'>" + videoValue.genre.genrename + "</h6></a>" +
+                    "<a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail related-thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 style='display:block;font-size:8px'>" + videoValue.timesince + "</h6></div>"
 
             if (prepend == true) {
                 $("#related-container").prepend(videoRelatedFormatHtml)
@@ -523,7 +526,7 @@ $('#description').linkify();
 {% load hitcount_tags %}
 <div class="container-fluid">
   <div class="row">
-<div class='col-md-8'>
+<div class='col-md-9'>
     <div id = "vidwrapper">
     <video id="my-video" class="video-js  vjs-default-skin vjs-big-play-centered vjs-16-9 vjs-fluid" controls="true" preload="auto"
       poster="{{ video.thumbnail.url }}" data-setup='{"fluid": true}'>
@@ -538,13 +541,30 @@ $('#description').linkify();
 
 
     <div class="row" id="undervid">
-      <div class="col-md-4 vidbtns" id="likeshare">
+
+    <div class="vidtitle" style="width:100%">
+      <h4 class="inline" style="margin-left:1.5em"  id="vidtitle">{{ video.title }}</h4>
+                      <div class="col-md-4 vidbtns" style="display:inline">
 
     </div>
-    <div class="vidtitle">
-      <h3 class="inline" id="vidtitle">{{ video.title }}</h3><h4 style='margin-left:20px' class='inline'>Views:</h4><h5 class="inline"><strong>{{ video.hit_count.hits }}</strong></h5>
+
+        <div style="margin-bottom:4em">
+            <div id="likeshare" style="float:left;margin-left:1.5em">
+
+        </div>
+
+        <div style="margin-top:2em"><h6 style='margin-left:20px'>Views:</h6><h6 class="inline"><strong>{{ video.hit_count.hits }}</strong></h6></div>
+        </div>
     </div>
-    </div>
+        {% load social_share %}
+        <div class="socialfa">
+    {% post_to_facebook  video.get_absolute_url "<h6 style='font-size:0.6em'><span class='fa fa-facebook'></span></h6>"  %}
+        {% post_to_twitter "Check Out This Video: {{object.title}}." video.get_absolute_url "<h6 style='font-size:0.6em'><span class='fa fa-twitter'></span></h6>" %}
+        {% post_to_reddit "Check Out This Video: {{object.title}}"  video.get_absolute_url "<h6 style='font-size:0.6em'><span class='fa fa-reddit'></span></h6>"%}
+            </div>
+            </div>
+
+
 
 
     <div class="row" id="videouser">
@@ -591,11 +611,13 @@ $('#description').linkify();
 
 </div>
 
-  <div class='col-md-4' id='related-container'><h3 class='text-center' style='text-decoration:underline'>Related Videos</h3>
+  <div class='col-md-3' id='related-container'><h3 class='text-center' style='text-decoration:underline'>Related Videos</h3>
       </div>
 <div class="text-center" ><a href="#" id="loadmorerelated" style="float:right;display:none;margin-right:13em" class="btn btn-primary btn-xs"><h5 class="text-center">Load More Videos</h5></a></div>
 
   </div>
+
+
 </div>
 
 

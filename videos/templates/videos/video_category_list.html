@@ -21,109 +21,7 @@
 var timeSortCookieCat = Cookies.set( "timeSortCookieCat" )
     $(document).ready(function() {
 
-        function attachVideo(videoValue, prepend) {
-
-            //var profiletImg = profileValue.user_img
-
-
-
-            var videoUser = videoValue.user
-            var profileValue = videoUser.profile
-            var verb = "Follow"
-          //  var follower_count = profileValue.follower_count
-           // if(profileValue.is_following) {
-           //     verb = "Unfollow"
-           // }
-
-            //var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
-           //         "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'><h6><a href='#' class='follow-btn' data-id="+ profileValue.id +">" + verb +  profileValue.follower_count + "|" +
-             //       "</a></h6></span><span class='glyphicon glyphicon-play' aria-hidden='true'><h6>Videos:" + profileUser.video_count + "</h6></span></div>"
-
-
-            var videoFormatHtml = "<div class='col-md-3' style='padding-top:20px'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
-                    "<h6 class='inline'><span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span>" + " " + profileValue.follower_count + " " + "</h6><h6 class='inline'><span class= 'glyphicon glyphicon-facetime-video' aria-hidden='true'></span>" + " " + videoUser.video_count + "  " +
-                    "</h6><h6 class='inline'><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span>" + " " + videoValue.views + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-share' class='inline' aria-hidden='true'></span>" + " " + videoValue.shares_count + " " + "</h6><h6 class='inline'><span class='glyphicon glyphicon-thumbs-up' class='inline' aria-hidden='true'></span>" + " " + videoValue.likes_count + "</h6><a href='"+ videoValue.url +"'><img src='" + videoValue.thumbnail + "'class='thumbnail img-responsive'></a><a href='"+ videoValue.url +"'><h5 class='text-center blacklink'>" +  videoValue.title  +"</h5></a><h6 class='text-center'>" + videoValue.timesince + "</h6></div>"
-
-            if (prepend == true) {
-                $("#video-genre-container").prepend(videoFormatHtml)
-            }
-            else {
-                $("#video-genre-container").append(
-                        videoFormatHtml
-
-                )
-            }
-        }
-
-        var query = getParameterByName('q')
-        var ordering = getParameterByName('ordering')
-        var videoList = [];
-        var nextVideoUrl;
-//        console.log(query)
-        function parseVideos() {
-
-                if (videoList == 0) {
-                    $("#video-genre-container").text("No Videos Currently Found.")
-                    $("#video-genre-container").addClass("text-center")
-                } else {
-                    //tweets exist, parse & display them
-
-
-                //console.log(key)
-                $.each(videoList, function (key, value) {
-                    var profileKey = key
-                    attachVideo(value)
-
-            })
-        }
-        }
-        function fetchVideos(url) {
-            var fetchUrl;
-            if (!url) {
-                fetchUrl = "/api/videos/category/" + "{{ category.genrename }}" + "/"
-            } else {
-                fetchUrl = url
-            }
-            $.ajax({
-            url: fetchUrl,
-            data: {
-                "q": query,
-                "ordering": ordering
-            },
-            beforeSend: function() {
-              $("#loading-image").show();
-
-           },
-            method: "GET",
-            success: function(data){
-                $("#loading-image").hide();
-                $('#loadmore').show()
-
-
-                videoList = data.results
-                if (data.next) {
-                    nextVideoUrl = data.next
-                } else {
-                    $("#loadmore").css("display", "none");
-                    //nextVideoUrl = null
-                }
-                parseVideos()
-            },
-            error: function(data){
-                console.log("error")
-            }
-        })
-        }
-            fetchVideos()
-
-        $("#loadmore").click(function(event){
-            event.preventDefault()
-            // load more items
-            if (nextVideoUrl) {
-                fetchVideos(nextVideoUrl)
-            }
-
-        })
+    loadVideoContainer("video-genre-container")
 
 {#    window.onscroll = function(ev) {#}
 {#    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {#}
@@ -242,7 +140,7 @@ if( timeSortCookieCat != undefined ) {
 
           </ul>
         </li>
-            <div id="video-genre-container" class="row fix">
+            <div id="video-genre-container" class="row fix" data-url="/api/videos/category/{{ category.genrename }}/">
 
             </div>
         </div>

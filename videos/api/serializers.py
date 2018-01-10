@@ -41,10 +41,28 @@ class UserDisplaySerializer(serializers.ModelSerializer):
     def get_video_count(self, obj):
         return obj.videos.count()
 
+class GenreModelSerializer(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
+    class Meta:
+        model = GenreModel
+        fields = [
+            'genrename',
+            'parent',
+            'is_category',
+            'url'
+        ]
+
+    def get_url(self, obj):
+        if not obj.parent:
+            return reverse_lazy('videos:video_category_list', kwargs={'category': obj.genrename})
+
+        return reverse_lazy('videos:video_genre_list', kwargs={'category': obj.parent.genrename, 'genrename': obj.genrename})
+
 
 class VideoModelSerializer(serializers.ModelSerializer):
    # url = serializers.SerializerMethodField()
     user = UserDisplaySerializer(read_only=True)
+    genre = GenreModelSerializer(read_only=True)
     url = serializers.SerializerMethodField()
     likes_count = serializers.SerializerMethodField()
     did_like = serializers.SerializerMethodField()
@@ -53,6 +71,7 @@ class VideoModelSerializer(serializers.ModelSerializer):
     timesince = serializers.SerializerMethodField()
     date_display = serializers.SerializerMethodField()
     daily_views = serializers.SerializerMethodField()
+    genrename = serializers.SerializerMethodField()
     comments = serializers.StringRelatedField(many=True, read_only=True)
    # genre = serializers.StringRelatedField()
     class Meta:
@@ -68,6 +87,7 @@ class VideoModelSerializer(serializers.ModelSerializer):
             'description',
             'thumbnail',
             'genre',
+            'genrename',
             'url',
             'comments',
             'playlistvideos',
@@ -124,13 +144,9 @@ class VideoModelSerializer(serializers.ModelSerializer):
        # return obj.timestamp.strftime("%b %d, %Y at %I:%M %p")
         return obj.timestamp.strftime("%m-%d-%Y")
 
-class GenreModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GenreModel
-        fields = [
-            'genrename',
-            'parent'
-        ]
+    def get_genrename(self, obj):
+        return obj.genre.genrename
+
 
 class VideoModelEditSerializer(serializers.ModelSerializer):
    # url = serializers.SerializerMethodField()

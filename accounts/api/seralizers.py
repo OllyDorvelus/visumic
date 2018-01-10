@@ -103,6 +103,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True,
         slug_field='username')
+
     #date_display = serializers.SerializerMethodField()
     # timesince = serializers.SerializerMethodField()
 

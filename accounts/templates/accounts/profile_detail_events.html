@@ -2,6 +2,7 @@
 
 
 
+
 {% block profilecontent %}
 <script>
     $(document).ready(function() {
@@ -112,5 +113,13 @@
 
 
 </div>
-    <a href="#" id="loadmore"><h5 class="text-center">Load More Events</h5></a>
+            <div class="text-center" style="padding-top:30px"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Events</h5></span></div>
+{% load static %}
+{#    <img src="{% static 'static/img/ajax-loader.gif'  %}">#}
+    <div id="myDiv" class="text-center">
+        <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
+    </div>
+
 {% endblock profilecontent %}
+{% block videoScript %}
+{% endblock videoScript %}

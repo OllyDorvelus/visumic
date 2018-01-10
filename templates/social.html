@@ -2,6 +2,7 @@
 
 {% block content %}
 {% load staticfiles %}
+    <link href="{% static 'static/css/videostyle.css' %}" rel="stylesheet">
         {% block metatags %}
 <meta property='og:title' content='Visumic: Share Videos'/>
 <meta property='og:image' content='{% static 'static/img/visumic_white_logo.png'  %}'/>
@@ -11,13 +12,15 @@ and view artist work. Special Thanks to all artist'/>
 {% endblock metatags %}
 
 <title>Visumic | Social</title>
-{#<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">#}
-{#<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>#}
-{#<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>#}
-
+<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+{#<link href="//vjs.zencdn.net/6.6.0/video-js.css" rel="stylesheet">#}
+{#<script src="//vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>#}
+{#<script src="//vjs.zencdn.net/6.6.0/video.js"></script>#}
 <script>
     $(document).ready(function() {
-
+    var counter = 0;
 
 
 
@@ -36,23 +39,32 @@ and view artist work. Special Thanks to all artist'/>
             var videoProfile = videoUser.profile
             var shareUser = shareValue.user
             var shareProfile = shareUser.profile
-            // var controls = "controls preload"
 
-            //if(profileValue.is_following) {
-            //verb = "Unfollow"
-            // }
+        var like_verb = "Like"
+        var like_count = videoValue.likes_count
+        if(videoValue.did_like) {
+            like_verb = "Unlike"
+        }
+
+        var follow_verb = "Follow"
+        var follower_count = videoProfile.follower_count
+
+            if(shareProfile.is_following) {
+                follow_verb = "Unfollow"
+            }
+
             if("{{ request.user.username }}" === shareUser.username) {
                 var editsharehtml = "<li class='dropdown' style='float:right;list-style:none'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='float:right;font-size:20px;cursor:pointer'>&#8942</span></a><ul class='dropdown-menu' style='float:right'><li><a href='#' class='share-edit' data-id='" + shareValue.id + "'>Edit</a></li><li><a href='#' class='deleteshare-btn' data-id='" + shareValue.id + "'>Delete</a></li></ul></li>"
             }
             else {
                 editsharehtml = ""
             }
-            var shareFormatHtml = "<div style='padding:20px' id='" + shareValue.id + "'><div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-md-3'><a href='" + shareUser.url + "'><img src='" + shareProfile.user_img + "'class ='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + shareUser.username + "</h5>" +
-                    "<span class='glyphicon glyphicon-user' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + shareProfile.follower_count + "</h5><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + shareUser.video_count + "</h5></div>" + editsharehtml + "<p class='text-center'>" + shareValue.content + "</p><p class='text-center' style='font-size:12px'>" + shareValue.timesince + "</p></div></div>" +
+            var shareFormatHtml = "<div style='padding:20px' id='" + shareValue.id + "'><div class='panel panel-default'><div class='panel-heading'><div class='row'><div class='col-md-4'><a href='" + shareUser.url + "'><img src='" + shareProfile.user_img + "'class ='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + shareUser.username + "</h5>" +
+                    "<span class='glyphicon glyphicon-user' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + shareProfile.follower_count + "</h5><span class='glyphicon glyphicon-play' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + shareUser.video_count + "</h5></div>" + editsharehtml + "<p class=''>" + shareValue.content + "</p><p class='text-center' style='font-size:12px'>" + shareValue.timesince + "</p></div></div>" +
                     "<div class='panel-body'><div class='vidsocialwrapper'><h5 class='text-center'>" + shareUser.username + " " + "Shared " + videoUser.username + "'s" + " " + "video</h5><a href='" + videoValue.url + "'><h4 class='text-center blacklink'>" + videoValue.title + "</h4></a>" +
-                    "<video class='vjs-poster' controls preload='auto' id='my-video' poster='" + videoValue.thumbnail + "'data-setup='{}'><source src='" + videoValue.video + "' type='video/mp4'></video>     " +
-                    "<div class='row'><div class='col-md-5'><a href='" + videoUser.url + "'><img src='" + videoProfile.user_img + "' class='videolistpic img-responsive img-circle'style='display:inline'></a><h5 class='inline'>" + " " + videoUser.username + "</h5><h5 class='inline'></h5><span class='glyphicon glyphicon-user inline' aria-hidden='true'>" + videoProfile.follower_count + "</span>" +
-                    "<span class='glyphicon glyphicon-play inline' aria-hidden='true'>" + videoUser.video_count + "</span></div></div></div></div>"
+                    "<video id='my-video" + counter + "' class='my-video video-js  vjs-default-skin vjs-big-play-centered vjs-16-9 vjs-fluid' controls preload='auto' poster='" + videoValue.thumbnail + "'><source src='" + videoValue.video + "' type='video/mp4'></video>     " +
+                    "<div class='row'><div class='col-md-7'><a href='" + videoUser.url + "'><img src='" + videoProfile.user_img + "' class='videolistpic img-responsive img-circle'style='display:inline'></a><h5 class='inline'>" + " " + videoUser.username + "</h5><h5 class='inline'></h5><span class='glyphicon glyphicon-user inline' aria-hidden='true'>" + videoProfile.follower_count + "</span>" +
+                    "<span class='glyphicon glyphicon-play inline' aria-hidden='true'>" + videoUser.video_count + "</span><h6 class='btn btn-primary inline follow-btn' style='font-size:10px' data-id='" + videoUser.username + "'>" + follow_verb + " " + follower_count + "</h6><h6 class='btn btn-primary inline like-btn' style='font-size:10px' data-id='" + videoValue.id + "'>" + like_verb + " " + like_count + "</h6></div></div></div></div>"
 
 
             if (prepend == true) {
@@ -65,7 +77,8 @@ and view artist work. Special Thanks to all artist'/>
 
             }
 
-
+            videojs('my-video' + counter.toString());
+            counter++;
         }
 
 
@@ -143,7 +156,7 @@ and view artist work. Special Thanks to all artist'/>
                     }
 
                 },
-
+{#                async:false,#}
 
                 error: function (data) {
                     console.log("error")
@@ -201,6 +214,10 @@ and view artist work. Special Thanks to all artist'/>
             })
 
   })
+       // videojs(document.getElementsByClassName("video-js")[0], {}, function(){
+          // Player (this) is initialized and ready.
+     //       Player(this)
+//});
     })
 
 
@@ -226,7 +243,7 @@ and view artist work. Special Thanks to all artist'/>
 
 
 {% if request.user.is_authenticated %}
-<div id="ogsection"></div>
+<div id="ogsection" class="row"></div>
 
 
  <div class="text-center"><div id="loadmoreshares" class="row text-center btn btn-primary" style="display:none">Load More</div></div>

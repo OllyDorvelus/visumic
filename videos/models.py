@@ -210,6 +210,12 @@ class GenreModel(models.Model):
         else:
             return self.genrename
 
+    # def get_absolute_url(self):
+    #     if self.parent:
+    #         return reverse('videos:video_category_list', kwargs={'category': self.genrename})
+    #
+    #     return reverse('videos:video_genre_list', kwargs={'category': self.parent.genrename, 'genre': self.genrename})
+
 
 class VideoModel(models.Model, HitCountMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, related_name='videos')

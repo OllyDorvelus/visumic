@@ -28,7 +28,7 @@
 
 
             var eventFormatHtml = "<div class='row'><div class='col-md-2 col-md-offset-2'><a href='" + eventValue.url + "'><img src='" + eventValue.picture + "'class='event-img thumbnail img-responsive' style='display:inline'></a></div><div class='col-md-6'>" +
-                    "<a href='" + eventValue.url + "'><h4 class='inline'>" + eventUser.username + "</h4>  <a href='#'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive' style='display:inline;height:30px;width:30px'></a><br><h3 class='inline blacklink' style='padding-bottom:10px'>" + eventValue.name + "</h3></a><p>" + eventValue.description + "<h5>" + eventValue.address + "</h5><h5>" + eventValue.display_date + "</h5>" +
+                    "<h4 class='inline'>" + eventUser.username + "</h4>  <a href='" + eventUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive' style='display:inline;height:30px;width:30px'></a><br><a href='" + eventValue.url + "' style='font-size:20px'><h3 class='inline blacklink' style='padding-bottom:10px'>" + eventValue.name + "</h3></a><p>" + eventValue.description + "<h5>" + eventValue.address + "</h5><h5>" + eventValue.display_date + "</h5>" +
                     "<h5>" + eventValue.time + "</h5></p><span data-id='" + eventValue.id + "'class='btn btn-primary attend-btn' >" + verb + " " + eventValue.attending_count + "</span></div></div>"
 
             if (prepend == true) {

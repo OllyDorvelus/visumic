@@ -93,6 +93,29 @@ body {
     /*margin-right: auto;*/
     /*margin-left:100px;*/
 /*}*/
+.bottom-right {
+    position: absolute;
+    top: 70%;
+    /*left: 0;*/
+    right:15%;
+    color: white;
+    background-color:black;
+   /*# width: 100%;*/
+    font-size:16px;
+    text-align: right;
+    transform: translateY(-100%); /* doesn't work in IE9 and older I'm affraid */
+    margin: 0;
+}
+
+.bottom-right:hover {
+    background-color:black;
+    color:white;
+    cursor:pointer;
+    animation-duration: 4s;
+    font-size:20px;
+    filter:drop-shadow(8px 8px 10px black);
+}
+
 .vjs-poster{
     background-size: 100%!important;
 }
@@ -102,13 +125,20 @@ body {
   margin-left: auto;
   height:auto;
   width:100%;
+}
 
+.my-video {
+  margin-right: auto;
+  margin-left: auto;
+  height:auto;
+  width:100%;
 }
 /*#my-video[poster]{*/
 /*height:auto;*/
 /*width:100%;*/
 /*background-size: 100%!important;*/
 /*}*/
+
 
 .searchbtn {
     display:none;
@@ -223,7 +253,7 @@ h6 {
   display:inline-block;
   /*opacity:80%;*/
   margin-left:3em;
-  width:60%;
+  /*width:60%;*/
 }
 
 #videouser {
@@ -319,6 +349,7 @@ h6 {
 
 .blacklink:hover {
     text-decoration: underline;
+    color:black;
 }
 
 #profilelist  ul  li {
@@ -519,6 +550,7 @@ h6 {
 
 }
 
+
 .notification li:hover {
     background-color:black;
     color:white;
@@ -610,3 +642,42 @@ h6 {
   height:500px;
   width:60%;
 }
+
+.genre {
+    background-color:black;
+    color:white;
+}
+
+.genre:hover {
+    background-color:black;
+    color:white;
+    cursor:pointer;
+    animation-duration: 4s;
+    font-size:16px;
+    filter:drop-shadow(8px 8px 10px black);
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/*media queueries*/
+@media only screen and (max-width: 500px) {
+    /*#commentsection {*/
+        /*display:none;*/
+    /*}*/
+}
+
+.facebook-this {
+    display:inline;
+
+}
+
+.tweet-this {
+    display:inline;
+}
+
+.reddit-this {
+    display:inline;
+}
+
