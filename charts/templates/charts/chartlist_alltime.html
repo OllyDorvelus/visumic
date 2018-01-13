@@ -50,7 +50,7 @@ var counter = 0;
       {% endfor %}
   </select>
         <li class="dropdown inline" style="list-style:none">
-          <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ category.genrename }}<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle btn btn-primary btn-sm" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ category.genrename }}<span class="caret"></span></a>
           <ul class="dropdown-menu">
           <li><a href="{% url 'charts:chart_list_alltime' category.genrename %}"></a></li>
             {% for cat in categories %}
@@ -66,7 +66,8 @@ var counter = 0;
 
 
 </div>
-    <div class="text-center"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Videos</h5></span></div>
+    <div class="footerscroll"></div>
+    <div class="text-center"><span id="loadmore" class="btn btn-primary" style="width:25%;display:none"><h5 class="text-center">Load More Videos</h5></span></div>
     {% load static %}
             <div id="myDiv" class="text-center">
         <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>

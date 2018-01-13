@@ -71,8 +71,8 @@
                     if (data.next) {
                         nextHashtagUrl = data.next
                     } else {
-                        $("#loadmore").css("display", "none");
                         nextHashtagUrl = null
+                        $("#loadmore").css("display", "none");
                     }
                     parseHashtags()
                     updateHashLinks()
@@ -94,6 +94,20 @@
             }
 
         })
+
+var ready = true
+$(window).bind('scroll', function() {
+        if(ready && $(window).scrollTop() >= $('.footerscroll').offset().top + $('.footerscroll').outerHeight() - window.innerHeight) {
+            $('#loadmore').hide()
+            ready = false
+          setTimeout(function(){
+            if(nextHashtagUrl) {
+                fetchHashtags(nextHashtagUrl)
+                ready = true
+            }
+          }, 800);
+        }
+});
 
         var typingTimer;
         var doneInterval = 800; // in ms
@@ -131,5 +145,11 @@
 
         </div>
     </div>
+    </div>
+    <div class="footerscroll" style="height:10px"></div>
+            <div class="text-center" id="loadmore" style="display:none"><span id="loadmore" class="btn btn-primary"><h5 class="text-center">Load More Hashtags</h5></span></div>
+    {% load staticfiles %}
+        <div id="myDiv" class="text-center">
+        <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
     </div>
 {% endblock content %}

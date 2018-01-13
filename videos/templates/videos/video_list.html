@@ -45,7 +45,7 @@
 
 //$(window).scroll(function() {
 //    if($(window).scrollTop() == $(document).height() - $(window).height()) {
- //         fetchVideos(nextVideoUrl)
+//         fetchVideos(nextVideoUrl)
   //  }
 //});
 
@@ -173,12 +173,14 @@ if( timeSortCookie != undefined ) {
             <div id="video-container" class="row fix">
 
             </div>
+
         </div>
         </div>
-            <div class="text-center" style="padding-top:30px"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Videos</h5></span></div>
-{% load static %}
-{#    <img src="{% static 'static/img/ajax-loader.gif'  %}">#}
-    <div id="myDiv" class="text-center">
+ <div class="footerscroll" style="height:10px"></div>
+        </div>
+            <div class="text-center" id="loadmore" style="display:none"><span id="loadmore" class="btn btn-primary"><h5 class="text-center">Load More Videos</h5></span></div>
+    {% load staticfiles %}
+        <div id="myDiv" class="text-center">
         <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
     </div>
 

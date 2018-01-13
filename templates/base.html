@@ -1,6 +1,6 @@
 {% load static %}
 <meta charset="utf-8">
-<meta name="viewport" content="width-device-edith, initial-scale=1">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 {% load staticfiles %}
 
 <head>
@@ -31,6 +31,11 @@ and view artist work. Special Thanks to all artist'/>
 {#<link rel="stylesheet" type="text/css" href="../../Scripts/node_modules/sweetalert/dist/sweetalert.css">#}
 <script>
     //Load Video Data
+    function getScrollTime() {
+        var scrolltime = 500;
+        return scrolltime
+    }
+
     function loadVideoContainer(videoContainerID, isVideoValue) {
 
         var videoContainer;
@@ -138,7 +143,7 @@ and view artist work. Special Thanks to all artist'/>
                 if (data.next) {
                     nextVideoUrl = data.next
                 } else {
-
+                    nextVideoUrl = null
                     $("#loadmore").css("display", "none");
 
                 }
@@ -162,6 +167,21 @@ and view artist work. Special Thanks to all artist'/>
             }
 
         })
+
+var ready = true
+$(window).bind('scroll', function() {
+        if(ready && $(window).scrollTop() >= $('.footerscroll').offset().top + $('.footerscroll').outerHeight() - window.innerHeight) {
+            $('#loadmore').hide()
+            ready = false
+          setTimeout(function(){
+            if(nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+                ready = true
+            }
+          }, getScrollTime());
+        }
+});
+
     }
 
     //Fetch Profiles
@@ -199,8 +219,8 @@ and view artist work. Special Thanks to all artist'/>
 
 
             var profileFormattedHtml2 = "<div class='col-md-3 profilecontainer text-center'>'" +
-                    "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><span class='glyphicon glyphicon-user' aria-hidden='true'></span><h6><a href='#' class='follow-btn btn btn-primary btn-sm' data-id="+ profileUser.username +">" + verb + " " +  profileValue.follower_count + "" +
-                    "</a></h6><span class='glyphicon glyphicon-play' aria-hidden='true'></span><h6>Videos:" + profileUser.video_count + "</h6></div>"
+                    "<a href ='" +  profileUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h6>" + profileUser.username + "|</h6><h6><a href='#' style='font-size:11px' class='follow-btn btn btn-primary btn-sm' data-id="+ profileUser.username +">" + verb + " " +  profileValue.follower_count + "" +
+                    "</a></h6><span style='font-size:12px' class='glyphicon glyphicon-play' aria-hidden='true'></span><h6><strong>" + profileUser.video_count + "</strong></h6></div>"
             if (prepend == true) {
                 profileContainer.prepend(profileFormattedHtml)
             }
@@ -234,6 +254,7 @@ and view artist work. Special Thanks to all artist'/>
             })
         }
         }
+        var dataHolder;
         function fetchProfiles(url) {
 
             var fetchUrl;
@@ -258,8 +279,10 @@ and view artist work. Special Thanks to all artist'/>
                 $('#loadmore').show()
                 profileList = data.results
 
+
                 if (data.next) {
                     nextProfileUrl = data.next
+
                 } else {
                     nextProfileUrl = null
                     $("#loadmore").hide()
@@ -280,11 +303,25 @@ and view artist work. Special Thanks to all artist'/>
         $("#loadmore").click(function(event){
             event.preventDefault()
             // load more items
-            if (nextProfileUrl) {
+            if(nextProfileUrl) {
                 fetchProfiles(nextProfileUrl)
             }
 
+
         })
+var ready = true
+$(window).bind('scroll', function() {
+        if(ready && $(window).scrollTop() >= $('.footerscroll').offset().top + $('.footerscroll').outerHeight() - window.innerHeight) {
+            $('#loadmore').hide()
+            ready = false
+          setTimeout(function(){
+            if(nextProfileUrl) {
+                fetchProfiles(nextProfileUrl)
+                ready = true
+            }
+          }, getScrollTime());
+        }
+});
     }
 
     //Chart Videos
@@ -379,8 +416,9 @@ and view artist work. Special Thanks to all artist'/>
                 if (data.next) {
                     nextVideoUrl = data.next
                 } else {
+                    nextVideoUrl = null
                     $("#loadmore").css("display", "none");
-                    //nextVideoUrl = null
+
                 }
                 parseVideos()
                 $("#loading-image").hide();
@@ -401,7 +439,270 @@ and view artist work. Special Thanks to all artist'/>
             }
 
         })
+
+var ready = true
+$(window).bind('scroll', function() {
+        if(ready && $(window).scrollTop() >= $('.footerscroll').offset().top + $('.footerscroll').outerHeight() - window.innerHeight) {
+            $('#loadmore').hide()
+            ready = false
+          setTimeout(function(){
+            if(nextVideoUrl) {
+                fetchVideos(nextVideoUrl)
+                ready = true
+            }
+          }, getScrollTime());
+        }
+});
+
+
+
     }
+// Events
+    function loadEventContainer(eventContainerID) {
+        var eventContainer;
+        if(eventContainerID) {
+            eventContainer = $("#" + eventContainerID)
+        }
+        else {
+             eventContainer = $('#event-container')
+        }
+
+        var initialURL = eventContainer.attr("data-url") || "/api/events/";
+
+        function attachPlaylist(eventValue, prepend) {
+
+
+
+            var eventUser = eventValue.user
+            var profileValue = eventUser.profile
+            var playlistImg = "{% static 'static/img/VPlaylist.jpg' %}"
+                        var verb = "Attend"
+            var attending_count = eventValue.attending_count
+            if(eventValue.is_attending) {
+                verb = "Attending"
+            }
+
+
+            var eventFormatHtml = "<div class='row'><div class='col-md-2 col-md-offset-2'><a href='" + eventValue.url + "'><img src='" + eventValue.picture + "'class='event-img thumbnail img-responsive' style='display:inline'></a></div><div class='col-md-6'>" +
+                    "<h4 class='inline'>" + eventUser.username + "</h4>  <a href='" + eventUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive' style='display:inline;height:30px;width:30px'></a><br><a href='" + eventValue.url + "' style='font-size:20px'><h3 class='inline blacklink' style='padding-bottom:10px'>" + eventValue.name + "</h3></a><p>" + eventValue.description + "<h5>" + eventValue.address + "</h5><h5>" + eventValue.display_date + "</h5>" +
+                    "<h5>" + eventValue.time + "</h5></p><span data-id='" + eventValue.id + "'class='btn btn-primary attend-btn' >" + verb + " " + eventValue.attending_count + "</span></div></div>"
+
+            if (prepend == true) {
+                eventContainer.prepend(eventFormatHtml)
+            }
+            else {
+                eventContainer.append(
+                        eventFormatHtml
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var eventList = [];
+        var nextEventUrl;
+//        console.log(query)
+        function parseEvents() {
+
+            if (eventList == 0) {
+                eventContainer.text("No Events")
+                eventContainer.addClass('text-center')
+            } else {
+                //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(eventList, function (key, value) {
+                    var profileKey = key
+                    attachPlaylist(value)
+
+                })
+            }
+        }
+
+        function fetchEvents(url) {
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = initialURL
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+                url: fetchUrl,
+                data: {
+                    "q": query
+                },
+                method: "GET",
+        beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+                success: function (data) {
+                    $("#loadmore").show();
+                    eventList = data.results
+                    if (data.next) {
+                        nextEventUrl = data.next
+                    } else {
+                        nextEventUrl = null
+                        $("#loadmore").css("display", "none");
+                    }
+                    parseEvents()
+                    $("#loading-image").hide();
+                },
+                error: function (data) {
+                    console.log("error")
+                }
+            })
+        }
+
+        fetchEvents()
+
+        $("#loadmore").click(function (event) {
+            event.preventDefault()
+            // load more items
+            if (nextEventUrl) {
+                fetchEvents(nextEventUrl)
+            }
+
+        })
+
+var ready = true
+$(window).bind('scroll', function() {
+        if(ready && $(window).scrollTop() >= $('.footerscroll').offset().top + $('.footerscroll').outerHeight() - window.innerHeight) {
+            $('#loadmore').hide()
+            ready = false
+          setTimeout(function(){
+            if(nextEventUrl) {
+                fetchEvents(nextEventUrl)
+                ready = true
+            }
+          }, getScrollTime());
+        }
+});
+
+    }
+
+// Playlist
+function loadPlaylistContainer(playlistContainerID) {
+        var playlistContainer;
+        if(playlistContainerID) {
+            playlistContainer = $("#" + playlistContainerID)
+        }
+        else {
+             playlistContainer = $('#playlist-container')
+        }
+
+        var initialURL = playlistContainer.attr("data-url") || "/api/videos/playlist";
+
+        function attachPlaylist(playlistValue, prepend) {
+
+
+
+            var videoUser = playlistValue.user
+            var profileValue = videoUser.profile
+            var playlistImg = "{% static 'static/img/VPlaylist.jpg' %}"
+            if(!playlistValue.is_empty) {
+                var playlistImg = playlistValue.videos[0].thumbnail
+            }
+            //var test = playlistValue.videos[0].title
+            //console.log(test)
+
+
+            var playlistFormatHtml = "<div class='col-md-3'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
+                    "<span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + profileValue.follower_count + " " + "<span class= 'glyphicon glyphicon-play' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + playlistValue.video_count + "  " +
+                    "" +  "<a href='" + playlistValue.url + "'><img src='" + playlistImg + "'class='thumbnail img-responsive'></a><a href='" + playlistValue.url + "'><h4 class='text-center blacklink'>" + playlistValue.name + "</h4></a></div>"
+
+            if (prepend == true) {
+                playlistContainer.prepend(playlistFormatHtml)
+            }
+            else {
+                playlistContainer.append(
+                        playlistFormatHtml
+                )
+            }
+        }
+
+        var query = getParameterByName('q')
+        var playlistList = [];
+        var nextPlaylistUrl;
+//        console.log(query)
+        function parseVideos() {
+
+            if (playlistList == 0) {
+                playlistContainer.text("No Playlist")
+                playlistContainer.addClass('text-center')
+            } else {
+                //tweets exist, parse & display them
+
+
+                //console.log(key)
+                $.each(playlistList, function (key, value) {
+                    var profileKey = key
+                    attachPlaylist(value)
+
+                })
+            }
+        }
+
+        function fetchPlaylist(url) {
+            var fetchUrl;
+            if (!url) {
+                fetchUrl = initialURL
+            } else {
+                fetchUrl = url
+            }
+            $.ajax({
+                url: fetchUrl,
+                data: {
+                    "q": query
+                },
+                method: "GET",
+        beforeSend: function(data) {
+              $("#loading-image").show();
+
+           },
+                success: function (data) {
+                    $("#loadmore").show();
+                    playlistList = data.results
+                    if (data.next) {
+                        nextPlaylistUrl = data.next
+                    } else {
+                        nextPlaylistUrl = null
+                        $("#loadmore").css("display", "none");
+                    }
+                    parseVideos()
+                    $("#loading-image").hide();
+                },
+                error: function (data) {
+                    console.log("error")
+                }
+            })
+        }
+
+        fetchPlaylist()
+
+        $("#loadmore").click(function (event) {
+            event.preventDefault()
+            // load more items
+            if (nextPlaylistUrl) {
+                fetchPlaylist(nextPlaylistUrl)
+            }
+
+        })
+
+var ready = true
+$(window).bind('scroll', function() {
+        if(ready && $(window).scrollTop() >= $('.footerscroll').offset().top + $('.footerscroll').outerHeight() - window.innerHeight) {
+            $('#loadmore').hide()
+            ready = false
+          setTimeout(function(){
+            if(nextPlaylistUrl) {
+                fetchPlaylist(nextPlaylistUrl)
+                ready = true
+            }
+          }, getScrollTime());
+        }
+});
+}
 </script>
 </head>
 <body>

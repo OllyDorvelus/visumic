@@ -73,6 +73,7 @@ class VideoModelSerializer(serializers.ModelSerializer):
     daily_views = serializers.SerializerMethodField()
     genrename = serializers.SerializerMethodField()
     comments = serializers.StringRelatedField(many=True, read_only=True)
+    comment_count = serializers.SerializerMethodField()
    # genre = serializers.StringRelatedField()
     class Meta:
         model = VideoModel
@@ -92,6 +93,7 @@ class VideoModelSerializer(serializers.ModelSerializer):
             'comments',
             'playlistvideos',
             'shares_count',
+            'comment_count',
             'views',
             'daily_views',
             'date_display',
@@ -116,10 +118,13 @@ class VideoModelSerializer(serializers.ModelSerializer):
 
     def get_likes_count(self, obj):
         return obj.liked.count()
-        return
+
 
     def get_shares_count(self, obj):
         return obj.shares.count()
+
+    def get_comment_count(self, obj):
+        return obj.comments.count()
 
     def get_did_like(self, obj):
         request = self.context.get("request")
@@ -165,6 +170,7 @@ class ParentCommentModelSerializer(serializers.ModelSerializer):
     user = UserDisplaySerializer(read_only=True) #write_only
     did_like = serializers.SerializerMethodField()
     likes_count = serializers.SerializerMethodField()
+    reply_count = serializers.SerializerMethodField()
 
     class Meta:
         model = CommentModel
@@ -180,6 +186,7 @@ class ParentCommentModelSerializer(serializers.ModelSerializer):
             'parent',
             'reply',
             'replies',
+            'reply_count'
 
         ]
         read_only_fields = [
@@ -198,6 +205,9 @@ class ParentCommentModelSerializer(serializers.ModelSerializer):
     def get_likes_count(self, obj):
         return obj.likedcmt.count()
 
+    def get_reply_count(self, obj):
+        return obj.replies.count()
+
 
 class CommentModelSerializer(serializers.ModelSerializer):
     user = UserDisplaySerializer(read_only=True)
@@ -207,6 +217,7 @@ class CommentModelSerializer(serializers.ModelSerializer):
     parent = ParentCommentModelSerializer(read_only=True)
     likes_count = serializers.SerializerMethodField()
     timesince = serializers.SerializerMethodField()
+    reply_count = serializers.SerializerMethodField()
     class Meta:
         model = CommentModel
         fields = [
@@ -222,6 +233,7 @@ class CommentModelSerializer(serializers.ModelSerializer):
             'timesince',
             'reply',
             'replies',
+            'reply_count',
         ]
         read_only_fields = [
             'reply',
@@ -241,6 +253,9 @@ class CommentModelSerializer(serializers.ModelSerializer):
 
     def get_timesince(self, obj):
         return timesince(obj.timestamp) + " ago"
+
+    def get_reply_count(self, obj):
+        return obj.replies.count()
 
 class ShareModelSerializer(serializers.ModelSerializer):
     user = UserDisplaySerializer(read_only=True)

@@ -46,8 +46,9 @@ $(document).ready(function() {
             }
 
 
-            var commentFormatHtml="<div class='row' id='" + commentValue.id + "'><div class='col-md-9'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4>" + commentedithtml +
-"<h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><span class='btn btn-primary btn-sm reply-btn' data-id='" + commentValue.id + "'>Reply</span><div class='row' style='padding-top:8px'><h6>" + commentValue.timesince + "</h6></div><hr></div></div>"
+            var commentFormatHtml="<div class='row' id='" + commentValue.id + "'><div class='col-md-9'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h5 class='inline'>" + commentUser.username + "</h5>" + commentedithtml +
+"<h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-xs cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><span class='btn btn-primary btn-xs reply-btn' data-id='" + commentValue.id + "'>Reply</span><span id='is" + commentValue.id + "'class='viewreply-btn viewreply' data-id='" + commentValue.id + "' data-toggle='collapse' data-target='#replysection" + commentValue.id + "'><strong> View Replies(<span class='cmtcount cmtcount" + commentValue.id + "'>" + commentValue.reply_count + "</span>)<span class='carot more'>&#9650;</span></strong></span><div class='row' style='padding-top:8px'><h6>" + commentValue.timesince + "</h6></div><hr class='hr'></div></div>" +
+                    "<div id='replysection" + commentValue.id + "'></div>"
 
 
             var commentFormatHtml2 ="<div class='row'><div class='col-md-6' style='margin-left:3em'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4><h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><hr></div></div>"
@@ -105,8 +106,8 @@ $(document).ready(function() {
 
             var commentFormatHtml="<div class='row' id='" + commentValue.id + "'><div class='col-md-9'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4><h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><span class='btn btn-primary btn-sm reply-btn'>Reply</span><hr></div></div>"
 
-            var commentFormatHtml2 ="<div class='row' id='" + commentValue.id + "'><div class='col-md-9' style='margin-left:3em'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h4 class='inline'>" + commentUser.username + "</h4>" + commentedithtml +
-"<h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-sm cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><div class='row' style='padding-top:8px'><h6>" + commentValue.timesince + "</h6></div><hr></div></div>"
+            var commentFormatHtml2 ="<div class='row collapse in' id='" + commentValue.id + "'><div class='col-md-9 collapse in' id='replysection" + commentParent.id + "'style='margin-left:3em'><a href='" + commentUser.url + "'><img src='" + profileValue.user_img + "'class='listpic img-circle img-responsive'></a><h5 class='inline'>" + commentUser.username + "</h5>" + commentedithtml +
+"<h5>" + commentValue.comment + "</h5><h6></h6><span class='btn btn-primary btn-xs cmt-like-btn' data-id='" + commentValue.id + "'>" + verb + " " + commentValue.likes_count +"</span><div class='row' style='padding-top:8px'><h6>" + commentValue.timesince + "</h6></div><hr></div></div>"
             if (prepend == true) {
                 $("#commentsection").prepend(commentFormatHtml)
 
@@ -119,7 +120,7 @@ $(document).ready(function() {
                     )
                 }
                 else {
-                    $('#' + commentParent.id ).append(commentFormatHtml2)
+                    $('#replysection' + commentParent.id ).append(commentFormatHtml2)
                     $('#commentsection').linkify();
                 }
             }
@@ -144,7 +145,7 @@ $(document).ready(function() {
                 //console.log(key)
                 $.each(commentList, function (key, value) {
                     attachComment(value)
-                    fetchReplies(value.id)
+                   // fetchReplies(value.id)
 
             })
         }
@@ -187,11 +188,12 @@ $(document).ready(function() {
 
            },
             success: function(data){
-               $("#loadmorecomments").show();
+             //  $("#loadmorecomments").show();
                 commentList = data.results
                 if (data.next) {
                     nextCommentUrl = data.next
                 } else {
+                    nextCommentUrl = null
                     $("#loadmorecomments").css("display", "none");
                 }
                 parseComments()
@@ -222,6 +224,7 @@ $(document).ready(function() {
                 commentReplyList = data.results
                 if (data.next) {
                     nextCommmentReplyUrl = data.next
+                    fetchReplies(id, nextCommmentReplyUrl)
                 } else {
                     $("#loadmorereplies").css("display", "none");
                 }
@@ -275,7 +278,7 @@ $(document).ready(function() {
                verb = "Unfollow"
            }
 
-       var formattedHtml = "<a href='#' class='follow-btn btn btn-primary' data-id='" + profileUser.username + "'><h5 class='inline'>" + verb + " " + profileValue.follower_count + "</h5></a>"
+       var formattedHtml = "<a href='#' class='follow-btn btn btn-primary btn-sm' data-id='" + profileUser.username + "'><h5 class='inline'>" + verb + " " + profileValue.follower_count + "</h5></a>"
        $('#vidfollow').append(formattedHtml)
     }
 
@@ -287,8 +290,8 @@ $(document).ready(function() {
             verb = "Unlike"
         }
 
-        var formattedHtml = "<a href='#' class='like-btn' data-id= " + videoValue.id + "><h5 class='inline btn btn-primary'>" + verb + " " + videoValue.likes_count + "</h5></a>" +
-                "<a href='#' class='share-btn' style='padding:5px'><h5 class='inline btn btn-primary'>Share" + " " + videoValue.shares_count + "</h5></a><li class='dropdown' style='list-style:none;display:inline'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='font-size:20px;cursor:pointer'>&#8942</span></a><ul class='dropdown-menu'><li class='btn btn-primary playlist-btn block'>Add</li>{% if request.user == video.user %}<li class='btn btn-primary block videoedit'>Edit</li><li class='btn btn-primary block delete-vid-btn'>Delete</li></ul></li>{% endif %}"
+        var formattedHtml = "<a href='#' class='like-btn' data-id= " + videoValue.id + "><h5 class='inline btn btn-primary btn-sm'>" + verb + " " + videoValue.likes_count + "</h5></a>" +
+                "<a href='#' class='share-btn' style='padding:5px'><h5 class='inline btn btn-primary btn-sm'>Share" + " " + videoValue.shares_count + "</h5></a><div style='padding:5px' class='inline'><h5 class='inline btn btn-primary btn-sm' data-target='#socialfa' data-toggle='collapse'>Share To Social Media</h5></div><li class='dropdown' style='list-style:none;display:inline'><a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span style='font-size:20px;cursor:pointer'>&#8942</span></a><ul class='dropdown-menu'><li class='btn btn-primary playlist-btn block'>Add</li>{% if request.user == video.user %}<li class='btn btn-primary block videoedit'>Edit</li><li class='btn btn-primary block delete-vid-btn'>Delete</li></ul></li>{% endif %}"
 
         $('#likeshare').append(formattedHtml)
 
@@ -361,6 +364,7 @@ $(document).ready(function() {
                    // $("#commentsection").text("")
                     this_.find("input[type=text], textarea").val("")
                     attachComment(data, true)
+                    $('#allcmtcount').text(data.video.comment_count)
                     //fetchTweets()
                     //tweetList = data
                     //parseTweets()
@@ -376,6 +380,39 @@ $(document).ready(function() {
         }
     })
 
+      $(document.body).on("click", ".viewreply-btn", function(e){
+          e.preventDefault()
+          var this_ = $(this)
+          var id = this_.attr("data-id")
+          fetchReplies(id)
+          this_.removeClass("viewreply-btn")
+
+         // this_.text("Hide Replies")
+      })
+
+      $(document.body).on("click", ".viewreply", function(e){
+          e.preventDefault()
+          var this_ = $(this)
+          if(this_.find(".cmtcount").text() == "0") {
+
+          }
+          else {
+
+              if(this_.find(".carot").hasClass("more")) {
+                  this_.find(".carot").html("&#9660")
+                  this_.find(".carot").removeClass("more")
+              }
+              else {
+                  this_.find(".carot").html("&#9650;")
+                  this_.find(".carot").addClass("more")
+              }
+
+
+          }
+
+
+         // this_.text("Hide Replies")
+      })
 
 var commentId = 0
     $(document.body).on("click", ".reply-btn", function(e){
@@ -400,7 +437,13 @@ var commentId = 0
                 success: function (data) {
                     $('#replyModal').modal('hide')
                     //this_.find("input[type=text], textarea").val("")
-                    attachCommentReply(data)
+                    $('#allcmtcount').text(data.video.comment_count)
+                    var cmt = $('.cmtcount' + data.parent.id)
+                    if(!($('#is' + data.parent.id).hasClass("viewreply-btn"))) {
+                        attachCommentReply(data)
+                    }
+                    console.log(data.parent.reply_count);
+                    cmt.text(data.parent.reply_count)
                     //attachComment(data, true)
                     //fetchTweets()
                     //tweetList = data
@@ -518,6 +561,21 @@ var commentId = 0
             }
 
         })
+
+var ready = true
+$(window).bind('scroll', function() {
+        if(ready && $(window).scrollTop() >= $('.footerscroll').offset().top + $('.footerscroll').outerHeight() - window.innerHeight) {
+            $('#loadmorecomments').hide()
+            ready = false
+          setTimeout(function(){
+            if(nextCommentUrl) {
+                fetchComments(nextCommentUrl)
+                ready = true
+            }
+          }, 800);
+        }
+});
+
 $('#description').linkify();
 
 });
@@ -544,20 +602,20 @@ $('#description').linkify();
 
     <div class="vidtitle" style="width:100%">
       <h4 class="inline" style="margin-left:1.5em"  id="vidtitle">{{ video.title }}</h4>
-                      <div class="col-md-4 vidbtns" style="display:inline">
+                      <div class="vidbtns" style="display:inline">
 
     </div>
 
-        <div style="margin-bottom:4em">
+        <div style="margin-bottom:0.5em">
             <div id="likeshare" style="float:left;margin-left:1.5em">
 
         </div>
-
+        <br>
         <div style="margin-top:2em"><h6 class="inline" style="margin-left:2em"><strong>{{ video.hit_count.hits }}</strong></h6><h6 style='padding-left:2px'>views</h6></div>
         </div>
     </div>
         {% load social_share %}
-        <div class="socialfa">
+        <div class="socialfa collapse" id="socialfa" style="margin-left:1.5em">
     {% post_to_facebook  video.get_absolute_url "<h6 style='font-size:0.6em'><span class='fa fa-facebook'></span></h6>"  %}
         {% post_to_twitter "Check Out This Video: {{object.title}}." video.get_absolute_url "<h6 style='font-size:0.6em'><span class='fa fa-twitter'></span></h6>" %}
         {% post_to_reddit "Check Out This Video: {{object.title}}"  video.get_absolute_url "<h6 style='font-size:0.6em'><span class='fa fa-reddit'></span></h6>"%}
@@ -570,8 +628,8 @@ $('#description').linkify();
     <div class="row" id="videouser">
       <div class="col-md-6">
       <a href="{% url 'accounts:profile_detail' video.user.username %}"><img src="{{ video.user.profile.user_img.url }}" class="videolistpic img-circle img-responsive"></a>
-      <h4 class="inline">{{ video.user.username }}|</h4>
-      <span class="glyphicon glyphicon-user" aria-hidden="true"></span><div class="inline" id="vidfollow"></div>
+      <h5 class="inline"><strong>{{ video.user.username }}</strong>|</h5>
+      <div class="inline" id="vidfollow"></div>
     </div>
     </div>
 
@@ -596,18 +654,22 @@ $('#description').linkify();
 {#        <textarea></textarea>#}
 {#        <input type="submit" value="Comment" class="btn btn-primary commentbtn">#}
 {#      </form>#}
+           <h5><strong><span id="allcmtcount">{{ video.comments.count }}</span></strong> comments</h5>
       <hr>
     </div>
+
     </div>
 
     <div class="row" id="commentsection">
 
     </div>
-
+    <div class="row">
+<div class="footerscroll" style="height:10px"></div>
     <div id="myDiv" class="text-center">
         <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
     </div>
-<div class="text-center" ><a href="#" id="loadmorecomments" style="width:18%;display:none" class="btn btn-primary"><h5 class="text-center">Load More Comments</h5></a></div>
+<div class="text-center" ><a href="#" id="loadmorecomments" style="width:75%;display:none" class="btn btn-primary"><h5 class="text-center">Load More Comments</h5></a></div>
+</div>
 
 </div>
 
@@ -619,7 +681,9 @@ $('#description').linkify();
 
 
 </div>
+<script>
 
+</script>
 
 
 {% include "videos/sharemodal.html" %}

@@ -205,7 +205,7 @@ class CommentModelListAPIView(generics.ListAPIView):
     pagination_class = StandardResultsPagination
     def get_queryset(self, *args, **kwargs):
         video = self.kwargs['video']
-        qs = CommentModel.objects.filter(video=video).order_by('-timestamp')
+        qs = CommentModel.objects.filter(video=video, reply=False).order_by('-timestamp')
         return qs
 
 class CommentCreateAPIView(generics.CreateAPIView):
@@ -233,7 +233,7 @@ class ReplyCommentCreateAPIView(generics.CreateAPIView):
 
 class CommentModelReplyListAPIView(generics.ListAPIView):
     serializer_class = CommentModelSerializer
-    pagination_class = StandardResultsPagination2
+    pagination_class = StandardResultsPagination
     def get_queryset(self, *args, **kwargs):
         # video = self.kwargs['video']
         pk = self.kwargs['pk']

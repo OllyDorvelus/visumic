@@ -7,7 +7,46 @@
 //else{
 //    Cookies.set("menuOutB","true");
 //}
+//$(window).scroll(function() {
+//   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+//       alert("bottom!");
+//   }
+//});
 
+//$(window).on("scroll", function() {
+//	var scrollHeight = $(document).height();
+//	var scrollPosition = $(window).height() + $(window).scrollTop();
+//	if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+//	    alert("bottom")
+//	}
+//});
+
+  //$(window).on("scroll", function() {
+  //          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+  //              alert("bottom")
+  //          }
+  //      });
+
+             //var $win = $(window);
+             //
+             //$win.scroll(function () {
+             //    if ($win.scrollTop() == 0)
+             //        alert('Scrolled to Page Top');
+             //    else if ($win.height() + $win.scrollTop()
+             //                   == $(document).height()) {
+             //        alert('Scrolled to Page Bottom');
+             //    }
+             //});
+
+//$(window).scroll(function() {
+//  if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+//    alert("Bottom")
+//  }
+//});
+
+
+
+console.log("Okay")
 
 function getCookie(name) {
     var cookieValue = null;
@@ -113,6 +152,7 @@ $(document).ready(function(){
      $("#playlistEditModal").modal({})
 
 });
+
 
 
 
@@ -268,17 +308,21 @@ $(document).ready(function(){
                 $.ajax({
                     method: "DELETE",
                     url: deleteVideoUrl,
+                    data:({"id": "id", "parent": "parent"}),
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
                     },
                     success: function (data) {
                         console.log("deleted")
                         $('#' + commentId).hide(500)
+                        //var cmt = $('.cmtcount' + data.parent.id)
+                        //cmt.text(data.parent.reply_count)
+
                     },
                     error: function (data) {
                         cannot()
                         console.log("error")
-                        console.log(data)
+
                     }
                 })
             })
@@ -330,7 +374,7 @@ function preventModalClose() {
 
 
 $(document).ready(function() {
-    var showChar = 200;  // How many characters are shown by default
+    var showChar = 250;  // How many characters are shown by default
     var ellipsestext = "...";
     var moretext = "Show more &#9660";
     var lesstext = "Show less &#9650;";

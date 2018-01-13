@@ -8,12 +8,12 @@ class StandardResultsPagination(pagination.PageNumberPagination):
     max_page_size = 2000
 
 class IndexResultsPagination(pagination.PageNumberPagination):
-    page_size = 15
+    page_size = 16
     page_size_query_param = 'page_size'
     max_page_size = 2000
 
 class ShareResultsPagination(pagination.PageNumberPagination):
-    page_size = 10
+    page_size = 3
     page_size_query_param = 'page_size'
     max_page_size = 2000
 

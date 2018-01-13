@@ -8,111 +8,19 @@
     $(document).ready(function() {
         {% load static %}
 
-        function attachEvent(eventValue, prepend) {
-
-            //var profiletImg = profileValue.user_img
-
-
-            var eventUser = eventValue.user
-            var profileValue = eventUser.profile
-
-            //var test = playlistValue.videos[0].title
-            //console.log(test)
-            var verb = "Attend"
-            if(eventValue.is_attending) {
-                verb = "Attending"
-            }
-
-            var eventFormatHtml = "<div class='row'><div class='col-md-2 col-md-offset-2'><a href='" + eventValue.url + "'><img src='" + eventValue.picture + "'class='event-img thumbnail' style='display:inline'></a></div><div class='col-md-6'>" +
-                    "<a href='" + eventValue.url + "'><h3 class='inline blacklink' style='padding-bottom:10px'>" + eventValue.name + "</h3></a><p>" + eventValue.description + "<h5>" + eventValue.address + "</h5><h5>" + eventValue.display_date + "</h5>" +
-                    "<h5>" + eventValue.time + "</h5></p><span data-id='" + eventValue.id + "'class='btn btn-primary attend-btn' >" + verb + " " + eventValue.attending_count + "</span></div></div>"
-
-            if (prepend == true) {
-                $("#userevents").prepend(eventFormatHtml)
-            }
-            else {
-                $("#userevents").append(
-                        eventFormatHtml
-                )
-            }
-        }
-
-       // var query = getParameterByName('q')
-        var eventList = [];
-        var nextEventUrl;
-//        console.log(query)
-        function parseVideos() {
-
-            if (eventList == 0) {
-                $("#userevents").text("No Events")
-                $("#userevents").addClass("text-center")
-                $("#userevents").removeClass("fix")
-            } else {
-                //tweets exist, parse & display them
-
-
-                //console.log(key)
-                $.each(eventList, function (key, value) {
-                    var profileKey = key
-                    attachEvent(value)
-
-
-                })
-            }
-        }
-
-        function fetchEvents(url) {
-            var fetchUrl;
-            if (!url) {
-                fetchUrl = "/api/accounts/" + "{{ User.username }}" + "/events/"
-            } else {
-                fetchUrl = url
-            }
-            $.ajax({
-                url: fetchUrl,
-                data: {
-                  //  "q": query
-                },
-                method: "GET",
-                success: function (data) {
-
-                    eventList = data.results
-                    if (data.next) {
-                        nextEventUrl = data.next
-                    } else {
-                        $("#loadmore").css("display", "none");
-                        nextEventUrl = null
-                    }
-                    parseVideos()
-                },
-                error: function (data) {
-                    console.log("error")
-
-                }
-            })
-        }
-
-        fetchEvents()
-
-        $("#loadmore").click(function (event) {
-            event.preventDefault()
-            // load more items
-            if (nextEventUrl) {
-                fetchEvents(nextEventUrl)
-            }
-
-        })
+        loadEventContainer("userevents")
 
 
 
     })
 </script>
     <title>{% block title %}{{ User.username }} | Events{% endblock title %}</title>
-<div id="userevents" style="padding:20px;">
+<div id="userevents" style="padding:20px;" data-url="/api/accounts/{{ User.username }}/events/">
 
 
 
 </div>
+    <div class="footerscroll"></div>
             <div class="text-center" style="padding-top:30px"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Events</h5></span></div>
 {% load static %}
 {#    <img src="{% static 'static/img/ajax-loader.gif'  %}">#}

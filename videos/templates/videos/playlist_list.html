@@ -12,103 +12,7 @@
     $(document).ready(function() {
         {% load static %}
 
-        function attachPlaylist(playlistValue, prepend) {
-
-            //var profiletImg = profileValue.user_img
-
-
-            var videoUser = playlistValue.user
-            var profileValue = videoUser.profile
-            var playlistImg = "{% static 'static/img/VPlaylist.jpg' %}"
-            if(!playlistValue.is_empty) {
-                var playlistImg = playlistValue.videos[0].thumbnail
-            }
-            //var test = playlistValue.videos[0].title
-            //console.log(test)
-
-
-            var playlistFormatHtml = "<div class='col-md-3'><a href='" + videoUser.url + "'><img src='" + profileValue.user_img + "' class='videolistpic img-responsive img-circle' style='display:inline'></a><h5 class='inline'>" + videoUser.username + "</h5>" +
-                    "<span class= 'glyphicon glyphicon-user' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + profileValue.follower_count + " " + "<span class= 'glyphicon glyphicon-play' class='inline' aria-hidden='true'></span><h5 class='inline'>" + " " + playlistValue.video_count + "  " +
-                    "" +  "<a href='" + playlistValue.url + "'><img src='" + playlistImg + "'class='thumbnail img-responsive'></a><a href='" + playlistValue.url + "'><h4 class='text-center blacklink'>" + playlistValue.name + "</h4></a></div>"
-
-            if (prepend == true) {
-                $("#playlist-container").prepend(playlistFormatHtml)
-            }
-            else {
-                $("#playlist-container").append(
-                        playlistFormatHtml
-                )
-            }
-        }
-
-        var query = getParameterByName('q')
-        var videoList = [];
-        var nextVideoUrl;
-//        console.log(query)
-        function parseVideos() {
-
-            if (videoList == 0) {
-                $("#playlist-container").text("No Playlist")
-                $("#playlist-container").addClass('text-center')
-            } else {
-                //tweets exist, parse & display them
-
-
-                //console.log(key)
-                $.each(videoList, function (key, value) {
-                    var profileKey = key
-                    attachPlaylist(value)
-
-                })
-            }
-        }
-
-        function fetchPlaylist(url) {
-            var fetchUrl;
-            if (!url) {
-                fetchUrl = "/api/videos/playlist"
-            } else {
-                fetchUrl = url
-            }
-            $.ajax({
-                url: fetchUrl,
-                data: {
-                    "q": query
-                },
-                method: "GET",
-        beforeSend: function(data) {
-              $("#loading-image").show();
-
-           },
-                success: function (data) {
-                    $("#loadmore").show();
-                    videoList = data.results
-                    if (data.next) {
-                        nextVideoUrl = data.next
-                    } else {
-                        $("#loadmore").css("display", "none");
-                        nextVideoUrl = null
-                    }
-                    parseVideos()
-                    $("#loading-image").hide();
-                },
-                error: function (data) {
-                    console.log("error")
-                }
-            })
-        }
-
-        fetchPlaylist()
-
-        $("#loadmore").click(function (event) {
-            event.preventDefault()
-            // load more items
-            if (nextVideoUrl) {
-                fetchPlaylist(nextVideoUrl)
-            }
-
-        })
-
+        loadPlaylistContainer("playlist-container")
         var typingTimer;
         var doneInterval = 800; // in ms
         var searchInput = $("#playlist-search-form input[type=text]")
@@ -138,14 +42,16 @@
 </script>
 {% include "videos/playlist_search_form.html" %}
     <div class='container-fluid'><div class='row'>
-            <div id="playlist-container">
+            <div id="playlist-container" data-url="/api/videos/playlist">
 
             </div>
         </div>
         </div>
-            <div class="text-center" style="padding-top:30px"><span id="loadmore" class="btn btn-primary" style="width:75%;display:none"><h5 class="text-center">Load More Playlist</h5></span></div>
-    {% load static %}
-    <div id="myDiv" class="text-center">
+    <div class="footerscroll"></div>
+        </div>
+            <div class="text-center" id="loadmore" style="display:none"><span id="loadmore" class="btn btn-primary"><h5 class="text-center">Load More Playlist</h5></span></div>
+    {% load staticfiles %}
+        <div id="myDiv" class="text-center">
         <img id="loading-image" src="{% static 'static/img/ajax-loader.gif'  %}" style="display:none;"/>
     </div>
 {% endblock content %}
