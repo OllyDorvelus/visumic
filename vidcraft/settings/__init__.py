@@ -5,6 +5,6 @@ __author__ = 'OllyD'
 from .production import *
 
 try:
-    from .local import *
+    from .production import *
 except:
     pass

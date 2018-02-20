@@ -1,6 +1,6 @@
 from django.db import models
 import os
-from accounts.validators import validate_file_extension, validate_file_video_extension
+from accounts.validators import validate_file_extension, validate_file_video_extension, validate_file_size
 from hitcount.models import HitCount, HitCountMixin
 from django.utils import timezone
 from django.utils.timesince import timesince
@@ -220,7 +220,8 @@ class GenreModel(models.Model):
 class VideoModel(models.Model, HitCountMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, related_name='videos')
     thumbnail = models.FileField(validators=[validate_file_extension], default="vthumbnail.jpg", upload_to='thumbnails')
-    video = models.FileField(upload_to="mp4video", validators=[validate_file_video_extension])
+    video = models.FileField(upload_to="mp4video", validators=[validate_file_video_extension,
+                                                               validate_file_size])
     title = models.CharField(max_length=115)
     liked = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked')
     description = models.TextField(blank=True)
