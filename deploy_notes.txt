@@ -1,0 +1,2 @@
+Make sure git ignore removes settings and aws
+make sure settings point to production.py
