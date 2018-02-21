@@ -1,8 +1,8 @@
 .DS_Store
 vidcraft/settings/local.py
 media/
-#vidcraft/settings/
-#vidcraft/aws/
+vidcraft/settings/
+vidcraft/aws/
 
 db.sqlite3
 # Byte-compiled / optimized / DLL files
