@@ -1,8 +1,7 @@
 .DS_Store
 vidcraft/settings/local.py
 media/
-vidcraft/settings/production.py
-vidcraft/settings/base.py
+vidcraft/settings/
 vidcraft/aws/
 
 db.sqlite3
