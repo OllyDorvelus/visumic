@@ -1,8 +1,10 @@
 .DS_Store
 vidcraft/settings/local.py
 media/
-vidcraft/settings/
-vidcraft/conf/
+vidcraft/settings/production.py
+vidcraft/settings/base.py
+vidcraft/aws/
+
 db.sqlite3
 # Byte-compiled / optimized / DLL files
 __pycache__/
